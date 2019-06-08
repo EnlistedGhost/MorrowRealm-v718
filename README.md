@@ -14,7 +14,7 @@ Anyone is welcome to use code found therein with the agreement that they will in
 
 Contents:
 ---------
-This github is the source code used for the MorrowRealm 718 server and only includes the core server files. You will NOT find any client code, chache data, combat definitions, etc... within this repository as this is intended for use by the MorrowRealm team to further the server's features and reliability along with user experience.
+This repository is used for the MorrowRealm 718 server/client source code and only includes the core files. You will NOT find any compiled code, cache data, combat definitions, etc... within this repository as this is intended for use by the MorrowRealm team to further the server/client features and reliability along with user experience.
 
 More info:
 ----------
