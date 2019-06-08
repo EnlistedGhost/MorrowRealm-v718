@@ -1,8 +1,11 @@
 # MorrowRealm-v718
 
-Quick Overview:
+Overview:
 ---------------
-MorrowRealm is an overhauled Matrix 718/Rune-Evo V3 Runescape Private Server based upon the v718 revision of the game.
+MorrowRealm is an overhauled Matrix 718/Rune-Evo V3 Runescape Private Server based upon the v718 revision of the game. Though this private server is originally a based on runescape the MorrowRealm project team aims to take the game to a new level and overhaul every aspect section by section including graphics, models, maps, items, and much more. 
+It is planned to keep an original 2012 feel remake operational side by side with the other realms that are created as of course the team still loves the original game they grew up with and wanted to keep a throwback to it built in still as one of the main focuses and starting area. 
+The decision to eventually replace even the graphics throughout the work on this project is to get away from utilizing any material created by a 3rd party, currently utilized Jagex material is owned by Jagex (and their partners) NOT the team. The team does NOT claim any ownership of any Jagex material used! 
+This is a fan made game created by a community that loves what it was in 2012 and wanted to expand it with what they had imagined for it. It is hoped that this repository and the game associated with it only joy to all who happen to see and/or be a part of it.
 
 Contributing:
 -------------
