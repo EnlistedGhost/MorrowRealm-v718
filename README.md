@@ -2,7 +2,7 @@
 
 Quick Overview:
 ---------------
-MorrowRealm is an overhauled Marix 718/Rune-Evo V3 Runescape Private Server based upon the v718 revision of the game.
+MorrowRealm is an overhauled Matrix 718/Rune-Evo V3 Runescape Private Server based upon the v718 revision of the game.
 
 Contributing:
 -------------
