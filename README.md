@@ -27,10 +27,13 @@ Coming soon...
 Disclaimer:
 -----------
 Currently utilized Jagex material (some of the 2d/3d material, some of the maps and portions of client sourcecode) is owned by Jagex and their partners NOT the team. The team does NOT claim any ownership of Jagex material used! Of course the team HIGHLY encourages you to support Jagex and their staff by buying and playing the actual game!
+
 Link: https://www.runescape.com/
 
 In addition to this the team does NOT claim ownership of any reference of Bethesda or Bethesda's "The Elder Scrolls III: Morrowind". Any and all likeness is ownership of Bethesda and its partners the team HIGHLY encourages you to support Bethesda's developers and buy the actual game! Also be sure to check out their many other titles!
+
 Link: https://bethesda.net/
 
 Finally there are many snippets, guides and users from run-server forums that have aided in development of this server/client and the game itself. It's HIGHLY encouraged to check rune-server forums out for yourself as considerable amounts of information can be found there on everything to do with runescape private servers otherwise known as an RSPS. Any and all snippets and guides used provide credits to those who created them.
+
 Link: https://www.rune-server.ee/
