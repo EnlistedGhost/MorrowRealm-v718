@@ -10,6 +10,7 @@ import com.rs.game.npc.NPC;
 import com.rs.game.player.Player;
 import com.rs.game.player.Skills;
 import com.rs.game.player.content.TicketSystem;
+import com.rs.game.RegionBuilder;
 import com.rs.utils.SerializableFilesManager;
 import com.rs.utils.Utils;
 
@@ -365,6 +366,48 @@ public class Administrator {
 				staff.getInterfaceManager().sendInterfaces();
 				staff.setNextWorldTile(player);
 				staff.getPackets().sendGameMessage("You been teleported for a staff meeting by " + player.getDisplayName());
+			}
+			return true;
+		}
+
+		if (cmd[0].equals("regionbuilder")) {
+			int chunkX1, chunkY1, chunkX2, chunkY2;
+			try
+			{
+                      	/** These values should be the RegionX, RegionY coordinates of your location, NOT your actual X and Y position.*/
+                      	/** The command format is ;;regionbuilder regionx1 regiony1 regionx2 regiony2 */
+                      	/** Head to the northeast corner of the region you want to instance, grab the regionx and regiony, then go to the
+                        	*   southwest corner, grab the regionx and regiony, and use those 4 values in the command.
+                       	*/
+				chunkX1 = Integer.parseInt(cmd[1]);
+				chunkY1 = Integer.parseInt(cmd[2]);
+				chunkX2 = Integer.parseInt(cmd[3]);
+				chunkY2 = Integer.parseInt(cmd[4]);		
+					
+				if(Math.abs(chunkX1 - chunkX2) != Math.abs(chunkY1 - chunkY2))
+				{
+					player.getPackets().sendGameMessage("Your region must be a square.");
+					return false;
+				}
+					
+				int dimension = Math.abs(chunkX1 - chunkX2);
+					
+				int mapChunks[] = RegionBuilder.findEmptyChunkBound(dimension, dimension);
+				
+				RegionBuilder.copyAllPlanesMap(chunkX1, chunkY1, mapChunks[0],
+						mapChunks[1], dimension);
+				RegionBuilder.copyAllPlanesMap(chunkX2, chunkY2, mapChunks[0],
+						mapChunks[1], dimension);
+                         /** You will be placed at the most south-western tile in the region you grabbed. 
+                          *   With that knowledge you can determine your offset that you'd like to add for player start locations.
+                          */
+				player.setNextWorldTile(new WorldTile(mapChunks[0] * 8,
+						mapChunks[1] * 8, 0));
+			}
+			catch(NumberFormatException e)
+			{
+				player.getPackets().sendGameMessage("Enter integer valued arguments.");
+				return false;
 			}
 			return true;
 		}

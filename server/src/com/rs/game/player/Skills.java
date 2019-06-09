@@ -330,14 +330,14 @@ public final class Skills implements Serializable {
 		double exp = xp[skill];
 		int points = 0;
 		int output = 0;
-		for (int lvl = 1; lvl <= (skill == DUNGEONEERING ? 120 : 99); lvl++) {
+		for (int lvl = 1; lvl <= (skill == DUNGEONEERING ? 360 : 360); lvl++) {// Define max levels
 			points += Math.floor(lvl + 300.0 * Math.pow(2.0, lvl / 7.0));
 			output = (int) Math.floor(points / 4);
 			if ((output - 1) >= exp) {
 				return lvl;
 			}
 		}
-		return skill == DUNGEONEERING ? 120 : 99;
+		return skill == DUNGEONEERING ? 360 : 360;// Define max levels
 	}
 
 	public int getTotal(Player player) {
