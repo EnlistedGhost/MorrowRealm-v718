@@ -24,7 +24,7 @@ import com.rs.game.player.actions.BoxAction.HunterNPC;
 import com.rs.game.player.actions.Cooking;
 import com.rs.game.player.actions.Cooking.Cookables;
 import com.rs.game.player.actions.CowMilkingAction;
-import com.rs.game.player.actions.Farming;
+import com.rs.game.player.actions.farming.v0_5.Farming;
 import com.rs.game.player.actions.PlayerCombat;
 import com.rs.game.player.actions.Smithing.ForgingBar;
 import com.rs.game.player.actions.Smithing.ForgingInterface;

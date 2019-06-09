@@ -1,4 +1,4 @@
-package com.rs.game.player.actions;
+package com.rs.game.player.actions.fletching;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,7 +9,7 @@ import com.rs.game.item.Item;
 import com.rs.game.player.Player;
 import com.rs.game.player.Skills;
 import com.rs.game.player.actions.Action;
-import com.rs.game.player.actions.Fletching.Fletch;
+import com.rs.game.player.actions.fletching.Fletching.Fletch;
 import com.rs.utils.Utils;
 
 /**
