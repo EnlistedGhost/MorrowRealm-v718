@@ -393,7 +393,7 @@ public class Fletching extends Action {
 		if (ticks <= 0) {
 			return false;
 		}
-		if ((!player.getInventory().containsItem(fletch.getSelected(), 1))) {
+		if ((!player.getInventory().containsItem(fletch.getSelected(), 1))) {// TODO: Add toolbet item checking in addition to current inventory checking
 			if (fletch.getSelected() == CHISEL || fletch.getSelected() == KNIFE)
 				player.getPackets().sendGameMessage("You need a "
 						+ ItemDefinitions.getItemDefinitions(fletch.getSelected()).getName() + " to fletch this.");

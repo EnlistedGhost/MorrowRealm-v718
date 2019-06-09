@@ -478,6 +478,7 @@ public class InventoryOptionsHandler {
  			* @Adapted by EnlistedGhost into MorrowRealm (Rune-Evo V3 base)
  			* 
  			*/
+ 			// TODO: Add toolbet item checking in addition to current inventory checking
 			if ((itemUsed.getId() >= 1511 && itemUsed.getId() <= 1521) || itemUsed.getId() == 24121 || itemUsed.getId() == 21600 || itemUsed.getId() == 2862) {
 				if (usedWith.getId() != 946)
 					player.sm("You need a knife to fletch this item.");
