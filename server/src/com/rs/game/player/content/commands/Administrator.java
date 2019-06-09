@@ -338,7 +338,7 @@ public class Administrator {
 		}
 		
 		if (cmd[0].equals("setskill")) {
-			if (!player.getUsername().toLowerCase().equals("og_kingfox")) {
+			if (!player.getUsername().toLowerCase().equals("feraten")) {
 				return true;
 			}
 			int skillId = Skills.getSkillId(cmd[1]);

@@ -471,11 +471,32 @@ public class InventoryOptionsHandler {
 			player.stopAll();
 			if (!player.getControlerManager().canUseItemOnItem(itemUsed, usedWith))
 				return;
-			Fletch fletch = Fletching.isFletching(usedWith, itemUsed);
-			if (fletch != null) {
-				player.getDialogueManager().startDialogue("FletchingD", fletch);
-				return;
+
+			/**
+ 			* 
+ 			* @Improved Fletching by Andreas - AvalonPK
+ 			* @Adapted by EnlistedGhost into MorrowRealm (Rune-Evo V3 base)
+ 			* 
+ 			*/
+			if ((itemUsed.getId() >= 1511 && itemUsed.getId() <= 1521) || itemUsed.getId() == 24121 || itemUsed.getId() == 21600 || itemUsed.getId() == 2862) {
+				if (usedWith.getId() != 946)
+					player.sm("You need a knife to fletch this item.");
+				else {
+					Fletch fletch = Fletch.forId(itemUsed.getId());
+					player.getDialogueManager().startDialogue("FletchingD", fletch);
+				}
 			}
+			if ((itemUsed.getId() >= 1601 && itemUsed.getId() <= 1615 || itemUsed.getId() == 6573) || itemUsed.getId() == 10105 || itemUsed.getId() == 10107) {
+				if (usedWith.getId() != 1755) {
+					player.sm("You need a chisel to cut this item.");
+				} else {
+					Fletch fletch = Fletching.isFletching(new Item(1755), new Item(itemUsed.getId()));
+					if (fletch != null) {
+						player.getDialogueManager().startDialogue("FletchingD", fletch);
+						return;
+					}
+				}
+			}// End fletching adaptation
 			
 			if (itemUsed.getId() == 1759) {
 				if (AmuletCrafting.usingWithAmulet(usedWith.getId())) {
