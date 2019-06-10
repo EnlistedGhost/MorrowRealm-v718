@@ -1,14 +1,13 @@
-package com.rs.game.player.actions;
+package com.rs.game.player.actions.crafting;
 
 import java.util.HashMap;
 import java.util.Map;
-
-
 
 import com.rs.Settings;
 import com.rs.cache.loaders.ItemDefinitions;
 import com.rs.game.Animation;
 import com.rs.game.item.Item;
+import com.rs.game.player.actions.Action;
 import com.rs.game.player.Player;
 import com.rs.game.player.Skills;
 import com.rs.utils.Utils;

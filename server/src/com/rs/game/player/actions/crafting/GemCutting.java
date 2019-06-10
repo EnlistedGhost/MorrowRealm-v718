@@ -1,8 +1,9 @@
-package com.rs.game.player.actions;
+package com.rs.game.player.actions.crafting;
 
 import com.rs.cache.loaders.ItemDefinitions;
 import com.rs.game.Animation;
 import com.rs.game.item.Item;
+import com.rs.game.player.actions.Action;
 import com.rs.game.player.Player;
 import com.rs.game.player.Skills;
 

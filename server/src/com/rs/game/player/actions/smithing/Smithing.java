@@ -1,4 +1,4 @@
-package com.rs.game.player.actions;
+package com.rs.game.player.actions.smithing;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -7,6 +7,7 @@ import com.rs.cache.loaders.ItemDefinitions;
 import com.rs.game.Animation;
 import com.rs.game.Graphics;
 import com.rs.game.item.Item;
+import com.rs.game.player.actions.Action;
 import com.rs.game.player.Player;
 import com.rs.game.player.Skills;
 import com.rs.utils.Utils;
@@ -19,19 +20,6 @@ import com.rs.utils.Utils;
 public class Smithing extends Action {
 
 	public enum ForgingBar {
-
-		ADAMANT(2361, 70, new Item[] { new Item(1211, 1), new Item(1357, 1),
-				new Item(1430, 1), new Item(1145, 1), new Item(9380, 1),
-				new Item(1287, 1), new Item(823, 1), new Item(4823, 1),
-				new Item(-1, 1), new Item(-1, 1), new Item(-1, 1),
-				new Item(43, 1), new Item(1331, 1), new Item(9429, 1),
-				new Item(1301, 1), new Item(867, 1), new Item(1161, 1),
-				new Item(1183, 1), new Item(-1, 1), new Item(-1, 1),
-				new Item(1345, 1), new Item(1371, 1), new Item(1111, 1),
-				new Item(1199, 1), new Item(3100, 1), new Item(1317, 1),
-				new Item(1091, 1), new Item(1073, 1), new Item(1123, 1),
-				new Item(1271, 1) }, new double[] { 62.5, 125, 187.5, 312.5 },
-				new int[] { 66, 210, 267 }),
 
 		BRONZE(2349, 0, new Item[] { new Item(1205, 1), new Item(1351, 1),
 				new Item(1422, 1), new Item(1139, 1), new Item(877, 1),
@@ -59,6 +47,19 @@ public class Smithing extends Action {
 				new Item(1267, 1) }, new double[] { 25, 50, 75, 125 },
 				new int[] { 66, 90, 162, 210, 267 }),
 
+		STEEL(2353, 30, new Item[] { new Item(1207, 1), new Item(1353, 1),
+				new Item(1424, 1), new Item(1141, 1), new Item(9378, 1),
+				new Item(1281, 1), new Item(821, 1), new Item(1539, 1),
+				new Item(-1, 1), new Item(-1, 1), new Item(2370, 1),
+				new Item(41, 1), new Item(1325, 1), new Item(9425, 1),
+				new Item(1295, 1), new Item(865, 1), new Item(1157, 1),
+				new Item(1177, 1), new Item(4544, 1), new Item(-1, 1),
+				new Item(1339, 1), new Item(1365, 1), new Item(1105, 1),
+				new Item(1193, 1), new Item(3097, 1), new Item(1311, 1),
+				new Item(1083, 1), new Item(1069, 1), new Item(1119, 1),
+				new Item(1269, 1) }, new double[] { 37.5, 75, 112.5, 187.5 },
+				new int[] { 66, 98, 162, 210, 267 }),
+
 		MITHRIL(2359, 50, new Item[] { new Item(1209, 1), new Item(1355, 1),
 				new Item(1428, 1), new Item(1143, 1), new Item(9379, 1),
 				new Item(1285, 1), new Item(822, 1), new Item(4822, 1),
@@ -71,6 +72,19 @@ public class Smithing extends Action {
 				new Item(1085, 1), new Item(1071, 1), new Item(1121, 1),
 				new Item(1273, 1) }, new double[] { 50, 100, 150, 250 },
 				new int[] { 66, 170, 210, 267 }),
+
+		ADAMANT(2361, 70, new Item[] { new Item(1211, 1), new Item(1357, 1),
+				new Item(1430, 1), new Item(1145, 1), new Item(9380, 1),
+				new Item(1287, 1), new Item(823, 1), new Item(4823, 1),
+				new Item(-1, 1), new Item(-1, 1), new Item(-1, 1),
+				new Item(43, 1), new Item(1331, 1), new Item(9429, 1),
+				new Item(1301, 1), new Item(867, 1), new Item(1161, 1),
+				new Item(1183, 1), new Item(-1, 1), new Item(-1, 1),
+				new Item(1345, 1), new Item(1371, 1), new Item(1111, 1),
+				new Item(1199, 1), new Item(3100, 1), new Item(1317, 1),
+				new Item(1091, 1), new Item(1073, 1), new Item(1123, 1),
+				new Item(1271, 1) }, new double[] { 62.5, 125, 187.5, 312.5 },
+				new int[] { 66, 210, 267 }),
 
 		RUNE(2363, 85, new Item[] { new Item(1213, 1), new Item(1359, 1),
 				new Item(1432, 1), new Item(1147, 1), new Item(9381, 1),
@@ -91,50 +105,39 @@ public class Smithing extends Action {
 				new Item(20617, 1), new Item(20622, 1), new Item(20627, 1)
 				}, new double[] { 25, 50, 75, 125 },
 				new int[] { 66, 90, 162, 210, 267 }),
-				STEEL_INGOT(20504, 32, new Item[] { new Item(20573, 1), new Item(20578, 1),
-						new Item(20583, 1), new Item(20588, 1), new Item(20593, 1),
-						new Item(20598, 1), new Item(20603, 1), new Item(20608, 1),
-						new Item(20613, 1), new Item(20618, 1), new Item(20623, 1),
-						new Item(20628, 1)
-						}, new double[] { 37.5, 75, 112.5, 187.5 },
-						new int[] { 66, 98, 162, 210, 267 }),
-						
-		ADAMANT_INGOT(20635, 70, new Item[] { new Item(20575, 1), new Item(20580, 1),
-			new Item(20585, 1), new Item(20590, 1), new Item(20595, 1),
-			new Item(20600, 1), new Item(20605, 1), new Item(20610, 1),
-			new Item(20615, 1), new Item(20620, 1), new Item(20625, 1),
-			new Item(20630, 1)
-			}, 
-			new double[] { 62.5, 125, 187.5, 312.5 },
-			new int[] { 66, 210, 267 }),
-			
-			RUNE_INGOT(20636, 85, new Item[] { new Item(20576, 1), new Item(20581, 1),
-					new Item(20586, 1), new Item(20591, 1), new Item(20596, 1),
-					new Item(20601, 1), new Item(20606, 1), new Item(20611, 1),
-					new Item(20616, 1), new Item(20621, 1), new Item(20626, 1),
-					new Item(20631, 1)
-					},  new double[] { 75, 150, 225, 375 },
-					new int[] { 66, 210, 267 }),
-					
-				MITHRIL_INGOT(20634, 50, new Item[] { new Item(20574, 1), new Item(20579, 1),
+
+		STEEL_INGOT(20504, 32, new Item[] { new Item(20573, 1), new Item(20578, 1),
+				new Item(20583, 1), new Item(20588, 1), new Item(20593, 1),
+				new Item(20598, 1), new Item(20603, 1), new Item(20608, 1),
+				new Item(20613, 1), new Item(20618, 1), new Item(20623, 1),
+				new Item(20628, 1)
+				}, new double[] { 37.5, 75, 112.5, 187.5 },
+				new int[] { 66, 98, 162, 210, 267 }),
+
+		MITHRIL_INGOT(20634, 50, new Item[] { new Item(20574, 1), new Item(20579, 1),
 				new Item(20584, 1), new Item(20589, 1), new Item(20594, 1),
 				new Item(20599, 1), new Item(20604, 1), new Item(20609, 1),
 				new Item(20614, 1), new Item(20619, 1), new Item(20624, 1),
 				new Item(20629, 1)
 				}, new double[] { 50, 100, 150, 250 },
 				new int[] { 66, 170, 210, 267 }),
-		STEEL(2353, 30, new Item[] { new Item(1207, 1), new Item(1353, 1),
-				new Item(1424, 1), new Item(1141, 1), new Item(9378, 1),
-				new Item(1281, 1), new Item(821, 1), new Item(1539, 1),
-				new Item(-1, 1), new Item(-1, 1), new Item(2370, 1),
-				new Item(41, 1), new Item(1325, 1), new Item(9425, 1),
-				new Item(1295, 1), new Item(865, 1), new Item(1157, 1),
-				new Item(1177, 1), new Item(4544, 1), new Item(-1, 1),
-				new Item(1339, 1), new Item(1365, 1), new Item(1105, 1),
-				new Item(1193, 1), new Item(3097, 1), new Item(1311, 1),
-				new Item(1083, 1), new Item(1069, 1), new Item(1119, 1),
-				new Item(1269, 1) }, new double[] { 37.5, 75, 112.5, 187.5 },
-				new int[] { 66, 98, 162, 210, 267 });
+						
+		ADAMANT_INGOT(20635, 70, new Item[] { new Item(20575, 1), new Item(20580, 1),
+				new Item(20585, 1), new Item(20590, 1), new Item(20595, 1),
+				new Item(20600, 1), new Item(20605, 1), new Item(20610, 1),
+				new Item(20615, 1), new Item(20620, 1), new Item(20625, 1),
+				new Item(20630, 1)
+				}, 
+				new double[] { 62.5, 125, 187.5, 312.5 },
+				new int[] { 66, 210, 267 }),
+			
+		RUNE_INGOT(20636, 85, new Item[] { new Item(20576, 1), new Item(20581, 1),
+				new Item(20586, 1), new Item(20591, 1), new Item(20596, 1),
+				new Item(20601, 1), new Item(20606, 1), new Item(20611, 1),
+				new Item(20616, 1), new Item(20621, 1), new Item(20626, 1),
+				new Item(20631, 1)
+				},  new double[] { 75, 150, 225, 375 },
+				new int[] { 66, 210, 267 });
 
 		private static Map<Integer, ForgingBar> bars = new HashMap<Integer, ForgingBar>();
 

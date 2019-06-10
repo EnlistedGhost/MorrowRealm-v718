@@ -1,8 +1,8 @@
 package com.rs.game.player.dialogues.impl;
 
 import com.rs.game.WorldObject;
-import com.rs.game.player.actions.Bonfire;
-import com.rs.game.player.actions.Bonfire.Log;
+import com.rs.game.player.actions.firemaking.Bonfire;
+import com.rs.game.player.actions.firemaking.Bonfire.Log;
 import com.rs.game.player.content.SkillsDialogue;
 import com.rs.game.player.dialogues.Dialogue;
 

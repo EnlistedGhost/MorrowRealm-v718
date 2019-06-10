@@ -6,8 +6,8 @@ import com.rs.game.WorldTile;
 import com.rs.game.item.Item;
 import com.rs.game.player.Player;
 import com.rs.game.player.Skills;
-import com.rs.game.player.actions.Fishing.Fish;
-import com.rs.game.player.actions.Summoning.Pouches;
+import com.rs.game.player.actions.fishing.Fishing.Fish;
+import com.rs.game.player.actions.summoning.Summoning.Pouches;
 import com.rs.game.player.content.Foods.Food;
 
 public class Bunyip extends Familiar {

@@ -1,7 +1,7 @@
 package com.rs.game.player.dialogues.impl;
 
-import com.rs.game.player.actions.LeatherCrafting;
-import com.rs.game.player.actions.LeatherCrafting.LeatherData;
+import com.rs.game.player.actions.crafting.LeatherCrafting;
+import com.rs.game.player.actions.crafting.LeatherCrafting.LeatherData;
 import com.rs.game.player.content.SkillsDialogue;
 import com.rs.game.player.dialogues.Dialogue;
 

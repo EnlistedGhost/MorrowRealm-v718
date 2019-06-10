@@ -3,9 +3,9 @@ package com.rs.game.npc.familiar;
 import com.rs.game.WorldObject;
 import com.rs.game.WorldTile;
 import com.rs.game.player.Player;
-import com.rs.game.player.actions.Summoning.Pouches;
-import com.rs.game.player.actions.Woodcutting;
-import com.rs.game.player.actions.Woodcutting.TreeDefinitions;
+import com.rs.game.player.actions.summoning.Summoning.Pouches;
+import com.rs.game.player.actions.woodcutting.Woodcutting;
+import com.rs.game.player.actions.woodcutting.Woodcutting.TreeDefinitions;
 
 public class Beaver extends Familiar {
 

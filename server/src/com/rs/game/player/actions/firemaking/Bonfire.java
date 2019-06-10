@@ -1,4 +1,4 @@
-package com.rs.game.player.actions;
+package com.rs.game.player.actions.firemaking;
 
 import java.util.ArrayList;
 
@@ -9,6 +9,7 @@ import com.rs.game.WorldObject;
 import com.rs.game.WorldTile;
 import com.rs.game.item.Item;
 import com.rs.game.npc.others.FireSpirit;
+import com.rs.game.player.actions.Action;
 import com.rs.game.player.Player;
 import com.rs.game.player.Skills;
 import com.rs.game.tasks.WorldTask;

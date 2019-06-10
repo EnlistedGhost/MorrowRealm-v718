@@ -1,10 +1,11 @@
-package com.rs.game.player.actions;
+package com.rs.game.player.actions.woodcutting;
 
 import com.rs.cache.loaders.ItemDefinitions;
 import com.rs.game.Animation;
 import com.rs.game.World;
 import com.rs.game.WorldObject;
 import com.rs.game.WorldTile;
+import com.rs.game.player.actions.Action;
 import com.rs.game.player.Player;
 import com.rs.game.player.Skills;
 import com.rs.utils.Utils;

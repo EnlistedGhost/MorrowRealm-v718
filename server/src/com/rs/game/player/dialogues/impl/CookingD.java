@@ -1,8 +1,8 @@
 package com.rs.game.player.dialogues.impl;
 
 import com.rs.game.WorldObject;
-import com.rs.game.player.actions.Cooking;
-import com.rs.game.player.actions.Cooking.Cookables;
+import com.rs.game.player.actions.cooking.Cooking;
+import com.rs.game.player.actions.cooking.Cooking.Cookables;
 import com.rs.game.player.content.SkillsDialogue;
 import com.rs.game.player.dialogues.Dialogue;
 

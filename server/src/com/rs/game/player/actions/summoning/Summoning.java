@@ -1,4 +1,4 @@
-package com.rs.game.player.actions;
+package com.rs.game.player.actions.summoning;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -17,7 +17,7 @@ import com.rs.game.minigames.clanwars.ClanWars.Rules;
 import com.rs.game.player.Player;
 import com.rs.game.player.Skills;
 import com.rs.game.npc.NPC;
-import com.rs.game.player.actions.SummoningPouch;
+import com.rs.game.player.actions.summoning.SummoningPouch;
 import com.rs.game.npc.others.DreadNip;
 
 @SuppressWarnings("serial")

@@ -2,8 +2,8 @@ package com.rs.game.player.dialogues.impl;
 
 import com.rs.game.WorldObject;
 import com.rs.game.player.Skills;
-import com.rs.game.player.actions.Smelting;
-import com.rs.game.player.actions.Smelting.SmeltingBar;
+import com.rs.game.player.actions.smithing.Smelting;
+import com.rs.game.player.actions.smithing.Smelting.SmeltingBar;
 import com.rs.game.player.content.SkillsDialogue;
 import com.rs.game.player.content.SkillsDialogue.ItemNameFilter;
 import com.rs.game.player.dialogues.Dialogue;

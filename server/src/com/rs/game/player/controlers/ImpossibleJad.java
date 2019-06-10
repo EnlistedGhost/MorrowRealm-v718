@@ -16,7 +16,7 @@ import com.rs.game.WorldTile;
 import com.rs.game.item.Item;
 import com.rs.game.npc.impossiblejad.ImpossibleJadNPC;
 import com.rs.game.player.Player;
-import com.rs.game.player.actions.Summoning;
+import com.rs.game.player.actions.summoning.Summoning;
 import com.rs.game.player.content.pet.Pets;
 import com.rs.game.tasks.WorldTask;
 import com.rs.game.tasks.WorldTasksManager;

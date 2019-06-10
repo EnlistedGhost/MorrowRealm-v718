@@ -1,4 +1,4 @@
-package com.rs.game.player.actions;
+package com.rs.game.player.actions.herblore;
 
 import com.rs.game.item.Item;
 import com.rs.game.player.Player;

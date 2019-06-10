@@ -2,7 +2,7 @@ package com.rs.game.npc.familiar;
 
 import com.rs.game.WorldTile;
 import com.rs.game.player.Player;
-import com.rs.game.player.actions.Summoning.Pouches;
+import com.rs.game.player.actions.summoning.Summoning.Pouches;
 
 public class SpiritKalphite extends Familiar {
 

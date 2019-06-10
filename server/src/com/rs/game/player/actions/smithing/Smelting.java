@@ -1,4 +1,4 @@
-package com.rs.game.player.actions;
+package com.rs.game.player.actions.smithing;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -7,6 +7,7 @@ import com.rs.game.Animation;
 import com.rs.game.WorldObject;
 import com.rs.game.item.Item;
 import com.rs.game.player.Equipment;
+import com.rs.game.player.actions.Action;
 import com.rs.game.player.Player;
 import com.rs.game.player.Skills;
 import com.rs.utils.Utils;

@@ -1,4 +1,4 @@
-package com.rs.game.player.actions;
+package com.rs.game.player.actions.firemaking;
 
 import com.rs.cache.loaders.ItemDefinitions;
 import com.rs.game.Animation;
@@ -10,6 +10,7 @@ import com.rs.game.item.Item;
 import com.rs.game.minigames.duel.DuelArena;
 import com.rs.game.minigames.duel.DuelControler;
 import com.rs.game.npc.familiar.Familiar;
+import com.rs.game.player.actions.Action;
 import com.rs.game.player.Player;
 import com.rs.game.player.Skills;
 import com.rs.game.tasks.WorldTask;

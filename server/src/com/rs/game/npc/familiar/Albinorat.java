@@ -5,7 +5,7 @@ import com.rs.game.Graphics;
 import com.rs.game.WorldTile;
 import com.rs.game.item.Item;
 import com.rs.game.player.Player;
-import com.rs.game.player.actions.Summoning.Pouches;
+import com.rs.game.player.actions.summoning.Summoning.Pouches;
 
 public class Albinorat extends Familiar {
 

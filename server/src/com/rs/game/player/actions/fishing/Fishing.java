@@ -1,4 +1,4 @@
-package com.rs.game.player.actions;
+package com.rs.game.player.actions.fishing;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -7,6 +7,7 @@ import com.rs.game.Animation;
 import com.rs.game.WorldTile;
 import com.rs.game.item.Item;
 import com.rs.game.npc.NPC;
+import com.rs.game.player.actions.Action;
 import com.rs.game.player.Player;
 import com.rs.game.player.Skills;
 import com.rs.game.player.content.FishingSpotsHandler;

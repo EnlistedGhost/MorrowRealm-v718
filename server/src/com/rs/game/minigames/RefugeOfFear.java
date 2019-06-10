@@ -19,7 +19,7 @@ import com.rs.game.WorldTile;
 import com.rs.game.item.Item;
 import com.rs.game.npc.NPC;
 import com.rs.game.player.Inventory;
-import com.rs.game.player.actions.Summoning.Pouches;
+import com.rs.game.player.actions.summoning.Summoning.Pouches;
 import com.rs.game.player.content.Foods.Food;
 import com.rs.game.player.content.Pots;
 import com.rs.game.player.controlers.Controler;

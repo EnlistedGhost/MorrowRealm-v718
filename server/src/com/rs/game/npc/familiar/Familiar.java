@@ -12,7 +12,7 @@ import com.rs.game.item.Item;
 import com.rs.game.npc.NPC;
 import com.rs.game.npc.combat.NPCCombatDefinitions;
 import com.rs.game.player.Player;
-import com.rs.game.player.actions.Summoning.Pouches;
+import com.rs.game.player.actions.summoning.Summoning.Pouches;
 import com.rs.game.tasks.WorldTask;
 import com.rs.game.tasks.WorldTasksManager;
 import com.rs.utils.Utils;

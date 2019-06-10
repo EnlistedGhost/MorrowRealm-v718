@@ -9,7 +9,7 @@ import com.rs.game.item.Item;
 import com.rs.game.npc.NPC;
 import com.rs.game.player.Inventory;
 import com.rs.game.player.Skills;
-import com.rs.game.player.actions.Woodcutting.TreeDefinitions;
+import com.rs.game.player.actions.woodcutting.Woodcutting.TreeDefinitions;
 import com.rs.net.decoders.WorldPacketsDecoder;
 
 public final class TutorialIsland extends Controler {

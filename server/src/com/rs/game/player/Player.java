@@ -38,7 +38,7 @@ import com.rs.game.npc.familiar.Familiar;
 import com.rs.game.npc.godwars.zaros.Nex;
 import com.rs.game.npc.pet.Pet;
 import com.rs.game.player.actions.PlayerCombat;
-import com.rs.game.player.actions.ThievingStalls;
+import com.rs.game.player.actions.thieving.ThievingStalls;
 import com.rs.game.player.content.ConstructFurniture;
 import com.rs.game.player.content.DwarfCannon;
 import com.rs.game.player.content.FriendChatsManager;

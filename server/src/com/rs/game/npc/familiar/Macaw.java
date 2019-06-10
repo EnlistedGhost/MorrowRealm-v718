@@ -6,8 +6,8 @@ import com.rs.game.World;
 import com.rs.game.WorldTile;
 import com.rs.game.item.Item;
 import com.rs.game.player.Player;
-import com.rs.game.player.actions.HerbCleaning.Herbs;
-import com.rs.game.player.actions.Summoning.Pouches;
+import com.rs.game.player.actions.herblore.HerbCleaning.Herbs;
+import com.rs.game.player.actions.summoning.Summoning.Pouches;
 import com.rs.utils.Utils;
 
 public class Macaw extends Familiar {
