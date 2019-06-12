@@ -3433,6 +3433,13 @@ public class PlayerCombat extends Action {
 		if (player.getFreezeDelay() >= Utils.currentTimeMillis()) {
 			if (player.withinDistance(target, 0))// done
 				return false;
+			if (isRanging(player) == 0 && player.getCombatDefinitions().getSpellId() <= 0 && size == 1) {
+                if (target.getX() == player.getX()+1 && target.getY() == player.getY()+1
+                	|| target.getX() == player.getX()-1 && target.getY() == player.getY()-1
+                    || target.getX() == player.getX()-1 && target.getY() == player.getY()+1
+                    || target.getX() == player.getX()+1 && target.getY() == player.getY()-1)
+                    return false;
+            }
 			return true;
 		}
 		if (target instanceof Player) {
