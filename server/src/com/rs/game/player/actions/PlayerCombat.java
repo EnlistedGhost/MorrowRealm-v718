@@ -3431,16 +3431,11 @@ public class PlayerCombat extends Action {
 			return false;
 		}
 		if (player.getFreezeDelay() >= Utils.currentTimeMillis()) {
-			if (player.withinDistance(target, 0))// done
-				return false;
 			if (isRanging(player) == 0 && player.getCombatDefinitions().getSpellId() <= 0 && size == 1) {
-                if (target.getX() == player.getX()+1 && target.getY() == player.getY()+1
-                	|| target.getX() == player.getX()-1 && target.getY() == player.getY()-1
-                    || target.getX() == player.getX()-1 && target.getY() == player.getY()+1
-                    || target.getX() == player.getX()+1 && target.getY() == player.getY()-1)
-                    return false;
+                if((Math.pow(target.getX() - player.getX(), 2) + Math.pow(target.getY() - player.getY(), 2)) <= 2 && (Math.pow(target.getX() - player.getX(), 2) + Math.pow(target.getY() - player.getY(), 2)) > 1) {
+                	return false;
+                }
             }
-			return true;
 		}
 		if (target instanceof Player) {
 			Player p2 = (Player) target;
