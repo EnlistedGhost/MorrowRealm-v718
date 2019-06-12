@@ -33,6 +33,8 @@ import com.rs.game.player.actions.crafting.LeatherCrafting;
 import com.rs.game.player.actions.summoning.Summoning;
 import com.rs.game.player.actions.summoning.Summoning.Pouches;
 import com.rs.game.player.actions.crafting.AmuletCrafting;
+import com.rs.game.player.actions.woodcutting.BirdNests;
+import com.rs.game.player.actions.woodcutting.BirdNests.Nests;
 import com.rs.game.player.content.AncientEffigies;
 import com.rs.game.player.content.ArmourSets;
 import com.rs.game.player.content.ArmourSets.Sets;
@@ -189,6 +191,15 @@ public class InventoryOptionsHandler {
 					ClueScrolls.showRiddle(player, ClueScrolls.Scrolls.getRiddles(itemId));
 					return;
 				}
+			}
+		}
+
+		// Bird Nest Controlls
+		for (BirdNests.Nests nests : Nests.values()) {
+			if (itemId == nests.getNestId()) {
+				player.getInventory().addItem(nests.getItem());
+				player.getInventory().deleteItem(nests.getNestId(), 1);
+				player.getInventory().addItem(5075, 1);
 			}
 		}
 		
