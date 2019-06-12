@@ -55,7 +55,7 @@ public class SlayerMaster extends Dialogue {
 				}
 				stage = 1;
 			} else if (componentId == OPTION_4) {
-				if (player.getTask().getCurrentTask() > 0) {
+				if (player.getTask().getTaskAmount() > 0) {// Old Value: getCurrentTask()
 					sendEntityDialogue(IS_NPC, "Kuradal", 9085, 9827, "You still have remaining:", "x"+player.getTask().getTaskAmount()+" "+player.getTask().getName()+"");
 					stage = 1;
 				} else {

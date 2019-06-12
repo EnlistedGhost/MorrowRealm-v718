@@ -177,6 +177,7 @@ public class InventoryOptionsHandler {
 			return;
 		}
 		
+		// ClueScroll controls
 		for (int i: ClueScrolls.ScrollIds){
 			if (itemId == i){
 				if (ClueScrolls.Scrolls.getMap(itemId) != null){
@@ -193,6 +194,11 @@ public class InventoryOptionsHandler {
 				}
 			}
 		}
+		// ClueScroll cont...
+		if (itemId == 2717){
+			ClueScrolls.giveReward(player);
+			return;
+		}
 
 		// Bird Nest Controlls
 		for (BirdNests.Nests nests : Nests.values()) {
@@ -203,16 +209,12 @@ public class InventoryOptionsHandler {
 			}
 		}
 		
-		if (itemId == 2717){
-			ClueScrolls.giveReward(player);
-			return;
-		}
-		
 		if (itemId == 20704) {
 			LividFarm.bunchPlants(player);
 			return;
 		}
 		
+		// Gem Cutting controls
 		if (player.getTools().contains(1755)) {
 			switch(item.getId()) {
 			case 1625:
@@ -244,9 +246,7 @@ public class InventoryOptionsHandler {
 				return;
 			}
 		}
-			
-			
-		
+		// Gem Cutting cont...
 		switch (itemDef.getName().toLowerCase()) {
 			case "sapphire":
 			case "emerald":

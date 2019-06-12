@@ -65,6 +65,7 @@ import com.rs.game.player.dialogues.impl.ExpertDung;
 import com.rs.game.player.dialogues.impl.MiningGuildDwarf;
 import com.rs.game.tasks.WorldTask;
 import com.rs.game.tasks.WorldTasksManager;
+import com.rs.net.decoders.handlers.SignPost;
 import com.rs.io.InputStream;
 import com.rs.utils.Logger;
 import com.rs.utils.PkRank;
@@ -187,6 +188,10 @@ public final class ObjectHandler {
                 if (object.getId() == 19205) {
                     Hunter.createLoggedObject(player, object, true);
                 }
+
+                // Sign Post handler
+                if (SignPost.handleSigns(player, object))
+                    return;
                 
                 HunterNPC hunterNpc = HunterNPC.forObjectId(id);
                 

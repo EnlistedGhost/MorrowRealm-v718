@@ -1114,6 +1114,10 @@ public class WorldPacketsEncoder extends Encoder {
 	public void sendNPCMessage(int border, NPC npc, String message) {
 		sendGameMessage(message);
 	}
+
+	public void sendObjectMessage(int border, int color, WorldObject object, String message) {
+		sendGameMessage(message);
+	}
 	
 	public void sendGameMessage(String text) {
 		sendGameMessage(text, false);
@@ -1321,6 +1325,22 @@ public class WorldPacketsEncoder extends Encoder {
 		stream.writeByte(player.isOldItemsLook() ? 1 : 0);
 		session.write(stream);
 	}*/
+
+	public void sendResetMinimapFlag() {
+		OutputStream stream = new OutputStream(3);
+		stream.writePacket(player, 13);
+		stream.writeByte128(255);
+		stream.writeByte128(255);
+		session.write(stream);
+	}
+
+	public void sendMinimapFlag(int x, int y) {
+		OutputStream stream = new OutputStream(3);
+		stream.writePacket(player, 13);
+		stream.writeByte128(y);
+		stream.writeByte128(x);
+		session.write(stream);
+	}
 	
 	public void sendCameraPos(int moveLocalX, int moveLocalY, int moveZ,
 			int speed1, int speed2) {
