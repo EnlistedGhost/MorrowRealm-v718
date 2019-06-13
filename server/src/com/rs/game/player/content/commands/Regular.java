@@ -33,35 +33,31 @@ public class Regular {
 
 		if (cmd[0].equals("zoomout")) {
 			cmd = cmd[1].split(" ");
-			player.zoom = player.zoom-Integer.valueOf(cmd[0]);
-			int setZoom = player.zoom;
+			player.zoom -= Integer.valueOf(cmd[0]);
 			if (player.zoom <= 49) {
 				player.zoom = 50;
-				player.getPackets().sendGlobalConfig(184, 50);
 				player.getPackets().sendGameMessage("You can not zoom out that much!");
 			}
-			player.getPackets().sendGlobalConfig(184, setZoom);
+			player.getPackets().sendGlobalConfig(184, player.zoom);
 			//player.getPackets().sendGameMessage("Player zoom: (out) "+player.zoom+"");
 			return true;
 		}
 			
 		if (cmd[0].equals("zoomin")) {
 			cmd = cmd[1].split(" ");
-			player.zoom = player.zoom+Integer.valueOf(cmd[0]);
-			int setZoom = player.zoom;
+			player.zoom += Integer.valueOf(cmd[0]);
 			if (player.zoom >= 2500) {
 				player.zoom = 2500;
-				player.getPackets().sendGlobalConfig(184, 2500);
 				player.getPackets().sendGameMessage("You can not zoom in that much!");
 			}
-			player.getPackets().sendGlobalConfig(184, setZoom);
+			player.getPackets().sendGlobalConfig(184, player.zoom);
 			//player.getPackets().sendGameMessage("Player zoom: (in) "+player.zoom+"");
 			return true;
 		}
 
 		if (cmd[0].equals("resetzoom")) {
 			player.zoom = 226;
-			player.getPackets().sendGlobalConfig(184, 0);
+			player.getPackets().sendGlobalConfig(184, player.zoom);
 			return true;
 		}
 		
