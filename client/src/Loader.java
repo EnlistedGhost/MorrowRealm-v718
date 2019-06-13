@@ -17,7 +17,7 @@ public class Loader extends Applet {
 	public static final double VERSION = 1.0;
 	public static final String CLIENT_TITLE = "MorrowRealm";
 	public static final String FRAME_TITLE = "MorrowRealm r718."+VERSION+"";
-	public static final String SERVER_IP = "192.168.1.144";
+	public static final String SERVER_IP = "192.168.1.144";// 192.168.1.144
 	public static final int SERVER_PORT = 43444;
 	public static final int REVISION = 718;
 	public static final int SUB_REVISION = 1;

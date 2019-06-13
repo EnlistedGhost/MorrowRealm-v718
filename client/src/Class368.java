@@ -2,9 +2,9 @@
  * Visit http://jode.sourceforge.net/
  */
 
-public class Class368 {// Arrray4002 == Define max levels | Array4003 == ??? (Maybe max level threshold) | Int4004 == Skill count
-	public static int[] anIntArray4002 = { 360, 360, 360, 360, 360, 360, 360, 360, 360, 360, 360, 360, 360, 360, 360, 360, 360, 360, 360, 360, 360, 360, 360, 360, 360 };
-	public static int[] anIntArray4003 = new int[360];
+public class Class368 {// Array 4002 == Skill levels
+	public static int[] anIntArray4002 = { 120, 120, 120, 120, 120, 120, 120, 120, 120, 120, 120, 120, 120, 120, 120, 120, 120, 120, 120, 120, 120, 120, 120, 120, 120 };
+	public static int[] anIntArray4003 = new int[120];
 	public static int anInt4004 = 25;
 	public static int anInt4005;
 
