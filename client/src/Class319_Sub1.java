@@ -135,8 +135,8 @@ public class Class319_Sub1 extends Class319 implements MouseListener, MouseMotio
 			if (mouseevent.isShiftDown()) {
 				String resetzoom = "resetzoom";
 				System.out.println(resetzoom);
-				Class419.method5605(resetzoom, true, false, 1405738364);
-				}// Zoom conrols
+				Class419.method5605(resetzoom, false, false, 1405738364);
+			}// Zoom conrols
 			if (mouseevent.isPopupTrigger())
 				mouseevent.consume();
 		} catch (RuntimeException runtimeexception) {
@@ -232,26 +232,26 @@ public class Class319_Sub1 extends Class319 implements MouseListener, MouseMotio
 	public synchronized void mouseWheelMoved(MouseWheelEvent mousewheelevent) {
 		try {
 			if (mousewheelevent.isShiftDown()) {
-			int z = mousewheelevent.getWheelRotation();
-			if (mousewheelevent.getWheelRotation() == +1) {
-				try {
-					String string = new StringBuilder().append("zoomout ").append(16).toString();
-					System.out.println(string);
-					Class419.method5605(string, true, false, 1405738364);
-				} catch (RuntimeException runtimeexception) {
-					throw Class346.method4175(runtimeexception, new StringBuilder().append("zm.gd(").append(')').toString());
+				int z = mousewheelevent.getWheelRotation();
+				if (mousewheelevent.getWheelRotation() == +1) {
+					try {
+						String string = new StringBuilder().append("zoomout ").append(16).toString();
+						System.out.println(string);
+						Class419.method5605(string, false, false, 1405738364);
+					} catch (RuntimeException runtimeexception) {
+						throw Class346.method4175(runtimeexception, new StringBuilder().append("zm.gd(").append(')').toString());
+					}
 				}
-			}
-			if (mousewheelevent.getWheelRotation() == -1){
-				try {
-					String string = new StringBuilder().append("zoomin ").append(16).toString();
-					System.out.println(string);
-					Class419.method5605(string, true, false, 1405738364);
-				} catch (RuntimeException runtimeexception) {
-					throw Class346.method4175(runtimeexception, new StringBuilder().append("zm.gd(").append(')').toString());
+				if (mousewheelevent.getWheelRotation() == -1){
+					try {
+						String string = new StringBuilder().append("zoomin ").append(16).toString();
+						System.out.println(string);
+						Class419.method5605(string, false, false, 1405738364);
+					} catch (RuntimeException runtimeexception) {
+						throw Class346.method4175(runtimeexception, new StringBuilder().append("zm.gd(").append(')').toString());
+					}
 				}
-			}
-		}// Zoom controls
+			}// Zoom controls
 			int i = mousewheelevent.getX();
 			int i_6_ = mousewheelevent.getY();
 			int i_7_ = mousewheelevent.getWheelRotation();

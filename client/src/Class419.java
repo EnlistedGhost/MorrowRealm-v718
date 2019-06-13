@@ -114,7 +114,7 @@ public class Class419 {
 				}
 				return;
 			} while (false);
-			if (Class242.aClass401_2708 != Class401.aClass401_6557 || 1806357379 * client.playerRights >= 2) {
+			if (Class242.aClass401_2708 != Class401.aClass401_6557 || 1806357379 * client.playerRights >= 0) {
 				try {
 					if (string.equalsIgnoreCase("wm1")) {
 						Class357.method4276(1, -1, -1, false, 1791719030);
