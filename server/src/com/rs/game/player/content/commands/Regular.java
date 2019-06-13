@@ -30,18 +30,52 @@ public class Regular {
 	public static boolean processCommand(Player player, String[] cmd, boolean console, boolean clientCommand) {
 		if (clientCommand)
 			return true;
-		
-		if (cmd[0].equals("setemail")) {
-			player.getAttributes().put("editingEmail", Boolean.TRUE); 
-			player.getPackets().sendInputLongTextScript("Please enter your paypal email:"); 
+
+		if (cmd[0].equals("zoomout")) {
+			cmd = cmd[1].split(" ");
+			player.zoom = player.zoom-Integer.valueOf(cmd[0]);
+			int setZoom = player.zoom;
+			if (player.zoom <= 49) {
+				player.zoom = 50;
+				player.getPackets().sendGlobalConfig(184, 50);
+				player.getPackets().sendGameMessage("You can not zoom out that much!");
+			}
+			player.getPackets().sendGlobalConfig(184, setZoom);
+			//player.getPackets().sendGameMessage("Player zoom: (out) "+player.zoom+"");
+			return true;
+		}
+			
+		if (cmd[0].equals("zoomin")) {
+			cmd = cmd[1].split(" ");
+			player.zoom = player.zoom+Integer.valueOf(cmd[0]);
+			int setZoom = player.zoom;
+			if (player.zoom >= 2500) {
+				player.zoom = 2500;
+				player.getPackets().sendGlobalConfig(184, 2500);
+				player.getPackets().sendGameMessage("You can not zoom in that much!");
+			}
+			player.getPackets().sendGlobalConfig(184, setZoom);
+			//player.getPackets().sendGameMessage("Player zoom: (in) "+player.zoom+"");
+			return true;
+		}
+
+		if (cmd[0].equals("resetzoom")) {
+			player.zoom = 226;
+			player.getPackets().sendGlobalConfig(184, 0);
 			return true;
 		}
 		
-		if (cmd[0].equals("boss")) {
-			player.sendMessage("The world boss has been moved to the quest tab.");
-			player.sendMessage("Quest Tab -> Bosses -> Last Page");
-			return true;
-		}
+		//if (cmd[0].equals("setemail")) {
+		//	player.getAttributes().put("editingEmail", Boolean.TRUE); 
+		//	player.getPackets().sendInputLongTextScript("Please enter your paypal email:"); 
+		//	return true;
+		//}
+		
+		//if (cmd[0].equals("boss")) {
+		//	player.sendMessage("The world boss has been moved to the quest tab.");
+		//	player.sendMessage("Quest Tab -> Bosses -> Last Page");
+		//	return true;
+		//}
 		
 		if (cmd[0].equals("starter")) {
 			if (player.getClassName() == "" || player.getClassName() == null) {
@@ -52,13 +86,13 @@ public class Regular {
 			return true;
 		}
 
-		if (cmd[0].equals("answer")) {
-			String name = "";
-			for (int i = 1; i < cmd.length; i++) {
-				name += cmd[i] + ((i == cmd.length - 1) ? "" : " ");
-			}
-			TriviaBot.getInstance().verify(player, name);
-		}
+		//if (cmd[0].equals("answer")) {
+		//	String name = "";
+		//	for (int i = 1; i < cmd.length; i++) {
+		//		name += cmd[i] + ((i == cmd.length - 1) ? "" : " ");
+		//	}
+		//	TriviaBot.getInstance().verify(player, name);
+		//}
 		
 		if (cmd[0].equals("stopc")) {
 			player.getControlerManager().forceStop();
@@ -67,20 +101,20 @@ public class Regular {
 			return true;
 		}
 		
-		if (cmd[0].equals("checkpurchase")) {
-			OnlineShop.checkPurchase(player);
-			return true;
-		}
+		//if (cmd[0].equals("checkpurchase")) {
+		//	OnlineShop.checkPurchase(player);
+		//	return true;
+		//}
 		
-		if (cmd[0].equals("checkpd")) {
-			NPC npc = World.getNpc(15581);
-			if (npc == null || npc.isDead() || npc.hasFinished()) {
-				player.sendMessage("Can not locate the Party Demon! Is it dead?");
-				return true;
-			}
-			player.sendMessage("Hitpoints remaining: <col=FF0000>"+Utils.formatNumber(npc.getHitpoints())+"</col> (Max: <col=FF0000>"+Utils.formatNumber(npc.getCombatDefinitions().getHitpoints())+"</col>)");
-			return true;
-		}
+		//if (cmd[0].equals("checkpd")) {
+		//	NPC npc = World.getNpc(15581);
+		//	if (npc == null || npc.isDead() || npc.hasFinished()) {
+		//		player.sendMessage("Can not locate the Party Demon! Is it dead?");
+		//		return true;
+		//	}
+		//	player.sendMessage("Hitpoints remaining: <col=FF0000>"+Utils.formatNumber(npc.getHitpoints())+"</col> (Max: <col=FF0000>"+Utils.formatNumber(npc.getCombatDefinitions().getHitpoints())+"</col>)");
+		//	return true;
+		//}
 		
 		if (cmd[0].equals("clearchat")) {
 			for (int i = 0; i < 300; i++) {
@@ -126,14 +160,14 @@ public class Regular {
 			return true;
 		}
 		
-		if (cmd[0].equals("claimdonor")) {
-			if (player.getInventory().getFreeSlots() < 28) {
-				player.sendMessage("Please clear out your inventory before claiming a donation.");
-				return true;
-			}
-			DonationManager.checkDonation(player);
-			return true;
-		}
+		//if (cmd[0].equals("claimdonor")) {
+		//	if (player.getInventory().getFreeSlots() < 28) {
+		//		player.sendMessage("Please clear out your inventory before claiming a donation.");
+		//		return true;
+		//	}
+		//	DonationManager.checkDonation(player);
+		//	return true;
+		//}
 		
 		if (cmd[0].equals("coords")) {
 			int x = player.getX();
@@ -165,53 +199,53 @@ public class Regular {
 			return true;
 		}
 
-		if (cmd[0].equals("prestige")) {
-			if (player.getEquipment().wearingArmour()) {
-				player.sendMessage("Please remove your equipment before prestiging.");
-				return true;
-			}
-			player.getPrestige().prestige();
-			return true;
-		}
+		//if (cmd[0].equals("prestige")) {
+		//	if (player.getEquipment().wearingArmour()) {
+		//		player.sendMessage("Please remove your equipment before prestiging.");
+		//		return true;
+		//	}
+		//	player.getPrestige().prestige();
+		//	return true;
+		//}
 
-		if (cmd[0].equals("skull")) {
-			if (player.getPrestigeLevel() == 0) {
-				player.sendMessage("You must be atleast 1st Prestige to enable your skull.");
-				return true;
-			}
-			player.setSkullEnabled(!player.isSkullEnabled());
-			player.sendMessage("You have " + (player.isSkullEnabled() == true ? "<col=00FF00>ENABLED</col>" : "<col=FF0000>DISABLED</col>" ) + " your prestige skull!");
-			player.getAppearence().generateAppearenceData();
-			return true;
-		}
+		//if (cmd[0].equals("skull")) {
+		//	if (player.getPrestigeLevel() == 0) {
+		//		player.sendMessage("You must be atleast 1st Prestige to enable your skull.");
+		//		return true;
+		//	}
+		//	player.setSkullEnabled(!player.isSkullEnabled());
+		//	player.sendMessage("You have " + (player.isSkullEnabled() == true ? "<col=00FF00>ENABLED</col>" : "<col=FF0000>DISABLED</col>" ) + " your prestige skull!");
+		//	player.getAppearence().generateAppearenceData();
+		//	return true;
+		//}
 		
-		if (cmd[0].equals("myprestige")) {
-			player.setNextForceTalk(new ForceTalk("<col=ff0000> I am currently " + player.getPrestigeLevel() + "" + player.getPrestige().getSuffix() + " prestige!"));
-			return true;
-		}
+		//if (cmd[0].equals("myprestige")) {
+		//	player.setNextForceTalk(new ForceTalk("<col=ff0000> I am currently " + player.getPrestigeLevel() + "" + player.getPrestige().getSuffix() + " prestige!"));
+		//	return true;
+		//}
 
 		if (cmd[0].equals("commands")) {
 			CommandsBook.sendBook(player);
 			return true;
 		}
 
-		if (cmd[0].equals("claimvote") || cmd[0].equals("checkvote") || cmd[0].equals("reward") || cmd[0].equals("claim")) {
-			try {
-				if (player.hasVoted()) {
-					return true;
-				}
-				VoteReward reward = VoteChecker.checkVote(player);
-				if (reward == null) {
-					player.getPackets().sendGameMessage("You have no items waiting for you.");
-					player.getPackets().sendGameMessage("If you feel there was an error, please contact King Fox.");
-					return true;
-				}
-				RewardClaim.claimReward(player, reward);
-			} catch (Exception e){
-				player.getPackets().sendGameMessage("[GTL Vote] An SQL error has occured.");
-			}
-            return true;
-		}
+		//if (cmd[0].equals("claimvote") || cmd[0].equals("checkvote") || cmd[0].equals("reward") || cmd[0].equals("claim")) {
+		//	try {
+		//		if (player.hasVoted()) {
+		//			return true;
+		//		}
+		//		VoteReward reward = VoteChecker.checkVote(player);
+		//		if (reward == null) {
+		//			player.getPackets().sendGameMessage("You have no items waiting for you.");
+		//			player.getPackets().sendGameMessage("If you feel there was an error, please contact King Fox.");
+		//			return true;
+		//		}
+		//		RewardClaim.claimReward(player, reward);
+		//	} catch (Exception e){
+		//		player.getPackets().sendGameMessage("[GTL Vote] An SQL error has occured.");
+		//	}
+        //    return true;
+		//}
 
 		if (cmd[0].equals("yell")) {
 			if (player.getRights() == 0 && !player.isDicer()) {
@@ -304,26 +338,26 @@ public class Regular {
 			return true;
 		}
 		
-		if (cmd[0].equals("forums")) {
-			player.getPackets().sendOpenURL(Settings.FORUM);
-			return true;
-		}
-		if (cmd[0].equals("wiki")) {
-			player.getPackets().sendOpenURL(Settings.WIKI);
-			return true;
-		}
-		if (cmd[0].equals("highscores")) {
-			player.getPackets().sendOpenURL(Settings.HIGHSCORES);
-			return true;
-		}
-		if (cmd[0].equals("donate")) {
-			player.getPackets().sendOpenURL(Settings.DONATE);
-			return true;
-		}
-		if (cmd[0].equals("vote")) {
-			player.getPackets().sendOpenURL(Settings.VOTE);
-			return true;
-		}
+		//if (cmd[0].equals("forums")) {
+		//	player.getPackets().sendOpenURL(Settings.FORUM);
+		//	return true;
+		//}
+		//if (cmd[0].equals("wiki")) {
+		//	player.getPackets().sendOpenURL(Settings.WIKI);
+		//	return true;
+		//}
+		//if (cmd[0].equals("highscores")) {
+		//	player.getPackets().sendOpenURL(Settings.HIGHSCORES);
+		//	return true;
+		//}
+		//if (cmd[0].equals("donate")) {
+		//	player.getPackets().sendOpenURL(Settings.DONATE);
+		//	return true;
+		//}
+		//if (cmd[0].equals("vote")) {
+		//	player.getPackets().sendOpenURL(Settings.VOTE);
+		//	return true;
+		//}
 		
 		return false;
 	}

@@ -141,6 +141,8 @@ public class Player extends Entity {
 	private ArrayList<Integer> lockedSkills;
 	private int prestigeLevel, prestigePoints;
 	private Title playerTitle;
+	// Zoom Controls
+	public int zoom = 226;
 	
 	public Title getTitle() {
 		return playerTitle;
@@ -888,6 +890,7 @@ public class Player extends Entity {
 		refreshHitPoints();
 		prayer.refreshPrayerPoints();
 		getPoison().refresh();
+		getPackets().sendGlobalConfig(184, zoom); // Set Zoom to default values
 		getPackets().sendConfig(281, 1000); // unlock can't do this on tutorial
 		getPackets().sendConfig(1160, -1);  // unlock summoning orb
 		getPackets().sendConfig(1159, 1);
