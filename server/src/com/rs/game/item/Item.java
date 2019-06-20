@@ -16,6 +16,10 @@ public class Item implements Serializable {
 		return id;
 	}
 
+	public static String getItemName(int itemId) {
+		return ItemDefinitions.getItemDefinitions(itemId).getName().toLowerCase();
+	}
+
 	@Override
 	public Item clone() {
 		return new Item(id, amount);

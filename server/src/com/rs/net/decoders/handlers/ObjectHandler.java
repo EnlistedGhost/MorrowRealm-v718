@@ -24,7 +24,8 @@ import com.rs.game.player.actions.BoxAction.HunterNPC;
 import com.rs.game.player.actions.cooking.Cooking;
 import com.rs.game.player.actions.cooking.Cooking.Cookables;
 import com.rs.game.player.actions.CowMilkingAction;
-import com.rs.game.player.actions.farming.v0_5.Farming;
+//import com.rs.game.player.actions.farming.v0_5.Farming;
+import com.rs.game.player.actions.farming.v1.FarmingSystem;
 import com.rs.game.player.actions.PlayerCombat;
 import com.rs.game.player.actions.smithing.Smithing.ForgingBar;
 import com.rs.game.player.actions.smithing.Smithing.ForgingInterface;
@@ -192,6 +193,13 @@ public final class ObjectHandler {
                 // Sign Post handler
                 if (SignPost.handleSigns(player, object))
                     return;
+
+                // Farming handler "Option 1"
+                for (int i = 0; i < FarmingSystem.farmingPatches.length; i++) {
+                    if (object.getId() == FarmingSystem.farmingPatches[i]) {
+                        FarmingSystem.executeAction(player, object);
+                    }
+                }
                 
                 HunterNPC hunterNpc = HunterNPC.forObjectId(id);
                 
@@ -1166,12 +1174,6 @@ public final class ObjectHandler {
                     player.useStairs(-1, new WorldTile(3044, 10325, 0), 0, 1);
                 } else if (id == 32048 && object.getX() == 3043 && object.getY() == 10328) {
                     player.useStairs(-1, new WorldTile(3045, 3927, 0), 0, 1);
-                } else if (id == 7848) {
-                	Farming.startRake(player, "Flower Patch");
-                } else if (id == 8151) {
-                	Farming.startRake(player, "Herb Patch");
-                } else if (id == 8552 || id == 8553) {
-                	Farming.startRake(player, "Allotment");
                 }
                 else if (id == 26194) {
                     player.getDialogueManager().startDialogue("PartyRoomLever");
@@ -1611,6 +1613,13 @@ public final class ObjectHandler {
                     player.getDialogueManager().startDialogue("LunarAltar");
                 } else if (id == 6) {
                 	player.getCannon().pickUpDwarfCannon(object);
+                }
+
+                // Farming handler "Option 2"
+                for (int i = 0; i < FarmingSystem.farmingPatches.length; i++) {
+                    if (object.getId() == FarmingSystem.farmingPatches[i]) {
+                        FarmingSystem.inspectPatch(player, object);
+                    }
                 }
                 
                 if (id == 40444) {
@@ -2184,6 +2193,13 @@ public final class ObjectHandler {
             @Override
             public void run() {
                 player.faceObject(object);
+
+                // Faming handler "Object"
+                for (int i = 0; i < FarmingSystem.farmingPatches.length; i++) {
+                    if (object.getId() == FarmingSystem.farmingPatches[i]) {
+                        FarmingSystem.handleSeeds(player, itemId, object);
+                    }
+                }
         
                 if (itemId == 2357 && object.getDefinitions().containsOption("Smelt")) {
                 	player.getDialogueManager().startDialogue("CraftingDialogue");

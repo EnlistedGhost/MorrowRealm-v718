@@ -43,7 +43,7 @@ public class ObjectDefinitions {
 	int[] anIntArray3859;
 	int anInt3860;
 	String[] options;
-	int configFileId;
+	public int configFileId;
 	private short[] modifiedColors;
 	int anInt3865;
 	boolean aBoolean3866;

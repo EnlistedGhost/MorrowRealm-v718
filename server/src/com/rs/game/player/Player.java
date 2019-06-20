@@ -39,6 +39,8 @@ import com.rs.game.npc.godwars.zaros.Nex;
 import com.rs.game.npc.pet.Pet;
 import com.rs.game.player.actions.PlayerCombat;
 import com.rs.game.player.actions.thieving.ThievingStalls;
+import com.rs.game.player.actions.farming.v1.FarmingSystem;
+import com.rs.game.player.actions.farming.v1.PatchStatus;
 import com.rs.game.player.content.ConstructFurniture;
 import com.rs.game.player.content.DwarfCannon;
 import com.rs.game.player.content.FriendChatsManager;
@@ -339,6 +341,11 @@ public class Player extends Entity {
 	private int slayerPoints;
 	private int spins;
 	private int Loyaltypoints;
+
+	// farming
+	private boolean firstLogin;
+	public List<PatchStatus> farmingPatch;
+	public List<WorldObject> rakedPatch;
 
 	private boolean needsFixed;
 	
@@ -923,6 +930,14 @@ public class Player extends Entity {
 			getDialogueManager().startDialogue("NewStarter");
 			getHintIconsManager().addHintIcon(World.getNpc(13768), 0, -1, false);
 		}
+
+		// FARMING FIRST LOGIN
+		if (firstLogin == false) {
+			farmingPatch = new ArrayList<PatchStatus>();
+			rakedPatch = new ArrayList<WorldObject>();
+			firstLogin = true;
+		}
+		FarmingSystem.sendPatchOnLogin(this);
 	}
 
 	public int reseted = 0;
