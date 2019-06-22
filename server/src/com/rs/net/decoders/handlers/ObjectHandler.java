@@ -25,7 +25,7 @@ import com.rs.game.player.actions.cooking.Cooking;
 import com.rs.game.player.actions.cooking.Cooking.Cookables;
 import com.rs.game.player.actions.CowMilkingAction;
 //import com.rs.game.player.actions.farming.v0_5.Farming;
-import com.rs.game.player.actions.farming.v1.FarmingSystem;
+import com.rs.game.player.actions.farming.v1_5.FarmingSystem;
 import com.rs.game.player.actions.PlayerCombat;
 import com.rs.game.player.actions.smithing.Smithing.ForgingBar;
 import com.rs.game.player.actions.smithing.Smithing.ForgingInterface;
