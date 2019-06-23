@@ -38,13 +38,49 @@ public final class DialogueHandler {
 		String fileLoc = "bin/com/rs/game/player/dialogues/impl";
 		String packageDir = "com.rs.game.player.dialogues.impl";
 		
-		try {
+		try {// Load Dialogues from files in package directory
 			List<Class> files = findClasses(new File(fileLoc) , packageDir);
 			for (Class<Dialogue> c : files) {
 				if (Dialogue.class.isAssignableFrom(c)) {
 					handledDialogues.put(""+c.getSimpleName()+"", (Class<Dialogue>) Class.forName(c.getCanonicalName()));
 				}
 			}
+			// Halloween Event Dialogues 
+			// (Should be auto loaded from above function,
+			// Therefore it's disabled below)
+			/*
+			Class<Dialogue> value83 = (Class<Dialogue>) Class
+					.forName(PumpkinPete.class.getCanonicalName());
+			handledDialogues.put("PumpkinPete", value83);
+			
+			Class<Dialogue> value84 = (Class<Dialogue>) Class
+					.forName(PumpkinPete2.class.getCanonicalName());
+			handledDialogues.put("PumpkinPete2", value84);
+			
+			Class<Dialogue> value85 = (Class<Dialogue>) Class
+					.forName(Zabeth.class.getCanonicalName());
+			handledDialogues.put("Zabeth", value85);
+			
+			Class<Dialogue> value86 = (Class<Dialogue>) Class
+					.forName(Zabeth2.class.getCanonicalName());
+			handledDialogues.put("Zabeth2", value86);
+			
+			Class<Dialogue> value87 = (Class<Dialogue>) Class
+					.forName(GrimReaper.class.getCanonicalName());
+			handledDialogues.put("GrimReaper", value87);
+			
+			Class<Dialogue> value88 = (Class<Dialogue>) Class
+					.forName(GrimReaper2.class.getCanonicalName());
+			handledDialogues.put("GrimReaper2", value88);
+			
+			Class<Dialogue> value89 = (Class<Dialogue>) Class
+					.forName(GrimReaper3.class.getCanonicalName());
+			handledDialogues.put("GrimReaper3", value89);
+			
+			Class<Dialogue> value90 = (Class<Dialogue>) Class
+					.forName(Zabeth3.class.getCanonicalName());
+			handledDialogues.put("Zabeth3", value90);
+			*/
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}

@@ -18,6 +18,8 @@ import com.rs.game.player.OwnedObjectManager;
 import com.rs.game.player.Player;
 import com.rs.game.player.QuestManager.Quests;
 import com.rs.game.player.Skills;
+import com.rs.game.player.quests.impl.HalloweenEvent;
+import com.rs.game.player.quests.impl.HalloweenObject;
 import com.rs.game.player.actions.firemaking.Bonfire;
 import com.rs.game.player.actions.BoxAction.HunterEquipment;
 import com.rs.game.player.actions.BoxAction.HunterNPC;
@@ -199,6 +201,13 @@ public final class ObjectHandler {
                     if (object.getId() == FarmingSystem.farmingPatches[i]) {
                         FarmingSystem.executeAction(player, object);
                     }
+                }
+
+                //Halloween event
+                if (id == 27896 || id == 32046 || id == 31747 || id == 30838
+                || id == 31842 || id == 46567 || id == 46568 || id == 31818
+                || id == 46549 || id == 31819 || id == 46566 || id == 62621) {
+                    HalloweenObject.HandleObject(player, object);
                 }
                 
                 HunterNPC hunterNpc = HunterNPC.forObjectId(id);

@@ -145,6 +145,13 @@ public class Player extends Entity {
 	private Title playerTitle;
 	// Zoom Controls
 	public int zoom = 226;
+	// Halloween Event
+	public int cake = 0;
+	public int dust1 = 0;
+	public int dust2 = 0;
+	public int dust3 = 0;
+	public int drink = 0;
+	public int doneevent = 0;// End
 	
 	public Title getTitle() {
 		return playerTitle;

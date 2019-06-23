@@ -202,6 +202,30 @@ public class NPCHandler {
 					player.getDialogueManager().startDialogue("SuppliesShop", npc.getId());
 			    else if (npc.getId() == 15501)
 					player.getDialogueManager().startDialogue("MakeOverMage", npc.getId(), 0);
+				//Halloween event
+				else if (npc.getId() == 12377)
+					  player.getDialogueManager().startDialogue("PumpkinPete", npc.getId());
+				else if (npc.getId() == 12378)
+					  player.getDialogueManager().startDialogue("PumpkinPete2", npc.getId());	
+				else if (npc.getId() == 12375 && player.cake == 0)
+					  player.getDialogueManager().startDialogue("Zabeth", npc.getId());
+				else if (npc.getId() == 12375 && player.drink == 0)
+					  player.getDialogueManager().startDialogue("Zabeth2", npc.getId());	
+				else if (npc.getId() == 12375 && player.drink == 1)
+					  player.getDialogueManager().startDialogue("Zabeth3", npc.getId());
+				else if (npc.getId() == 12379 && player.drink == 0)
+					  player.getDialogueManager().startDialogue("GrimReaper", npc.getId());
+				else if (npc.getId() == 12379 && player.dust1 == 0)
+					  player.getDialogueManager().startDialogue("GrimReaper2", npc.getId());
+				else if (npc.getId() == 12379 && player.dust1 == 1 && player.dust2 == 1 && player.dust3 == 1)
+					  player.getDialogueManager().startDialogue("GrimReaper3", npc.getId());
+				else if (npc.getId() == 12375 && player.doneevent == 1)
+					  player.getDialogueManager().startDialogue("PumpkinPete2", npc.getId());
+				else if (npc.getId() == 12379 && player.doneevent == 1)
+					  player.getDialogueManager().startDialogue("PumpkinPete2", npc.getId());
+				else if (npc.getId() == 12392)
+					  player.getDialogueManager().startDialogue("PumpkinPete2", npc.getId());
+				// End event
 				else {
 					if (Settings.DEBUG) {
 						if (player.isOwner()) {

@@ -9,6 +9,7 @@ import com.rs.game.item.Item;
 import com.rs.game.npc.NPC;
 import com.rs.game.player.Player;
 import com.rs.game.player.Skills;
+import com.rs.game.player.quests.impl.HalloweenEvent;
 import com.rs.game.player.content.TicketSystem;
 import com.rs.game.RegionBuilder;
 import com.rs.utils.SerializableFilesManager;
@@ -409,6 +410,11 @@ public class Administrator {
 				player.getPackets().sendGameMessage("Enter integer valued arguments.");
 				return false;
 			}
+			return true;
+		}
+
+		if (cmd[0].equals("halloweenevent")) {
+			HalloweenEvent.startEvent();
 			return true;
 		}
 		
