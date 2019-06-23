@@ -208,6 +208,12 @@ public class InventoryOptionsHandler {
 				player.getInventory().addItem(5075, 1);
 			}
 		}
+
+		// Christmas event
+		if (itemId >= 23713 && itemId <= 23716) {
+			player.getDialogueManager().startDialogue("xmasExpLampsD", itemId);
+			return;
+		}
 		
 		if (itemId == 20704) {
 			LividFarm.bunchPlants(player);

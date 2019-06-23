@@ -477,6 +477,8 @@ public final class Skills implements Serializable {
 		player.getControlerManager().trackXP(skill, (int) exp);
 		exp *= player.getAuraManager().usingWisdom() == true ? 1.025 : 1;
 		exp *= TimeManager.isWeekend() == true ? 1.7 : 1.0;
+		// This will give the Christmas Amulet bonus xp of 1.2%
+		exp *= player.getEquipment().getAmuletId() == 26492 ? 1.2 : 1.0;
 		
 		int oldLevel = getLevelForXp(skill);
 		xp[skill] += exp;

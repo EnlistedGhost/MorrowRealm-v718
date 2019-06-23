@@ -226,6 +226,68 @@ public class NPCHandler {
 				else if (npc.getId() == 12392)
 					  player.getDialogueManager().startDialogue("PumpkinPete2", npc.getId());
 				// End event
+				/**
+				*  Christmas Event
+				*/
+				else if (npc.getId() == 9376) { // Imp 1
+					if (player.christmas < 2)
+					player.getPackets().sendGameMessage("The imp has no interest in you.");
+					else if (player.xmasFoodGathering == 1 && player.xmasWine == 0 && player.xmasYule == 0) {
+						player.getDialogueManager().startDialogue("Imp12", npc.getId());
+						return;
+					}else if (player.xmasFoodGathering == 1 && player.xmasWine == 1 && player.xmasYule == 1) {
+						player.getDialogueManager().startDialogue("Imp13", npc.getId());
+						return;
+					}else if (player.xmasFoodReceived == 1){
+						player.getDialogueManager().startDialogue("Imp14", npc.getId());
+						return;
+				}else {
+					player.getDialogueManager().startDialogue("Imp11", npc.getId());
+				}	return;
+				} else if (npc.getId() == 9377) {
+					if (player.christmas < 2)
+					player.getPackets().sendGameMessage("The imp has no interest in you.");
+					else if (player.xmasBeadStarted == 1 && (player.xmasDrawer < 3 || player.xmasBookcaseBig < 3 || player.xmasBookcaseSmall < 3 || player.xmasChest < 3)){
+						player.getDialogueManager().startDialogue("Imp22", npc.getId());
+						return;
+					} else if (player.xmasDrawer == 3 && player.xmasBookcaseBig == 3 && player.xmasBookcaseSmall == 3 && player.xmasChest == 3){
+						player.getDialogueManager().startDialogue("Imp23", npc.getId());
+						return;
+					
+					} else if (player.xmasBeadComplete == 1){
+						player.getDialogueManager().startDialogue("Imp24", npc.getId());
+						return;
+					}else {
+					player.getDialogueManager().startDialogue("Imp21", npc.getId());
+					}return;
+				} else if (npc.getId() == 9378) {
+					if (player.christmas <= 1)
+					player.getPackets().sendGameMessage("The imp has no interest in you.");
+					else
+					player.getDialogueManager().startDialogue("Imp3", npc.getId());
+					return;
+				} else if (npc.getId() == 9379) {
+					if (player.christmas <= 1)
+					player.getPackets().sendGameMessage("The imp has no interest in you.");
+					else
+					player.getDialogueManager().startDialogue("Imp4", npc.getId());
+					return;
+				} else if (npc.getId() == 8540) {
+					player.getDialogueManager().startDialogue("SnowQueen2", npc.getId());
+					return;
+				} else if (npc.getId() == 13642) {
+					if (player.christmas < 1) {
+					player.getDialogueManager().startDialogue("SnowQueen1", npc.getId());	
+					}else {
+						player.getDialogueManager().startDialogue("SnowQueen2", npc.getId());
+					}
+					return;
+				}  else if (npc.getId() == 9412 || npc.getId() == 9414 || npc.getId() == 9416 || npc.getId() == 9418 || npc.getId() == 9420 || npc.getId() == 9422) {
+					player.getDialogueManager().startDialogue("PartyGoers", npc.getId());
+				}
+				/**
+				 * End Christmas
+				 */
 				else {
 					if (Settings.DEBUG) {
 						if (player.isOwner()) {

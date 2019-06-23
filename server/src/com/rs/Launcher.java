@@ -89,6 +89,9 @@ public final class Launcher {
             ServerChannelHandler.init();
             NPCSpawns.loadSpawns();
             ObjectSpawning.loadSpawns();
+            // Christmas Event
+            ChristmasStart.startXmas();
+            System.out.println("Christmas Ending Chunk Copied Successfully");
         } catch (Throwable e) {
             Logger.handle(e);
             Logger.log("Launcher", "Failed starting Server Channel Handler. Shutting down...");

@@ -1,5 +1,7 @@
 package com.rs.net.decoders.handlers;
 
+import java.util.concurrent.TimeUnit;
+
 import com.rs.Settings;
 import com.rs.cache.loaders.ObjectDefinitions;
 import com.rs.game.Animation;
@@ -68,6 +70,9 @@ import com.rs.game.player.dialogues.impl.ExpertDung;
 import com.rs.game.player.dialogues.impl.MiningGuildDwarf;
 import com.rs.game.tasks.WorldTask;
 import com.rs.game.tasks.WorldTasksManager;
+import com.rs.game.ForceTalk;
+import com.rs.game.player.content.FadingScreen;
+import com.rs.cores.CoresManager;
 import com.rs.net.decoders.handlers.SignPost;
 import com.rs.io.InputStream;
 import com.rs.utils.Logger;
@@ -209,7 +214,192 @@ public final class ObjectHandler {
                 || id == 46549 || id == 31819 || id == 46566 || id == 62621) {
                     HalloweenObject.HandleObject(player, object);
                 }
+
+                /**
+                 * Christmas event
+                 */
+                if (id == 47774) { // Snow to Jack
+                    if (player.christmas < 1) {
+                        player.setNextForceTalk(new ForceTalk("I'm not too sure where this will lead me, maybe I should speak with the Snow Queen first."));
+                    }else if (player.christmas >= 5) {
+                        player.setNextForceTalk(new ForceTalk("I don't think I need to go back there."));
+                    }else {
+                        player.getControlerManager().startControler("SantaCage1Controler");
+                    }
+                    return;
+                }
+                if (id == 47857) { // Santa in Cage
+                    if (player.christmas < 2) {
+                    player.getDialogueManager().startDialogue("SantaCage1", 8540);
+                    
+                    }else {
+                    player.getDialogueManager().startDialogue("SantaCage2", 8540);
+                    }   
+                    return;
+                }
+                if (id == 47775) {// Jack to Snow
+                    final long time = FadingScreen.fade(player);
+                    CoresManager.slowExecutor.schedule(new Runnable() {
+                        @Override
+                        public void run() {
+                            FadingScreen.unfade(player, time, new Runnable() {
+                                @Override
+                                public void run() {
+                                    player.setNextWorldTile(new WorldTile(2674, 5662, 0));
+                                }
+                                
+                            
+                            });
+                        }
+                    }, 3000, TimeUnit.MILLISECONDS);
+                    return;
+                }
+                if (id == 12258) { //Portal to Snow
+                    final long time = FadingScreen.fade(player);
+                    CoresManager.slowExecutor.schedule(new Runnable() {
+                        @Override
+                        public void run() {
+                            FadingScreen.unfade(player, time, new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (player.christmas >= 5) {
+                                        player.setNextWorldTile(new WorldTile(78, 91, 0));
+                                    } else {
+                                    player.setNextWorldTile(new WorldTile(2646, 5659, 0));
+                                }
+                                }
+                            
+                            });
+                        }
+                    }, 3000, TimeUnit.MILLISECONDS);
+                    return;
+                }
+                if (id == 47766) { // Portal to Home
+                    final long time = FadingScreen.fade(player);
+                    CoresManager.slowExecutor.schedule(new Runnable() {
+                        @Override
+                        public void run() {
+                            FadingScreen.unfade(player, time, new Runnable() {
+                                @Override
+                                public void run() {
+                                    player.setNextWorldTile(new WorldTile(2500, 3500, 0)); // MAKE SURE THESE COORDS CHANGE TO WHERE YOU WANT THEM SPAWNED BACK TO
+                                }
+                                
+                            
+                            });
+                        }
+                    }, 3000, TimeUnit.MILLISECONDS);
+                    return;
+                }
+                if (id == 25034 && x == 3041 && y == 3365) { // Christmas Drawer
+                    if (player.xmasDrawer == 0) {
+                        player.sm("I shouldn't go through things that aren't mine.");
+                        return;
+                    } else if (player.xmasDrawer == 1) {
+                        if (player.getInventory().getFreeSlots() < 1) {
+                            player.sm("Please get more free space before checking this.");
+                            return;
+                        }else {
+                            player.getInventory().addItem(1470, 1);
+                            player.sm("You found a Red Bead!");
+                            player.xmasDrawer = 3;
+                            return;
+                        }
+                    } else{
+                        player.sm("I already found what I needed in there.");
+                        return;
+                    }
+                }
+                if (id == 24204 && x == 3048 && y == 3355 && player.getPlane() == 2) { // Christmas Chest
+                    if (player.xmasChest == 0) {
+                        player.sm("I shouldn't go through things that aren't mine.");
+                        return;
+                    } else if (player.xmasChest == 1) {
+                        if (player.getInventory().getFreeSlots() < 1) {
+                            player.sm("Please get more free space before checking this.");
+                            return;
+                        }else {
+                            player.getInventory().addItem(1472, 1);
+                            player.sm("You found a Yellow Bead!");
+                            player.xmasChest = 3;
+                            return;
+                        }
+                    } else{
+                        player.sm("I already found what I needed in there.");
+                        return;
+                    }
+                }
+                if (id == 9611 && x == 3048 && y == 3364) { // Christmas Small Book Case
+                    if (player.xmasBookcaseSmall == 0) {
+                        player.sm("I shouldn't go through things that aren't mine.");
+                        return;
+                    } else if (player.xmasBookcaseSmall == 1) {
+                        if (player.getInventory().getFreeSlots() < 1) {
+                            player.sm("Please get more free space before checking this.");
+                            return;
+                        }else {
+                            player.getInventory().addItem(1474, 1);
+                            player.sm("You found a Black Bead!");
+                            player.xmasBookcaseSmall = 3;
+                            return;
+                        }
+                    } else{
+                        player.sm("I already found what I needed in there.");
+                        return;
+                    }
+                }
+                if (id == 15544 && x == 3026 && y == 3354) { // Christmas Big Book Case
+                    if (player.xmasBookcaseBig == 0) {
+                        player.sm("I shouldn't go through things that aren't mine.");
+                        return;
+                    } else if (player.xmasBookcaseBig == 1) {
+                        if (player.getInventory().getFreeSlots() < 1) {
+                            player.sm("Please get more free space before checking this.");
+                            return;
+                        }else {
+                            player.getInventory().addItem(1476, 1);
+                            player.sm("You found a White Bead!");
+                            player.xmasBookcaseBig = 3;
+                            return;
+                        }
+                    } else{
+                        player.sm("I already found what I needed in there.");
+                        return;
+                    }
+                }
+                if (id == 47777 || id == 47778) {
+                    if (player.christmas < 5) {
+                        player.getDialogueManager().startDialogue("XmasFoodTable1");
+                        return;
+                    } else 
+                        player.sm("Ahh, smells like Christmas!");
+                    return;
+                }
+                /**
+                 * Falador East House Stairs & Ladder
+                 */
+                if (id == 35781 && x == 3048 && y == 3352) { // Stairs to Ladder Christmas
+                    player.useStairs(-1, new WorldTile(3049, 3354, 1), 1, 1);
+                }
                 
+                if (id == 35782 && x == 3049 && y == 3353 && player.getPlane() == 1) { // Ladder to Stairs Christmas
+                    player.useStairs(-1, new WorldTile(3049, 3354, 0), 1, 1);
+                }
+                
+                if (id == 11739 && x == 3050 && y == 3355 && player.getPlane() == 1) { //Ladder to Chest
+                    player.useStairs(828, new WorldTile(3050, 3354, 2), 2, 3);
+                }
+                
+                if (id == 11741 && x == 3050 && y == 3355 && player.getPlane() == 2) { // Chest to Ladder
+                    player.useStairs(828,  new WorldTile(3049, 3355, 1), 2, 3);
+                }
+                /**
+                 *End Falador Stairs and Ladder 
+                 */
+                /**
+                 * End Christmas
+                 */
+
                 HunterNPC hunterNpc = HunterNPC.forObjectId(id);
                 
                 if (id == 55764) {
@@ -2209,6 +2399,43 @@ public final class ObjectHandler {
                         FarmingSystem.handleSeeds(player, itemId, object);
                     }
                 }
+
+                /**
+                * Christmas event Keys on Cage
+                */
+                if (itemId == 1543 || itemId == 1546 ||
+                        itemId == 1547 || itemId == 1548 && 
+                        object.getId() == 47857 ) {
+                    if (player.getInventory().containsItem(1543) &&
+                        player.getInventory().containsItem(1546) &&
+                        player.getInventory().containsItem(1547) &&
+                        player.getInventory().containsItem(1548)) {
+                        final long time = FadingScreen.fade(player);
+                        CoresManager.slowExecutor.schedule(new Runnable() {
+                            @Override
+                            public void run() {
+                                FadingScreen.unfade(player, time, new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        player.setNextWorldTile(new WorldTile(87, 110, 0));
+                                        player.christmas = 5;
+                                        player.getDialogueManager().startDialogue("SnowQueen2", 13642);
+                                    }
+                                    
+                                
+                                });
+                            } 
+                        }, 3000, TimeUnit.MILLISECONDS);
+                        return;
+                            
+                    } else {
+                        player.sendMessage("I don't have all the required keys to unlock this.");
+                        return;
+                    } 
+                }                
+                /**
+                * End Keys on Cage
+                */
         
                 if (itemId == 2357 && object.getDefinitions().containsOption("Smelt")) {
                 	player.getDialogueManager().startDialogue("CraftingDialogue");

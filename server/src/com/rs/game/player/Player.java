@@ -156,6 +156,27 @@ public class Player extends Entity {
 	// Daily Login Rewards
 	private transient DailyReward dailyReward;
 	private transient long dailyRewardTime;
+	// Christmas event
+	public int christmas = 0;
+	// Imp1
+	public int xmasFoodGathering = 0;
+	public int xmasYule = 0;
+	public int xmasWine = 0;
+	public int xmasFoodReceived = 0;
+	// Imp2
+	public int xmasDrawer = 0;
+	public int xmasBookcaseSmall = 0;
+	public int xmasBookcaseBig = 0;
+	public int xmasChest = 0;
+	public int xmasComplete = 0;
+	public int xmasBeadStarted = 0;
+	public int xmasBeadComplete = 0;
+	// Imp 3
+	public int xmasQuizComplete = 0;
+	// Imp 4
+	public int xmas4Complete = 0;
+	// xMas Lamp Dialogue
+	public int xmasLampOpen = 0;// End
 	
 	public Title getTitle() {
 		return playerTitle;

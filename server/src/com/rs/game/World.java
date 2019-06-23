@@ -69,6 +69,7 @@ import com.rs.utils.PkRank;
 import com.rs.utils.SerializableFilesManager;
 import com.rs.utils.ShopsHandler;
 import com.rs.utils.Utils;
+import com.rs.utils.Utils.EntityDirection;
 
 public final class World {
 	
@@ -97,6 +98,14 @@ public final class World {
 	public static boolean isOnline(String name) {
 		return getPlayerByDisplayName(name) != null ? true : false;
 	}
+
+	// Christmas event
+	public static final NPC spawnNPC(int id, WorldTile tile,
+			int mapAreaNameHash, boolean canBeAttackFromOutOfArea, EntityDirection faceDirection) {
+	NPC returnValue = spawnNPC(id, tile, mapAreaNameHash, canBeAttackFromOutOfArea, false);
+	returnValue.setDirection(faceDirection.getValue());
+	return returnValue;
+}
 	
 	public static final void init() {
 		addRestoreRunEnergyTask();

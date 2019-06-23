@@ -51,6 +51,7 @@ public final class Utils {
 		date.setTime(System.currentTimeMillis());
 		return dateFormat.format(date);
 	}
+
 	public static String formatString(String name) {
 		if (name == null)
 			return "";
@@ -90,12 +91,35 @@ public final class Utils {
 		}
 		return false;
 	}
+
 	public static boolean isValidTitle(String title) {
 		for (String t : INVALID_TITLES) {
 			if (title.toLowerCase().trim().contains(t))
 				return false;
 		}
 		return true;
+	}
+
+	// Christmas event
+	public enum EntityDirection {
+		NORTH(8192), 
+		SOUTH(0), 
+		EAST(12288), 
+		WEST(4096), 
+		NORTHEAST(10240), 
+		SOUTHEAST(14366), 
+		NORTHWEST(6144), 
+		SOUTHWEST(2048);
+	        
+	        private int value;
+	        
+	        public int getValue() {
+	        	return value;
+	        }
+	        
+	        private EntityDirection(int value) {
+	        	this.value = value;
+	        }
 	}
 	
 	/**
