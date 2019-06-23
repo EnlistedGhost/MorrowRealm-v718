@@ -2,6 +2,10 @@ package com.rs.game.player.dialogues.impl;
 
 import com.rs.game.WorldTile;
 import com.rs.game.player.dialogues.Dialogue;
+import com.rs.game.player.Equipment;
+import com.rs.game.player.Appearence;
+import com.rs.game.player.Inventory;
+import com.rs.game.player.Player;
 
 /**
  * 
@@ -34,6 +38,13 @@ public class DungLeaving extends Dialogue {
 				}
 				player.getPackets().closeInterface(player.getInterfaceManager().hasRezizableScreen() ? 746 : 548, player.getInterfaceManager().hasRezizableScreen() ? 11: 27);
 				player.getInterfaceManager().closeChatBoxInterface();
+				//Equipment removal
+				player.getEquipment().reset();
+				for (int i = 0; i < 15; i++) {
+				player.getEquipment().refresh(i);
+				}
+				player.getAppearence().generateAppearenceData();
+				player.getInventory().reset();
 			}
 			if (componentId == OPTION_2) {
 				stage = 2;				

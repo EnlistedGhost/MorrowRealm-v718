@@ -2,6 +2,10 @@ package com.rs.game.player.dialogues.impl;
 
 import com.rs.game.player.controlers.dungeoneering.DungLobby;
 import com.rs.game.player.dialogues.Dialogue;
+import com.rs.game.player.Equipment;
+import com.rs.game.player.Appearence;
+import com.rs.game.player.Inventory;
+import com.rs.game.player.Player;
 
 /**
  * 
@@ -28,9 +32,13 @@ public class EnteringDung extends Dialogue {
 	public void run(int interfaceId, int componentId) {
 		if (stage == 1) {
 			if (componentId == OPTION_1) {
-				player.getControlerManager().startControler(
-						"RuneDungLobby", 1);
-				stage= 2;
+				if (player.getEquipment().wearingArmour() || player.getInventory().getFreeSlots() < 28 || player.getPet() != null) {
+					player.sendMessage("Please bank all your items before entering the lobby.");
+					stage = 2;
+				} else {
+					player.getControlerManager().startControler("RuneDungLobby", 1);
+					stage = 2;	
+				}
 			}
 			if (componentId == OPTION_2) {
 				stage = 2;				

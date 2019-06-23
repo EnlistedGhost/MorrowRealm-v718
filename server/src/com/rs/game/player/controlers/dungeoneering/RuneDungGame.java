@@ -11,9 +11,15 @@ import com.rs.game.item.Item;
 import com.rs.game.player.controlers.Controler;
 import com.rs.game.tasks.WorldTask;
 import com.rs.game.tasks.WorldTasksManager;
+import com.rs.game.player.Inventory;
+
 /**
  * @author Tyluur <itstyluur@gmail.com>
  * @since 2013-01-02
+ *
+ * @updated by EnlistedGhost <Enlisted.Ghost@gmail.com>
+ *
+ * @using zabix18 reference snippet "No items allowed into dungeoneering"
  */
 public class RuneDungGame extends Controler {
 
@@ -101,6 +107,7 @@ public class RuneDungGame extends Controler {
 	@Override
 	public boolean logout() {
 		dungeoneering.removeFromGame(player, true);
+		player.getInventory().reset();
 		return true;
 	}
 
