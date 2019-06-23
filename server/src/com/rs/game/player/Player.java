@@ -64,6 +64,7 @@ import com.rs.game.player.content.custom.RightsManager;
 import com.rs.game.player.content.custom.TimeManager;
 import com.rs.game.player.content.custom.TitleHandler;
 import com.rs.game.player.content.custom.TitleHandler.Title;
+import com.rs.game.player.content.custom.DailyReward;
 import com.rs.game.player.content.pet.PetManager;
 import com.rs.game.player.content.squeal.SquealOfFortune;
 import com.rs.game.player.content.toolbelt.Toolbelt;
@@ -152,6 +153,9 @@ public class Player extends Entity {
 	public int dust3 = 0;
 	public int drink = 0;
 	public int doneevent = 0;// End
+	// Daily Login Rewards
+	private transient DailyReward dailyReward;
+	private transient long dailyRewardTime;
 	
 	public Title getTitle() {
 		return playerTitle;
@@ -368,6 +372,19 @@ public class Player extends Entity {
 	public void setTradeLock() {
 		tradeLocked = !tradeLocked;
 	}
+
+	// Daily Login Rewards
+	public DailyReward getDailyReward() {
+    	return dailyReward;
+    }
+    public void dispatchDailyReward() {
+		if (dailyRewardTime - System.currentTimeMillis() > (1000 * 60 * 60 * 24)) {
+			return;
+		}
+
+		dailyRewardTime = System.currentTimeMillis();
+		getDailyReward().startCountdown();
+	}
 	
 	public Player(String password) {
 		super(Settings.START_PLAYER_LOCATION);
@@ -478,6 +495,8 @@ public class Player extends Entity {
 		actionManager = new ActionManager(this);
 		cutscenesManager = new CutscenesManager(this);
 		trade = new Trade(this);
+		// Daily Login Rewards
+		dailyReward = new DailyReward(this);//
 		squeal.setPlayer(this);
 		notes.setPlayer(this);
 		prestige.setPlayer(this);
@@ -945,6 +964,9 @@ public class Player extends Entity {
 			firstLogin = true;
 		}
 		FarmingSystem.sendPatchOnLogin(this);
+
+		// DAILY LOGIN REWARD
+		dispatchDailyReward();
 	}
 
 	public int reseted = 0;
