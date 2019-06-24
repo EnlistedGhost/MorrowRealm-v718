@@ -60,6 +60,9 @@ import com.rs.game.player.actions.BoxAction.HunterNPC;
 import com.rs.game.player.content.ItemConstants;
 import com.rs.game.player.content.LivingRockCavern;
 import com.rs.game.player.controlers.Wilderness;
+import com.rs.game.tasks.WorldTask;
+import com.rs.game.tasks.WorldTasksManager;
+import com.rs.game.player.content.ShootingStar;
 import com.rs.utils.AntiFlood;
 import com.rs.utils.DTRank;
 import com.rs.utils.DisplayNames;
@@ -101,11 +104,11 @@ public final class World {
 
 	// Christmas event
 	public static final NPC spawnNPC(int id, WorldTile tile,
-			int mapAreaNameHash, boolean canBeAttackFromOutOfArea, EntityDirection faceDirection) {
-	NPC returnValue = spawnNPC(id, tile, mapAreaNameHash, canBeAttackFromOutOfArea, false);
-	returnValue.setDirection(faceDirection.getValue());
-	return returnValue;
-}
+	int mapAreaNameHash, boolean canBeAttackFromOutOfArea, EntityDirection faceDirection) {
+		NPC returnValue = spawnNPC(id, tile, mapAreaNameHash, canBeAttackFromOutOfArea, false);
+		returnValue.setDirection(faceDirection.getValue());
+		return returnValue;
+	}
 	
 	public static final void init() {
 		addRestoreRunEnergyTask();
@@ -119,6 +122,8 @@ public final class World {
 		LivingRockCavern.init();
 		addAccountsSavingTask();
 		sendRandomNews();
+		// Shooting Stars
+		spawnStar();
 	}
 	
 	private static void sendRandomNews() {
@@ -142,6 +147,46 @@ public final class World {
             }
         }, 0, 60, TimeUnit.SECONDS);
     }
+
+    // Shooting Stars
+	/**
+	 * Spawns The Shooting Star Every 1200 Seconds.
+	 */
+	public static void spawnStar() {
+		WorldTasksManager.schedule(new WorldTask() {
+			int loop;
+			@Override
+			public void run() {
+				if (loop == 12) {
+					ShootingStar.stage = 8;
+					ShootingStar.stardustMined = 0;
+					ShootingStar.spawnRandomStar();
+				}
+				loop++;
+			}
+		}, 0, 1);
+	}
+	
+	/**
+	 * Removes The Star Sprite After 50 Seconds.
+	 */
+	public static void removeStarSprite(final Player player) {
+		WorldTasksManager.schedule(new WorldTask() {
+			int loop;
+			@Override
+			public void run() {
+				if (loop == 50) {
+					for (NPC n : World.getNPCs()) {
+						if (n == null || n.getId() != 8091)
+							continue;
+						n.sendDeath(n); //Removes the Star Sprite.
+						spawnStar(); //Spawns Another Star.
+					}
+				}
+				loop++;
+			}
+		}, 0, 1);
+	}
 	
     public static void saveFiles() {
         for (Player player : getPlayers()) {

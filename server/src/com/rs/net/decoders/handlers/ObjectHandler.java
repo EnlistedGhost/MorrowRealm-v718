@@ -70,6 +70,7 @@ import com.rs.game.player.dialogues.impl.ExpertDung;
 import com.rs.game.player.dialogues.impl.MiningGuildDwarf;
 import com.rs.game.tasks.WorldTask;
 import com.rs.game.tasks.WorldTasksManager;
+import com.rs.game.player.content.ShootingStar;
 import com.rs.game.ForceTalk;
 import com.rs.game.player.content.FadingScreen;
 import com.rs.cores.CoresManager;
@@ -1514,6 +1515,9 @@ public final class ObjectHandler {
                         case "mithril ore rocks":
                             player.getActionManager().setAction(new Mining(object, RockDefinitions.Mithril_Ore));
                             break;
+                        case "crashed star":
+                            player.getActionManager().setAction(new Mining(object, RockDefinitions.CRASHED_STAR));
+                            break;
                         case "bank deposit box":
                             if (objectDef.containsOption(0, "Deposit")) {
                                 player.getBank().openDepositBox();
@@ -1874,6 +1878,8 @@ public final class ObjectHandler {
                     //crucible
                 } else if (id == 67051) {
                     player.getDialogueManager().startDialogue("Marv", true);
+                } else if (object.getDefinitions().name.equalsIgnoreCase("Crashed star")) {
+                    player.getPackets().sendGameMessage("The current size of the star is "+(ShootingStar.stage)+ ".");
                 } else {
                     switch (objectDef.name.toLowerCase()) {
                         case "cabbage":

@@ -8,6 +8,7 @@ import com.rs.game.World;
 import com.rs.game.WorldObject;
 import com.rs.game.player.Player;
 import com.rs.game.player.Skills;
+import com.rs.game.player.content.ShootingStar;
 import com.rs.utils.Utils;
 
 public final class Mining extends MiningBase {
@@ -29,7 +30,8 @@ public final class Mining extends MiningBase {
 			Adamant_Ore(70, 95, 449,130, 25, 11552, 180, 0), 
 			Runite_Ore(85, 125, 451, 150, 30,11552, 360, 0),
 			LRC_Coal_Ore(77, 50, 453, 50, 10, -1, -1, -1),
-			LRC_Gold_Ore(80, 60, 444, 40, 10, -1, -1, -1);
+			LRC_Gold_Ore(80, 60, 444, 40, 10, -1, -1, -1),
+			CRASHED_STAR(10, 150, 13727, 2, 30, -1, -1, -1);
 
 		private int level;
 		private double xp;
@@ -127,6 +129,11 @@ public final class Mining extends MiningBase {
 			player.getPackets().sendGameMessage("You need a pickaxe to mine this rock.");
 			return false;
 		}
+
+		// Shooting Stars
+		if (definitions == RockDefinitions.CRASHED_STAR) {
+			player.getShootingStar().checkIfFirst();
+		}
 		
 		if (!setPickaxe(player)) {
 			player.getPackets().sendGameMessage("You dont have the required level to use this pickaxe.");
@@ -199,6 +206,9 @@ public final class Mining extends MiningBase {
 		} else if (definitions == RockDefinitions.Sandstone_Ore) {
 			idSome = Utils.getRandom(3) * 2;
 			xpBoost += idSome / 2 * 10;
+		} else if (definitions == RockDefinitions.CRASHED_STAR) {
+			player.getShootingStar().mineCrashedStar();
+			ShootingStar.stardustMined++;
 		}
 		
 		if (hasMiningSuit(player))

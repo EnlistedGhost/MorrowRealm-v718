@@ -68,6 +68,7 @@ import com.rs.game.player.content.custom.DailyReward;
 import com.rs.game.player.content.pet.PetManager;
 import com.rs.game.player.content.squeal.SquealOfFortune;
 import com.rs.game.player.content.toolbelt.Toolbelt;
+import com.rs.game.player.content.ShootingStar;
 import com.rs.game.player.controlers.CorpBeastControler;
 import com.rs.game.player.controlers.CrucibleControler;
 import com.rs.game.player.controlers.DTControler;
@@ -177,6 +178,15 @@ public class Player extends Entity {
 	public int xmas4Complete = 0;
 	// xMas Lamp Dialogue
 	public int xmasLampOpen = 0;// End
+	// Shooting Stars
+	/**
+	 * Shooting Star's
+	 */
+	private transient ShootingStar ShootingStar;
+	public boolean canTalkToSprite, taggedStar;
+	public ShootingStar getShootingStar() {
+		return ShootingStar;
+	}
 	
 	public Title getTitle() {
 		return playerTitle;
@@ -484,6 +494,8 @@ public class Player extends Entity {
 			unlockedOutfits = new ArrayList<Integer>();
 		if (unlockedWeapons == null)
 			unlockedWeapons = new ArrayList<Integer>();
+		if (ShootingStar == null)
+			ShootingStar = new ShootingStar(this);
 		
 		this.session = session;
 		this.username = username;
