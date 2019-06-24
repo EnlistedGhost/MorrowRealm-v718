@@ -2743,6 +2743,23 @@ public class PlayerCombat extends Action {
 				return false;
 	}
 
+	public static final boolean fullGuthansEquipped(Player player) {
+		int helmId = player.getEquipment().getHatId();
+		int chestId = player.getEquipment().getChestId();
+		int legsId = player.getEquipment().getLegsId();
+		int weaponId = player.getEquipment().getWeaponId();
+		if (helmId == -1 || chestId == -1 || legsId == -1 || weaponId == -1)
+			return false;
+		return ItemDefinitions.getItemDefinitions(helmId).getName()
+				.contains("Guthan's")
+				&& ItemDefinitions.getItemDefinitions(chestId).getName()
+				.contains("Guthan's")
+				&& ItemDefinitions.getItemDefinitions(legsId).getName()
+				.contains("Guthan's")
+				&& ItemDefinitions.getItemDefinitions(weaponId).getName()
+				.contains("Guthan's");
+	}
+
 	public static final boolean fullVeracsEquipped(Player player) {
 		int helmId = player.getEquipment().getHatId();
 		int chestId = player.getEquipment().getChestId();
@@ -2878,6 +2895,21 @@ public class PlayerCombat extends Action {
 			}
 			int damage = hit.getDamage() > target.getHitpoints() ? target
 					.getHitpoints() : hit.getDamage();
+					// Guthans Set Effect
+					if (fullGuthansEquipped(player)) {
+						if (Utils.random(4) == 0) {
+							Player p = (Player) hit.getSource();
+							if (p != null) {
+								int heal = (int) hit.getDamage();
+								if (heal > 0) {
+									if (player.getHitpoints() < player.getMaxHitpoints()) {
+										player.heal(heal);
+										target.setNextGraphics(new Graphics(398));
+									}
+								}
+							}
+						}
+					}// End Guthans Set effect
 					if (hit.getLook() == HitLook.RANGE_DAMAGE
 							|| hit.getLook() == HitLook.MELEE_DAMAGE) {
 						double combatXp = damage / 2.5;
@@ -2896,17 +2928,17 @@ public class PlayerCombat extends Action {
 								int xpStyle = CombatDefinitions.getXpStyle(weaponId,
 										attackStyle);
 								if (xpStyle != CombatDefinitions.SHARED)
-									player.getSkills().addXp(xpStyle, combatXp);
+									player.getSkills().addXp(xpStyle, combatXp / 6);
 								else {
 									player.getSkills().addXp(Skills.ATTACK,
-											combatXp / 3);
+											combatXp / 12);
 									player.getSkills().addXp(Skills.STRENGTH,
-											combatXp / 3);
+											combatXp / 12);
 									player.getSkills().addXp(Skills.DEFENCE,
-											combatXp / 3);
+											combatXp / 12);
 								}
 							}
-							double hpXp = damage / 7.5;
+							double hpXp = damage / 15;
 							if (hpXp > 0)
 								player.getSkills().addXp(Skills.HITPOINTS, hpXp);
 						}
@@ -2938,7 +2970,7 @@ public class PlayerCombat extends Action {
 								}
 							}
 							player.getSkills().addXp(Skills.MAGIC, combatXp);
-							double hpXp = damage / 7.5;
+							double hpXp = damage / 10;
 							if (hpXp > 0)
 								player.getSkills().addXp(Skills.HITPOINTS, hpXp);
 						}
@@ -2991,6 +3023,7 @@ public class PlayerCombat extends Action {
 											}
 										}
 									} else {
+										combatXp = damage / 6;
 										if (weaponId != -1) {
 											String name = ItemDefinitions
 													.getItemDefinitions(weaponId)
