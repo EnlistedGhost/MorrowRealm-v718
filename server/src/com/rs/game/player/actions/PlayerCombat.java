@@ -2962,15 +2962,15 @@ public class PlayerCombat extends Action {
 							player.getAuraManager().checkSuccefulHits(hit.getDamage());
 							if (player.getCombatDefinitions().isDefensiveCasting()
 									|| (hasPolyporeStaff(player) && player.getCombatDefinitions().getAttackStyle() == 1)) {
-								int defenceXp = (int) (damage / 7.5);
+								int defenceXp = (int) (damage / 12);
 								if (defenceXp > 0) {
 									combatXp -= defenceXp;
 									player.getSkills().addXp(Skills.DEFENCE,
-											defenceXp / 7.5);
+											defenceXp / 12);
 								}
 							}
-							player.getSkills().addXp(Skills.MAGIC, combatXp);
-							double hpXp = damage / 10;
+							player.getSkills().addXp(Skills.MAGIC, combatXp / 8);
+							double hpXp = damage / 15;
 							if (hpXp > 0)
 								player.getSkills().addXp(Skills.HITPOINTS, hpXp);
 						}
