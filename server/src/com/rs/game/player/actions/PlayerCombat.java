@@ -2922,7 +2922,7 @@ public class PlayerCombat extends Action {
 									player.getSkills().addXp(Skills.DEFENCE,
 											combatXp / 10);
 								} else
-									player.getSkills().addXp(Skills.RANGE, combatXp / 6);
+									player.getSkills().addXp(Skills.RANGE, combatXp / 8);
 
 							} else {
 								int xpStyle = CombatDefinitions.getXpStyle(weaponId,
@@ -3007,7 +3007,7 @@ public class PlayerCombat extends Action {
 								double combatXp = damage / 2.5;
 								if (combatXp > 0) {
 									if (hit.getLook() == HitLook.RANGE_DAMAGE) {
-										combatXp = damage / 6;
+										combatXp = damage / 8;
 										if (weaponId != -1) {
 											String name = ItemDefinitions
 													.getItemDefinitions(weaponId)
