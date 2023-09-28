@@ -20,12 +20,14 @@ import com.rs.game.npc.combat.CombatScriptsHandler;
 import com.rs.game.player.Player;
 import com.rs.game.player.content.FishingSpotsHandler;
 import com.rs.game.player.content.FriendChatsManager;
+import com.rs.game.player.content.custom.SpeakBotInterface;
 import com.guardian.ItemManager;
 import com.guardian.PriceLoader;
 import com.rs.game.player.controlers.ControlerHandler;
 import com.rs.game.player.cutscenes.CutscenesHandler;
 import com.rs.game.player.dialogues.Dialogue;
 import com.rs.game.player.dialogues.DialogueHandler;
+import com.rs.game.player.quests.impl.ChristmasStart;
 import com.rs.net.ServerChannelHandler;
 import com.rs.utils.DTRank;
 import com.rs.utils.DisplayNames;
@@ -46,6 +48,8 @@ import com.rs.utils.console.Console;
 import com.rs.utils.console.ConsoleLogger;
 import com.rs.utils.huffman.Huffman;
 import com.rs.utils.spawning.ObjectSpawning;
+// xmas event
+//import com.rs.game.player.controlers.SantaCageControler;
 
 public final class Launcher {
 	
@@ -92,6 +96,12 @@ public final class Launcher {
             // Christmas Event
             ChristmasStart.startXmas();
             System.out.println("Christmas Ending Chunk Copied Successfully");
+            //SantaCageController.startCageController();
+            //System.out.println("Christmas CageController Started Successfully");
+            //
+            // SPEAK BOT INTERFACE AUTOMATION
+            SpeakBotInterface.startspeakCountdown();
+            System.out.println("SpeakBot Interface Automation Started Successfully");
         } catch (Throwable e) {
             Logger.handle(e);
             Logger.log("Launcher", "Failed starting Server Channel Handler. Shutting down...");

@@ -45,6 +45,7 @@ import com.rs.game.player.content.interfaces.PvmRewards;
 import com.rs.game.player.content.interfaces.RunePortal;
 import com.rs.game.player.content.interfaces.TitleMenuHandler;
 import com.rs.game.player.content.shops.SlayerShop;
+//import com.rs.game.player.content.custom.PlayerLoginTimeout;
 import com.rs.game.player.dialogues.Dialogue;
 import com.rs.game.player.dialogues.impl.LevelUp;
 import com.rs.game.player.dialogues.impl.Transportation;
@@ -64,6 +65,8 @@ public class ButtonHandler {
 		final int componentId = interfaceHash - (interfaceId << 16);
 		final int slotId2 = stream.readUnsignedShort128();
 		final int slotId = stream.readUnsignedShortLE128();
+		// Reset player timeout
+		//PlayerLoginTimeout.PlayerTimeoutReset();
 		
 		if (Settings.ENABLE_BUTTON_DEBUG && player.isOwner()) {
 			Logger.log("ButtonHandler", "InterfaceId: " + interfaceId + ", componentId: " + componentId + ", slotId: " + slotId + ", slotId2: " + slotId2 + ", packetId: " + packetId);
@@ -92,8 +95,8 @@ public class ButtonHandler {
 		
 		if (interfaceId == 560) {
 			if (componentId == 16) {
-				player.getPackets().sendOpenURL("http://morrowrealm.xyz/forum/threads/setting-up-open-gl-mode.34/");
-				player.sendMessage("Opening forums...please wait a moment for the page to load.");
+				player.getPackets().sendOpenURL("http://morrowrealm.xyz/");
+				player.sendMessage("Opening Official Site...please wait a moment for the page to load.");
 				return;
 			}
 		}
@@ -1205,6 +1208,11 @@ public class ButtonHandler {
 						player.getInterfaceManager().gazeOrbOfOculus();
 					}
 				} else if (packetId == WorldPacketsDecoder.ACTION_BUTTON1_PACKET) {
+					// Snow Ball Handling
+					Item snowball = player.getEquipment().getItem(Equipment.SLOT_WEAPON);
+					if (snowball.getId() == 10501) {
+            			player.getPackets().sendPlayerOption("null", 1, true);
+        			}
 					ButtonHandler.sendRemove(player, Equipment.SLOT_WEAPON);
 				} else if (packetId == WorldPacketsDecoder.ACTION_BUTTON8_PACKET){
 					player.getEquipment().sendExamine(Equipment.SLOT_WEAPON);
@@ -1728,6 +1736,10 @@ public class ButtonHandler {
 				|| !player.getInventory().addItem(item.getId(),
 						item.getAmount()))
 			return;
+		// Snow Ball Handling
+		if (item.getId() == 10501) {
+            player.getPackets().sendPlayerOption("null", 1, true);
+        }
 		player.getEquipment().getItems().set(slotId, null);
 		player.getEquipment().refresh(slotId);
 		player.getAppearence().generateAppearenceData();
@@ -1745,6 +1757,13 @@ public class ButtonHandler {
 		
 		if (item == null || item.getId() != itemId)
 			return false;
+
+		// Snow Ball Handling
+		if (item.getId() == 10501) {
+            player.getPackets().sendPlayerOption("Pelt", 1, true);
+        } else {
+        	player.getPackets().sendPlayerOption("null", 1, true);
+        }
 		
 		if (item.getDefinitions().isNoted() || !item.getDefinitions().isWearItem(player.getAppearence().isMale())) {
 			player.getPackets().sendGameMessage(""+item.getDefinitions().getName()+" is wearable by females only.");
@@ -1861,6 +1880,13 @@ public class ButtonHandler {
 		
 		if (item == null || item.getId() != itemId)
 			return false;
+
+		// Snow Ball Handling
+		if (item.getId() == 10501) {
+            player.getPackets().sendPlayerOption("Pelt", 1, true);
+        } else {
+        	player.getPackets().sendPlayerOption("null", 1, true);
+        }
 		
 		if (item.getDefinitions().isNoted() || !item.getDefinitions().isWearItem(player.getAppearence().isMale()) && itemId != 4084) {
 			player.getPackets().sendGameMessage("You can't wear that.");

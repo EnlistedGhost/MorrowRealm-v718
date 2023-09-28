@@ -3,6 +3,7 @@ package com.rs.game.player.content;
 import com.rs.game.player.Player;
 import com.rs.game.player.content.commands.Administrator;
 import com.rs.game.player.content.commands.Donator;
+import com.rs.game.player.content.commands.BetaTester;
 import com.rs.game.player.content.commands.Moderator;
 import com.rs.game.player.content.commands.Owner;
 import com.rs.game.player.content.commands.Regular;
@@ -43,6 +44,12 @@ public final class Commands {
 		
 		if (player.isOwner() || player.isAdmin() || player.isWikiEditor()){
 			if (WikiEditor.processCommand(player, cmd, console, clientCommand)) {
+				return true;
+			}
+		}
+
+		if (player.isOwner() || player.isAdmin() || player.isBetaTester()){
+			if (BetaTester.processCommand(player, cmd, console, clientCommand)) {
 				return true;
 			}
 		}

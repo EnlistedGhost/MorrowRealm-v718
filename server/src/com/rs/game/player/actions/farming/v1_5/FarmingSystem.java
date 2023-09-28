@@ -162,7 +162,7 @@ public class FarmingSystem {
 						if (seed.getSuitablePatch()[i] == object.getId()) {
 							if ((seed.getConfigValues()[seed.getConfigValues().length-1] == patch.getMaxConfigValue()) && (patch.getObjectId() == object.getId())) {
 								player.lock();
-								player.getSkills().addXp(Skills.FARMING, seed.getSeedExp());
+								player.getSkills().addXp(Skills.FARMING, (seed.getSeedExp()/10)); // TODO: clean up XP balance
 								player.setNextAnimation(new Animation(2286));
 								player.getInventory().addItem(seed.getProduce());
 								player.getPackets().sendGameMessage("You harvest the "+new Item(seed.getProduce().getId(), 1).getDefinitions().getName()+"'s.");
@@ -274,7 +274,7 @@ public class FarmingSystem {
 						player.setNextAnimation(new Animation(2273));
 						player.getPackets().sendConfigByFile(object.getDefinitions().configFileId, configValue);
 						player.getInventory().addItem(6055, 1);
-						player.getSkills().addXp(Skills.FARMING, 25);
+						player.getSkills().addXp(Skills.FARMING, (18/10));// TODO: clean up XP balance
 						player.rakedPatch.add(object);
 					} else if (loop >= 7) {
 						player.unlock();

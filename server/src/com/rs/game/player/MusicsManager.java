@@ -198,7 +198,7 @@ public final class MusicsManager implements Serializable {
 
 	public boolean musicEnded() {
 		return playingMusic != -2
-				&& playingMusicDelay + (180000) < Utils.currentTimeMillis();
+				&& playingMusicDelay + (300000) < Utils.currentTimeMillis();
 	}
 
 	public void replayMusic() {
@@ -219,7 +219,7 @@ public final class MusicsManager implements Serializable {
 
 	public void checkMusic(int requestMusicId) {
 		if (playListOn || settedMusic
-				&& playingMusicDelay + (180000) >= Utils.currentTimeMillis())
+				&& playingMusicDelay + (300000) >= Utils.currentTimeMillis())
 			return;
 		settedMusic = false;
 		if (playingMusic != requestMusicId)

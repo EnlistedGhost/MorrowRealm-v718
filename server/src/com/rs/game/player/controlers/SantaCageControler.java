@@ -3,19 +3,13 @@ package com.rs.game.player.controlers;
 
 import java.util.concurrent.TimeUnit;
 
-
-
-
-
-
-
 import com.rs.Settings;
 import com.rs.cores.CoresManager;
 import com.rs.game.RegionBuilder;
 import com.rs.game.World;
 import com.rs.game.WorldObject;
 import com.rs.game.WorldTile;
-//import com.rs.game.item.Item;
+import com.rs.game.item.Item;
 import com.rs.game.player.Skills;
 import com.rs.game.player.content.FadingScreen;
 import com.rs.game.player.controlers.Controler;
@@ -23,41 +17,31 @@ import com.rs.utils.Utils.EntityDirection;
 
 /**
  * 
- * @author Lonely
+ * @author Lonely && EnlistedGhost
  *
  */
 
-public class SantaCage1Controler extends Controler {
+public class SantaCageControler extends Controler {
 	
-	private int[] boundChunks;
+	private static int[] boundChunks;
 	
 	static int sizeX = 6; // horizontal size
 	static int sizeY = 7; // vertical size
 	
 	static int chunkX = 321; // bottom left chunk x
 	static int chunkY = 696; // bottom left chunk y
-	
-	@Override
-	public void start() {
-		player.lock();
-		final long time = FadingScreen.fade(player);
-		CoresManager.slowExecutor.schedule(new Runnable() {
-			@Override
-			public void run() {
-				boundChunks = RegionBuilder.findEmptyChunkBound(sizeX, sizeY); 
-				RegionBuilder.copyAllPlanesMap(321, 696, boundChunks[0], boundChunks[1], sizeX, sizeY);
-				FadingScreen.unfade(player, time, new Runnable() {
-					@Override
-					public void run() {
-						int maxPrayer = player.getSkills().getLevelForXp(Skills.PRAYER) * 10;
-						player.setForceMultiArea(true);
-						player.getPrayer().restorePrayer(maxPrayer);
-						player.heal(player.getHitpoints() * 10);
-						player.setNextWorldTile(getWorldTile(24, 8));
-						player.getCombatDefinitions().resetSpells(true);
-						player.stopAll();
-						player.unlock();
-						//World.addGroundItem(new Item(1050, 1), new WorldTile(getWorldTile(24, 9)));
+		
+		public static void startCageController() {
+			CoresManager.slowExecutor.schedule(new Runnable() {
+				@Override
+				public void run() {
+					boundChunks = RegionBuilder.findEmptyChunkBound(sizeX, sizeY); 
+					RegionBuilder.copyAllPlanesMap(chunkX, chunkY, boundChunks[0], boundChunks[1], sizeX, sizeY); 
+					
+							/**
+							 *  Ground Items
+							 */
+						World.addGroundItem(new Item(1050), new WorldTile(getWorldTile(24, 9)));
 						/**
 						 * Npcs
 						 */
@@ -135,62 +119,12 @@ public class SantaCage1Controler extends Controler {
 						World.spawnObject(new WorldObject(555, 10, 0, new WorldTile(getWorldTile(29, 16))), true);
 						World.spawnObject(new WorldObject(555, 10, 0, new WorldTile(getWorldTile(28, 17))), true);
 						World.spawnObject(new WorldObject(555, 10, 0, new WorldTile(getWorldTile(27, 18))), true);
-						}
-					
-				
-				});
-			}
-		}, 3000, TimeUnit.MILLISECONDS);
-	}
+							
+					};
+			}, 3000, TimeUnit.MILLISECONDS);
+		}
 	
-	@Override
-	public boolean processMagicTeleport(WorldTile toTile) {
-		endDungeon(false);
-		removeControler();
-		return false;
-	}
-
-
-	@Override
-	public boolean processItemTeleport(WorldTile toTile) {
-		endDungeon(false);
-		removeControler();
-		return false;
-	}
-
-
-	@Override
-	public boolean processObjectTeleport(WorldTile toTile) {
-		endDungeon(false);
-		removeControler();
-		return false;
-	}
-	
-	@Override
-	public boolean logout() {
-		endDungeon(true);
-		return true;
-	}
-	
-	private void removeMapChunks() {
-		CoresManager.slowExecutor.schedule(new Runnable() {
-			@Override
-			public void run() {
-				RegionBuilder.destroyMap(boundChunks[0], boundChunks[1], sizeX, sizeY);
-			}
-		}, 1200, TimeUnit.MILLISECONDS);
-	}
-	
-	public void endDungeon(boolean logout) {
-		player.setForceMultiArea(false);
-		if (!logout)
-			player.setNextWorldTile(Settings.START_PLAYER_LOCATION);
-		else
-			player.setLocation(Settings.START_PLAYER_LOCATION);
-		removeMapChunks();
-	}
-	
-	public WorldTile getWorldTile(int mapX, int mapY) {
+	public static WorldTile getWorldTile(int mapX, int mapY) {
 		return new WorldTile(boundChunks[0] * 8 + mapX, boundChunks[1] * 8 + mapY, 0);
 	}
 	

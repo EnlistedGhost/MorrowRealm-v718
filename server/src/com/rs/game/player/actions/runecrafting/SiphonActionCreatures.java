@@ -229,7 +229,7 @@ public class SiphonActionCreatures extends Action {
 				double totalXp = creatures.xp;
 				if (Runecrafting.hasRcingSuit(player))
 					totalXp *= 1.025;
-				player.getSkills().addXp(Skills.RUNECRAFTING, totalXp);
+				player.getSkills().addXp(Skills.RUNECRAFTING, (totalXp/10));
 				player.getGoals().increase(Skills.RUNECRAFTING);
 				player.setNextGraphics(new Graphics(3071));
 				points += creatures.pointValue * 10;

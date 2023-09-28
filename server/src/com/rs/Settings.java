@@ -13,8 +13,8 @@ public final class Settings {
 	public static final String[] OWNERS = { "feraten" };
 	public static boolean ZOMBIE_ENABLED = true;
 	
-	public static final WorldTile START_PLAYER_LOCATION = new WorldTile(2089, 3913, 0);
-	public static final WorldTile RESPAWN_PLAYER_LOCATION = new WorldTile(2089, 3913, 0);
+	public static final WorldTile START_PLAYER_LOCATION = new WorldTile(3238, 3218, 0);
+	public static final WorldTile RESPAWN_PLAYER_LOCATION = new WorldTile(3238, 3218, 0);
 
 	public static final int droppedItemDelay = 180;
 	public static final double SKILL_RING_MOD = 1.2;

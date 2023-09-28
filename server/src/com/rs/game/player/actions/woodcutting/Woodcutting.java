@@ -14,17 +14,17 @@ public final class Woodcutting extends Action {
 
 	public static enum TreeDefinitions {
 
-		NORMAL(1, 25, 1511, 20, 4, 1341, 8, 0), // TODO
-		EVERGREEN(1, 25, 1511, 20, 4, 57931, 8, 0),
-		DEAD(1, 25, 1511, 20, 4, 12733, 8, 0),
-		OAK(15, 37.5, 1521, 30, 4, 1341, 15, 15), // TODO
-		WILLOW(30, 67.5, 1519, 60, 4, 1341, 51, 15), // TODO
-		MAPLE(45, 100, 1517, 83, 16, 31057, 72, 10),
-		YEW(60, 175, 1515, 120, 17, 1341, 94, 10), // TODO
-		IVY(68, 332.5, -1, 120, 17, 46319, 58, 10),
-		MAGIC(75, 250, 1513, 150, 21, 37824, 121, 10),
-		CURSED_MAGIC(82, 250, 1513, 150, 21, 37822, 121, 10),
-		BLOOD_TREE(85, 320, 4135, 150, 21, 24263, 28800, 10);
+		NORMAL(1, 10, 1511, 20, 4, 1341, 8, 0), // TODO
+		EVERGREEN(1, 13, 1511, 20, 4, 57931, 8, 0),
+		DEAD(1, 10, 1511, 20, 4, 12733, 8, 0),
+		OAK(15, 23, 1521, 30, 4, 1341, 15, 15), // TODO
+		WILLOW(30, 35, 1519, 60, 4, 1341, 51, 15), // TODO
+		MAPLE(45, 50, 1517, 83, 16, 31057, 72, 10),
+		YEW(60, 75, 1515, 120, 17, 1341, 94, 10), // TODO
+		IVY(68, 98, -1, 120, 17, 46319, 58, 10),
+		MAGIC(75, 112, 1513, 150, 21, 37824, 121, 10),
+		CURSED_MAGIC(82, 160, 1513, 150, 21, 37822, 121, 10),
+		BLOOD_TREE(85, 195, 4135, 150, 21, 24263, 28800, 10);
 
 		private int level;
 		private double xp;
@@ -372,14 +372,14 @@ public final class Woodcutting extends Action {
 			xpBoost += 1.500;
 		
 		if (player.getEquipment().getWeaponId() == 13661 && Utils.random(1000) < 300) {
-			player.sendMessage("Your inferno adze burns the logs instantly.");
-			player.getSkills().addXp(Skills.WOODCUTTING, definitions.getXp() * xpBoost);
-			player.getSkills().addXp(Skills.FIREMAKING, definitions.getXp() * xpBoost);
+			player.sendMessage("Your inferno burns the logs instantly.");
+			player.getSkills().addXp(Skills.WOODCUTTING, (definitions.getXp()/20) * xpBoost);// TODO balance skills correctly
+			player.getSkills().addXp(Skills.FIREMAKING, (definitions.getXp()/20) * xpBoost);// TODO balance skills correctly
 			player.getGoals().increase(Skills.WOODCUTTING);
 			player.getGoals().increase(Skills.FIREMAKING);
 		} else {
 			player.getInventory().addItem(definitions.getLogsId(), 1);
-			player.getSkills().addXp(Skills.WOODCUTTING, definitions.getXp() * xpBoost);
+			player.getSkills().addXp(Skills.WOODCUTTING, (definitions.getXp()/10) * xpBoost);// TODO balance skills correctly
 			player.getGoals().increase(Skills.WOODCUTTING);
 		}
 		

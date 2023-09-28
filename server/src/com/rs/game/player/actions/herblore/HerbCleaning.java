@@ -82,7 +82,7 @@ public class HerbCleaning {
 					return;
 				i.setId(herb.getCleanId());
 				player.getInventory().refresh(slotId);
-				player.getSkills().addXp(Skills.HERBLORE, herb.getExperience());
+				player.getSkills().addXp(Skills.HERBLORE, (herb.getExperience()/10));
 				player.getPackets().sendGameMessage("You clean the herb.", true);
 			}
 

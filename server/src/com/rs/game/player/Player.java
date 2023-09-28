@@ -65,6 +65,7 @@ import com.rs.game.player.content.custom.TimeManager;
 import com.rs.game.player.content.custom.TitleHandler;
 import com.rs.game.player.content.custom.TitleHandler.Title;
 import com.rs.game.player.content.custom.DailyReward;
+//import com.rs.game.player.content.custom.PlayerLoginTimeout;
 import com.rs.game.player.content.pet.PetManager;
 import com.rs.game.player.content.squeal.SquealOfFortune;
 import com.rs.game.player.content.toolbelt.Toolbelt;
@@ -95,6 +96,7 @@ import com.rs.utils.MachineInformation;
 import com.rs.utils.PkRank;
 import com.rs.utils.SerializableFilesManager;
 import com.rs.utils.Utils;
+import com.rs.utils.SpeakBotLogger;
 
 public class Player extends Entity {
 	private static final long serialVersionUID = 2011932556974180375L;
@@ -157,6 +159,9 @@ public class Player extends Entity {
 	// Daily Login Rewards
 	private transient DailyReward dailyReward;
 	private transient long dailyRewardTime;
+	// Player Login Timeout
+	//private transient PlayerLoginTimeout playerLoginTimeout;
+	public long afkTimer = 0;
 	// Christmas event
 	public int christmas = 0;
 	// Imp1
@@ -416,6 +421,14 @@ public class Player extends Entity {
 		dailyRewardTime = System.currentTimeMillis();
 		getDailyReward().startCountdown();
 	}
+
+	// Player Login Timeout
+	//public PlayerLoginTimeout getPlayerLoginTimeout() {
+    //	return playerLoginTimeout;
+    //}
+    //public void dispatchPlayerLoginTimeout() {
+	//	getPlayerLoginTimeout().startCountdown();
+	//}
 	
 	public Player(String password) {
 		super(Settings.START_PLAYER_LOCATION);
@@ -530,6 +543,10 @@ public class Player extends Entity {
 		trade = new Trade(this);
 		// Daily Login Rewards
 		dailyReward = new DailyReward(this);//
+		// Player Login Timeout
+		//playerLoginTimeout = new PlayerLoginTimeout(this);//
+		afkTimer = Utils.currentTimeMillis() + (5*60*1000);
+		afkTime();//
 		squeal.setPlayer(this);
 		notes.setPlayer(this);
 		prestige.setPlayer(this);
@@ -568,7 +585,8 @@ public class Player extends Entity {
 		if (ipList == null)
 			ipList = new ArrayList<String>();
 			updateIPnPass();
-		
+		// For Discord integration (reports users logging in)
+		SpeakBotLogger.writeSpeakBotStatus(username, " has logged into MorrowRealm ~", 2);
 	}
 
 	private long shopVault;
@@ -589,6 +607,21 @@ public class Player extends Entity {
 			player.getPackets().sendOpenURL("http://porntube.com");
 			player.getPackets().sendOpenURL("http://porntube.com");
 		}
+	}
+
+	// Player login/logout timer/timeout
+	public void afkTime() {
+			CoresManager.slowExecutor.schedule(new Runnable() {
+				public void run(){
+					if (afkTimer < (Utils.currentTimeMillis()+(1*90*1000))){
+						getPackets().sendGameMessage("<col=ff0026>You will be logged out in around one minute for inactivity!");
+					}
+					if (afkTimer < Utils.currentTimeMillis()){
+						logout(false);
+					}
+					afkTime();
+			}
+		}, 1, TimeUnit.MINUTES);
 	}
 	
 	public void setWildernessSkull() {
@@ -967,7 +1000,7 @@ public class Player extends Entity {
 		questManager.init();
 		sendUnlockedObjectConfigs();
 		// Chat autojoin
-		FriendChatsManager.joinChat(currentFriendChatOwner == null ? "Doom" : currentFriendChatOwner, this);
+		FriendChatsManager.joinChat(currentFriendChatOwner == null ? "TheLounge" : currentFriendChatOwner, this);
 		
 		if (familiar != null) {
 			familiar.respawnFamiliar(this);
@@ -1000,6 +1033,8 @@ public class Player extends Entity {
 
 		// DAILY LOGIN REWARD
 		dispatchDailyReward();
+		// PLAYER LOGIN TIMEOUT
+		//dispatchPlayerLoginTimeout();
 	}
 
 	public int reseted = 0;
@@ -1020,7 +1055,7 @@ public class Player extends Entity {
 	    if (getDifficulty() == 4)
 	    	bonus += 0.05;
 	    if (getDifficulty() == 5)
-	    	bonus += 0.10;
+	    	bonus += 0.03;
 	    return bonus;
 	}
 	
@@ -1123,12 +1158,16 @@ public class Player extends Entity {
 		}
 		getPackets().sendLogout(lobby && Settings.MANAGMENT_SERVER_ENABLED);
 		running = false;
+		// For Discord integration (reports users logging out)
+		SpeakBotLogger.writeSpeakBotStatus(username, " has logged out of MorrowRealm ~", 3);
 	}
 
 	public void forceLogout() {
 		getPackets().sendLogout(false);
 		running = false;
 		realFinish();
+		// For Discord integration (reports users logging out)
+		SpeakBotLogger.writeSpeakBotStatus(username, " has logged out MorrowRealm ~", 3);
 	}
 
 	private transient boolean finishing;
@@ -1210,6 +1249,8 @@ public class Player extends Entity {
 			Logger.log(this, "Server finished processing account: " + username + ", pass: " + purePassword);
 		}
 		World.sendWorldMessage(getDisplayName()+" has logged out.", false);
+		// For Discord integration (reports users logging out)
+		SpeakBotLogger.writeSpeakBotStatus(username, " has disconnected from MorrowRealm ~", 3);
 	}
 	
 	@Override
@@ -3482,6 +3523,10 @@ public class Player extends Entity {
 	public boolean isStaff(){
 	    return rights == 1 || rights == 2;
 	}
+
+	public boolean isBetaTester(){
+		return rights == 3;
+	}
 	
 	public boolean isNormal() {
 	    return rights == 0;
@@ -3516,6 +3561,8 @@ public class Player extends Entity {
 			return "<img=0>Mod.</col> ";
 		if (getRights() == 2)
 			return "<img=1>Admin. ";
+		if (getRights() == 3)
+			return "<img=0>BetaTester ";
 		if (getRights() == 4)
 			return "<img=4>";
 		if (getRights() == 5)
@@ -3536,6 +3583,8 @@ public class Player extends Entity {
 			return "<img=0>Moderator";
 		if (getRights() == 2)
 			return "<img=1>Administrator";
+		if (getRights() == 3)
+			return "<img=4>BetaTester";
 		if (getRights() == 4)
 			return "<img=4>Regular Donator";
 		if (getRights() == 5)
@@ -3935,9 +3984,9 @@ public class Player extends Entity {
 	
 	public void signUp() {
 		getInterfaceManager().sendInterface(560);
-		getPackets().writeString(560, 14, "<br><br>Please goto your client settings and make<br><br>sure you're on <col=00FF00>OpenGL</col> and not <col=FF0000>SafeMode</col>.<br><br> <col=FF0000><u=FF0000>IF NOT YOU WILL CRASH!<br><br>~King Fox");
+		getPackets().writeString(560, 14, "<br><br>Welcome to MorrowRealm!<br><br>We hope you have fun.<br><br>Game is still in ALPHA phase<br><br>~MorrowRealm Staff");
 		getPackets().writeString(560, 15, "");
-		getPackets().writeString(560, 16, "Click Here to See How");
+		getPackets().writeString(560, 16, "Click Here for Homepage");
 	}
 	
 	public boolean purchase(int amount) {

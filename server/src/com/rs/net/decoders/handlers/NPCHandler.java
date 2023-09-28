@@ -1,8 +1,14 @@
 package com.rs.net.decoders.handlers;
 
+import java.util.TimerTask;
+// for xmas 2019
+import java.util.concurrent.TimeUnit;
+
 import com.rs.Settings;
+import com.rs.game.Animation;
 import com.rs.game.ForceTalk;
 import com.rs.game.World;
+import com.rs.game.WorldTile;
 import com.rs.game.minigames.Implings;
 import com.rs.game.npc.NPC;
 import com.rs.game.npc.familiar.Familiar;
@@ -20,15 +26,29 @@ import com.rs.game.player.actions.thieving.PickPocketAction;
 import com.rs.game.player.actions.thieving.PickPocketableNPC;
 import com.rs.game.player.content.LividFarm;
 import com.rs.game.player.content.PlayerLook;
+import com.rs.game.player.content.Magic;
+//import com.rs.game.player.content.custom.PlayerLoginTimeout;
 import com.rs.game.player.dialogues.impl.ContractDialogue;
 import com.rs.game.player.dialogues.impl.FremennikShipmaster;
+import com.rs.game.player.dialogues.impl.Aubury;
+import com.rs.game.player.dialogues.impl.CustomsOfficerKaramja;
+import com.rs.game.player.dialogues.impl.CaptainTobias;
+import com.rs.game.player.dialogues.impl.SeamanLorris;
+import com.rs.game.player.dialogues.impl.SeamanThresnor;
+import com.rs.game.player.dialogues.impl.LumbridgeSage;
 import com.rs.io.InputStream;
 import com.rs.utils.Logger;
 import com.rs.utils.ShopsHandler;
+import com.rs.utils.Utils;
+import com.rs.cores.CoresManager;
+// for xmas 2019
+import com.rs.game.player.content.FadingScreen;
 
 public class NPCHandler {
 
 	public static void handleExamine(final Player player, InputStream stream) {
+		// Reset player timeout
+		//PlayerLoginTimeout.PlayerTimeoutReset();
 		int npcIndex = stream.readUnsignedShort128();
 		boolean forceRun = stream.read128Byte() == 1;
 		if(forceRun)
@@ -45,6 +65,8 @@ public class NPCHandler {
 	}
 	
 	public static void handleOption1(final Player player, InputStream stream) {
+		// Reset player timeout
+		//PlayerLoginTimeout.PlayerTimeoutReset();
 		int npcIndex = stream.readUnsignedShort128();
 		boolean forceRun = stream.read128Byte() == 1;
 		final NPC npc = World.getNPCs().get(npcIndex);
@@ -91,11 +113,31 @@ public class NPCHandler {
 				} else if(npc.getId() == 6654)
 					npc.setNextForceTalk(new ForceTalk("Smith, smith smith! There is work to do!"));
 				else if(npc.getId() == 65)
-					npc.setNextForceTalk(new ForceTalk("Boring... how long we need to do this?!"));
+					npc.setNextForceTalk(new ForceTalk("Boring... how long do we need to do this?!"));
 				else if(npc.getId() == 6647)
 					npc.setNextForceTalk(new ForceTalk("Shut up students! Work harder, go go go!"));
 				else if (npc.getId() == 7531)
 					player.getDialogueManager().startDialogue("Niles", npc.getId());
+				else if (npc.getId() == 5913)
+					player.getDialogueManager().startDialogue("Aubury", npc.getId());
+				else if (npc.getId() == 705)
+					player.getDialogueManager().startDialogue("Melee instructor", npc.getId());
+				else if (npc.getId() == 4707)
+					player.getDialogueManager().startDialogue("Magic instructor", npc.getId());
+				else if (npc.getId() == 1861)
+					player.getDialogueManager().startDialogue("Ranged instructor", npc.getId());
+				else if (npc.getId() == 4906)
+					player.getDialogueManager().startDialogue("Wilfred", npc.getId());
+				else if (npc.getId() == 2238)
+					player.getDialogueManager().startDialogue("Donie", npc.getId());
+				else if (npc.getId() == 11700)
+					player.getDialogueManager().startDialogue("CaptainTobias", npc.getId());
+				else if (npc.getId() == 11701)
+					player.getDialogueManager().startDialogue("SeamanLorris", npc.getId());
+				else if (npc.getId() == 11702)
+					player.getDialogueManager().startDialogue("SeamanThresnor", npc.getId());
+				else if (npc.getId() == 380)
+					player.getDialogueManager().startDialogue("CustomsOfficerKaramja", npc.getId());
 				else if (npc.getId() == 14194)
 					player.getDialogueManager().startDialogue("PKGear", npc.getId());
 				else if (npc.getId() == 918)
@@ -130,9 +172,9 @@ public class NPCHandler {
 					player.getDialogueManager().startDialogue("NomadMultiShop", npc.getId());
 				} else if (npc.getId() >= 6053 && npc.getId() <= 6064)
 					Implings.captureImp(player, npc);
-				else if (npc.getId() == 2600 << 2700) // 1 to 24 in java if im sure, change if not
+				else if (npc.getId() == 7879) // 1 to 24 in java if im sure, change if not
 					player.getDialogueManager().startDialogue("Man", npc.getId(), false);
-				else if (npc.getId() == 3000 << 4000) // 1 to 24 in java if im sure, change if not	
+				else if (npc.getId() == 7873) // 1 to 24 in java if im sure, change if not	
 					player.getDialogueManager().startDialogue("Man", npc.getId(), false);
 				else if (npc.getId() == 9707)
 					player.getDialogueManager().startDialogue("FremennikShipmaster", npc.getId(), true);
@@ -140,9 +182,9 @@ public class NPCHandler {
 					player.getDialogueManager().startDialogue("FremennikShipmaster", npc.getId(), false);
 				else if (npc.getId() == 8555)
 					PlayerLook.openMageMakeOver(player);
-				else if (npc.getId() == 320 << 400) // 1 to 24 in java if im sure, change if not
+				else if (npc.getId() == 7876) // 1 to 24 in java if im sure, change if not
 					player.getDialogueManager().startDialogue("Man", npc.getId(), false);
-				else if (npc.getId() == 8080 << 8125) // 1 to 24 in java if im sure, change if not
+				else if (npc.getId() == 7875) // 1 to 24 in java if im sure, change if not
 					player.getDialogueManager().startDialogue("Man", npc.getId(), false);
 				else if (npc.getId() == 13727)
                     player.getDialogueManager().startDialogue("Xuans", npc.getId());
@@ -276,18 +318,68 @@ public class NPCHandler {
 					player.getDialogueManager().startDialogue("SnowQueen2", npc.getId());
 					return;
 				} else if (npc.getId() == 13642) {
+					if ((player.getInventory().containsItem(29961, 250))) {
+						player.christmas = 5;
+						//
+						player.getInventory().deleteItem(29961, 250);
+						//
+						final long time = FadingScreen.fade(player);
+                    	CoresManager.slowExecutor.schedule(new Runnable() {
+                        	@Override
+                        	public void run() {
+                            	FadingScreen.unfade(player, time, new Runnable() {
+                                	@Override
+                                	public void run() {
+                                        player.setNextWorldTile(new WorldTile(87, 110, 0));
+                                	}
+                            	});
+                        	}
+                    	}, 3000, TimeUnit.MILLISECONDS);
+					}
 					if (player.christmas < 1) {
 					player.getDialogueManager().startDialogue("SnowQueen1", npc.getId());	
 					}else {
 						player.getDialogueManager().startDialogue("SnowQueen2", npc.getId());
 					}
 					return;
-				}  else if (npc.getId() == 9412 || npc.getId() == 9414 || npc.getId() == 9416 || npc.getId() == 9418 || npc.getId() == 9420 || npc.getId() == 9422) {
+				} else if (npc.getId() == 9412 || npc.getId() == 9414 || npc.getId() == 9416 || npc.getId() == 9418 || npc.getId() == 9420 || npc.getId() == 9422) {
 					player.getDialogueManager().startDialogue("PartyGoers", npc.getId());
 				}
 				/**
 				 * End Christmas
 				 */
+				//
+				// Sheep shearing handler
+				else if (npc.getId() == 43 || npc.getId() == 1765 || npc.getId() == 5156 || npc.getId() == 5157 || npc.getId() == 5160 || npc.getId() == 5161) {
+					// Functionality thanks to Edimmu @ rune-server | https://www.rune-server.ee/members/edimmu/
+					// Implemented by EnlistedGhost | github.com/enlistedghost
+					final int npcId = npc.getId();
+					if (player.getInventory().containsItem(1735, 1)) {
+						if(Utils.getRandom(2) == 0) {
+							npc.setNextForceTalk(new ForceTalk("Baa!"));
+							npc.playSound(756, 1);
+							npc.addWalkSteps(npcId, npcId, 4, true);
+							npc.setRun(true);
+							player.getPackets().sendGameMessage("The sheep runs away from you.");
+						} else {
+							player.playSound(761, 1);
+							player.getInventory().addItem(1737, 1);
+							player.getPackets().sendGameMessage("You shear the sheep of it's fleece.");
+							player.setNextAnimation(new Animation(893));
+							npc.transformIntoNPC(5149);
+							CoresManager.fastExecutor.schedule(new TimerTask() {
+						    	@Override
+						    	public void run() {
+						    		npc.transformIntoNPC(npcId);
+						    	}
+							}, 17000);
+						}
+					} else {
+						player.getPackets().sendGameMessage("You need a pair of shears to shear the sheep.");
+					}
+				} else if (npc.getId() == 2244) {
+					player.getDialogueManager().startDialogue("LumbridgeSage", npc.getId());
+				}
 				else {
 					if (Settings.DEBUG) {
 						if (player.isOwner()) {
@@ -300,6 +392,8 @@ public class NPCHandler {
 	}
 	
 	public static void handleOption2(final Player player, InputStream stream) {
+		// Reset player timeout
+		//PlayerLoginTimeout.PlayerTimeoutReset();
 		int npcIndex = stream.readUnsignedShort128();
 		boolean forceRun = stream.read128Byte() == 1;
 		final NPC npc = World.getNPCs().get(npcIndex);
@@ -347,7 +441,7 @@ public class NPCHandler {
 							return;
 						}
 						if (!player.getPoison().isPoisoned()) {
-							player.getPackets().sendGameMessage("Your arent poisoned or diseased.");
+							player.getPackets().sendGameMessage("Your aren't poisoned or diseased.");
 							return;
 						} else {
 							player.getFamiliar().drainSpecial(2);
@@ -378,7 +472,21 @@ public class NPCHandler {
 					player.getDialogueManager().startDialogue("BettyMagic");
 				else if (npc.getId() == 538)
 					ShopsHandler.openShop(player, 6);
-				else if (npc.getId() == 14854)
+				else if (npc.getId() == 5913) {// Aubury shop
+					ShopsHandler.openShop(player, 11);
+				} else if (npc.getId() == 11700) {// Captain Tobias
+					npc.setNextForceTalk(new ForceTalk("Alright boys, let's sail!"));
+					player.setNextWorldTile(new WorldTile(2956, 3143, 1));
+				} else if (npc.getId() == 11701) {// Seaman Lorris
+					npc.setNextForceTalk(new ForceTalk("Alright boys, let's sail!"));
+					player.setNextWorldTile(new WorldTile(2956, 3143, 1));
+				} else if (npc.getId() == 11702) {// Seaman Thresnor
+					npc.setNextForceTalk(new ForceTalk("Alright boys, let's sail!"));
+					player.setNextWorldTile(new WorldTile(2956, 3143, 1));
+				} else if (npc.getId() == 380) {// Customs Officer
+					npc.setNextForceTalk(new ForceTalk("Anchors away!"));
+					player.setNextWorldTile(new WorldTile(3032, 3217, 1));
+				} else if (npc.getId() == 14854)
 					ShopsHandler.openShop(player, 7);
 				else if (npc.getId() == 522 || npc.getId() == 523)
 					ShopsHandler.openShop(player, 8);
@@ -444,6 +552,8 @@ public class NPCHandler {
 	}
 
 	public static void handleOption3(final Player player, InputStream stream) {
+		// Reset player timeout
+		//PlayerLoginTimeout.PlayerTimeoutReset();
 		int npcIndex = stream.readUnsignedShort128();
 		boolean forceRun = stream.read128Byte() == 1;
 		final NPC npc = World.getNPCs().get(npcIndex);
@@ -482,8 +592,12 @@ public class NPCHandler {
 					PlayerLook.openThessaliasMakeOver(player);
                 }
 				if (npc.getId() == 5532) {
-					npc.setNextForceTalk(new ForceTalk("Senventior Disthinte Molesko!"));
+					npc.setNextForceTalk(new ForceTalk("Senventior Disthine Molenko!"));
 					player.getControlerManager().startControler("SorceressGarden");
+				}
+				if (npc.getId() == 5913) {// Aubury tele
+					npc.setNextForceTalk(new ForceTalk("Senventior Disthine Molenko!"));
+					Magic.sendNormalTeleportSpell(player, 0, 0, new WorldTile(2911, 4832, 0));
 				}
 			}
 		}, npc.getSize()));

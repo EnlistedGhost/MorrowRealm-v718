@@ -30,6 +30,7 @@ import com.rs.game.player.content.Magic;
 import com.rs.game.player.content.Notes.Note;
 import com.rs.game.player.content.Shop;
 import com.rs.game.player.content.SkillCapeCustomizer;
+//import com.rs.game.player.content.custom.PlayerLoginTimeout;
 import com.guardian.ItemManager;
 import com.rs.game.player.content.interfaces.PlayerStats;
 import com.rs.io.InputStream;
@@ -238,6 +239,8 @@ public final class WorldPacketsDecoder extends Decoder {
 	@Override
 	public void decode(InputStream stream) {
 		while (stream.getRemaining() > 0 && session.getChannel().isConnected() && !player.hasFinished()) {
+			// Reset player timeout
+        	//PlayerLoginTimeout.PlayerTimeoutReset();
 			int packetId = stream.readPacket(player);
 			if (packetId == 71) {
 				/*final short itemId = (short) stream.readShort();
@@ -285,6 +288,9 @@ public final class WorldPacketsDecoder extends Decoder {
 	public static void decodeLogicPacket(final Player player, LogicPacket packet) {
 		int packetId = packet.getId();
 		InputStream stream = new InputStream(packet.getData());
+
+		// Reset player timeout
+        //PlayerLoginTimeout.PlayerTimeoutReset();
 		
 		if (Settings.ENABLE_PACKET_DEBUG && player.getRights() == 2) 
 			player.getPackets().sendGameMessage("Logic Packet Id: "+packet.getId()+"");
@@ -466,31 +472,47 @@ public final class WorldPacketsDecoder extends Decoder {
 			if (player.getLockDelay() > Utils.currentTimeMillis()
 					|| !player.getControlerManager().canPlayerOption1(p2))
 				return;
-			if (!player.isCanPvp())
-				return;
+			int weaponId_snbl = player.getEquipment().getWeaponId();
+			if (!player.isCanPvp()) {
+				if (weaponId_snbl != 10501) {// snowball handling
+					player.getPackets().sendGameMessage("You are not in a PvP zone.");
+					return;
+				}
+			}
 			if (!player.getControlerManager().canAttack(p2))
 				return;
 
 			if (!player.isCanPvp() || !p2.isCanPvp()) {
-				player.getPackets().sendGameMessage("You can only attack players in a player-vs-player area.");
-				return;
+				if (weaponId_snbl != 10501) {// snowball handling
+					player.getPackets().sendGameMessage("You can only attack players in a player-vs-player area.");
+					return;
+				}
 			}
 			if (!p2.isAtMultiArea() || !player.isAtMultiArea()) {
 				if (player.getAttackedBy() != p2 && player.getAttackedByDelay() > Utils.currentTimeMillis()) {
-					player.getPackets().sendGameMessage("You are already in combat.");
-					return;
+					if (weaponId_snbl != 10501) {// snowball handling
+						player.getPackets().sendGameMessage("You are already in combat.");
+						return;
+					}
 				}
 				if (p2.getAttackedBy() != player && p2.getAttackedByDelay() > Utils.currentTimeMillis()) {
 					if (p2.getAttackedBy() instanceof NPC) {
 						p2.setAttackedBy(player);
 					} else {
-						player.getPackets().sendGameMessage("That player is already in combat.");
-						return;
+						if (weaponId_snbl != 10501) {// snowball handling
+							player.getPackets().sendGameMessage("That player is already in combat.");
+							return;
+						}
 					}
 				}
 			}
 			player.stopAll(false);
-			player.getActionManager().setAction(new PlayerCombat(p2));
+			if (weaponId_snbl == 10501) {// Snowball combat handling
+				player.getPackets().sendGameMessage("You pelt " + p2.getUsername() + " with a snowball!");
+				player.getActionManager().setAction(new PlayerCombat(p2));
+			} else {
+				player.getActionManager().setAction(new PlayerCombat(p2));
+			}
 		} else if (packetId == ATTACK_NPC) {
 			if (!player.hasStarted() || !player.clientHasLoadedMapRegion()
 					|| player.isDead()) {
@@ -1038,6 +1060,13 @@ public final class WorldPacketsDecoder extends Decoder {
 			// USELESS PACKET
 		} else if (packetId == KEY_TYPED_PACKET) {
 			// USELESS PACKET
+			//
+			player.afkTimer = Utils.currentTimeMillis() + (10*60*1000);//10 minute timeout login
+			if (player.getRights() > 0) {
+				// Users with rights (Moderator, Admin, Owner, BetaTester)
+				// override the afk logout timer
+				player.afkTimer = Utils.currentTimeMillis() + (2*60*60*1000);//2 hour timeout login
+			}
 		} else if (packetId == RECEIVE_PACKET_COUNT_PACKET) {
 			// interface packets
 			stream.readInt();
@@ -1054,10 +1083,22 @@ public final class WorldPacketsDecoder extends Decoder {
 			}
 			player.stopAll();
 		} else if (packetId == MOVE_CAMERA_PACKET) {
+			player.afkTimer = Utils.currentTimeMillis() + (10*60*1000);//10 minute timeout login
+			if (player.getRights() > 0) {
+				// Users with rights (Moderator, Admin, Owner, BetaTester)
+				// override the afk logout timer
+				player.afkTimer = Utils.currentTimeMillis() + (2*60*60*1000);//2 hour timeout login
+			}
 			// not using it atm
 			stream.readUnsignedShort();
 			stream.readUnsignedShort();
 		} else if (packetId == IN_OUT_SCREEN_PACKET) {
+			player.afkTimer = Utils.currentTimeMillis() + (10*60*1000);//10 minute timeout login
+			if (player.getRights() > 0) {
+				// Users with rights (Moderator, Admin, Owner, BetaTester)
+				// override the afk logout timer
+				player.afkTimer = Utils.currentTimeMillis() + (2*60*60*1000);//2 hour timeout login
+			}
 			// not using this check because not 100% efficient
 			@SuppressWarnings("unused")
 			boolean inScreen = stream.readByte() == 1;
@@ -1086,6 +1127,12 @@ public final class WorldPacketsDecoder extends Decoder {
 			if (time <= 1 || x < 0 || x > player.getScreenWidth() || y < 0 || y > player.getScreenHeight()) {
 				clicked = false;
 				return;
+			}
+			player.afkTimer = Utils.currentTimeMillis() + (10*60*1000);//10 minute timeout login
+			if (player.getRights() > 0) {
+				// Users with rights (Moderator, Admin, Owner, BetaTester)
+				// override the afk logout timer
+				player.afkTimer = Utils.currentTimeMillis() + (2*60*60*1000);//2 hour timeout login
 			}
 			clicked = true;
 		} else if (packetId == DIALOGUE_CONTINUE_PACKET) {
@@ -1398,8 +1445,15 @@ public final class WorldPacketsDecoder extends Decoder {
 				|| packetId == OBJECT_CLICK4_PACKET
 				|| packetId == OBJECT_CLICK5_PACKET
 				|| packetId == INTERFACE_ON_OBJECT
-				|| packetId == PlayerStats.PACKET_ID)
+				|| packetId == PlayerStats.PACKET_ID) {
+			player.afkTimer = Utils.currentTimeMillis() + (10*60*1000);//10 minute timeout login
+			if (player.getRights() > 0) {
+				// Users with rights (Moderator, Admin, Owner, BetaTester)
+				// override the afk logout timer
+				player.afkTimer = Utils.currentTimeMillis() + (2*60*60*1000);//2 hour timeout login
+			}
 			player.addLogicPacketToQueue(new LogicPacket(packetId, length, stream));
+		}
 		else if (packetId == OBJECT_EXAMINE_PACKET) {
 			ObjectHandler.handleOption(player, stream, -1);
 		}else if (packetId == NPC_EXAMINE_PACKET) {

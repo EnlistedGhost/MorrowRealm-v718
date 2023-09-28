@@ -144,7 +144,7 @@ public class PickPocketAction extends Action {
 			double totalXp = npcData.getExperience();
 			if (hasTheivingSuit(player))
 				totalXp *= 1.025;
-			player.getSkills().addXp(Skills.THIEVING, totalXp);
+			player.getSkills().addXp(Skills.THIEVING, (totalXp/10));
 			player.getGoals().increase(Skills.THIEVING);
 			for (int i = 0; i <= index; i++) {
 				Item item = npcData.getLoot()[Utils

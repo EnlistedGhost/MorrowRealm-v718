@@ -21,14 +21,18 @@ import com.rs.utils.Utils;
 public class Firemaking extends Action {
 
 	public static enum Fire {
-		NORMAL(1511, 1, 300, 70755, 40, 20), ACHEY(2862, 1, 300, 70756, 40, 1), OAK(
-				1521, 15, 450, 70757, 60, 1), WILLOW(1519, 30, 450, 70758, 90,
-				1), TEAK(6333, 35, 450, 70759, 105, 1), ARCTIC_PINE(10810, 42,
-				500, 70760, 125, 1), MAPLE(1517, 45, 500, 70761, 135, 1), MAHOGANY(
-				6332, 50, 700, 70762, 157.5, 1), EUCALYPTUS(12581, 58, 700,
-				70763, 193.5, 1), YEW(1515, 60, 800, 70764, 202.5, 1), MAGIC(
-				1513, 75, 900, 70765, 303.8, 1), CURSED_MAGIC(13567, 82, 1000,
-				70766, 303.8, 1);
+		NORMAL(1511, 1, 300, 70755, 20, 20), 
+		ACHEY(2862, 1, 300, 70756, 35, 1), 
+		OAK(1521, 15, 450, 70757, 47, 1), 
+		WILLOW(1519, 30, 450, 70758, 62,1), 
+		TEAK(6333, 35, 450, 70759, 78, 1), 
+		ARCTIC_PINE(10810, 42,500, 70760, 90, 1), 
+		MAPLE(1517, 45, 500, 70761, 102, 1), 
+		MAHOGANY(6332, 50, 700, 70762, 113, 1), 
+		EUCALYPTUS(12581, 58, 700,70763, 127, 1), 
+		YEW(1515, 60, 800, 70764, 153, 1), 
+		MAGIC(1513, 75, 900, 70765, 175, 1), 
+		CURSED_MAGIC(13567, 82, 1000,70766, 198, 1);
 
 		private int logId;
 		private int level;
@@ -177,7 +181,7 @@ public class Firemaking extends Action {
 				player.getPackets().sendSound(2594, 0, 1); 
 				player.getGoals().increase(Skills.FIREMAKING);
 				World.spawnTempGroundObject(new WorldObject(fire.getFireId(), 10, 0, tile.getX(), tile.getY(), tile.getPlane()), 592, fire.getLife());
-				player.getSkills().addXp(Skills.FIREMAKING, increasedExperience(player, fire.getExperience()));
+				player.getSkills().addXp(Skills.FIREMAKING, increasedExperience(player, (fire.getExperience()/10)));
 				player.setNextFaceWorldTile(tile);
 			}
 		}, 1);

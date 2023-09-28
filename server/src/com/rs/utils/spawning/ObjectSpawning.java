@@ -54,7 +54,7 @@ public class ObjectSpawning {
 			PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(FILE_LOCATION, true)));
 			String tab = "\t";
 			String objectName = ObjectDefinitions.getObjectDefinitions(objectId).name.toLowerCase();
-		    out.println(objectId + tab + x + tab + y + tab + z + tab + face + tab + clipped + tab + objectName);
+		    out.println("\n" + objectId + tab + x + tab + y + tab + z + tab + face + tab + clipped + tab + objectName);
 		    out.close();
 		} catch (IOException e) {
 			if (player != null) {

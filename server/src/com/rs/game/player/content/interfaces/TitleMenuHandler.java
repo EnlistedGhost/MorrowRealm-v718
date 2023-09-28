@@ -90,6 +90,14 @@ public class TitleMenuHandler {
 				TitleHandler.forceSet(player, 68);
 				return;
 			}
+			if (componentId == 14) {
+				if (player.getRights() != 3) {
+					player.sendMessage("This title is reserved for Beta Testers only.");
+					return;
+				}
+				TitleHandler.forceSet(player, 92);
+				return;
+			}
 		}
 	}
 }

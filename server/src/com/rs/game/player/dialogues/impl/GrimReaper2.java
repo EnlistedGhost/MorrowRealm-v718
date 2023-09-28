@@ -1,5 +1,6 @@
 package com.rs.game.player.dialogues.impl;
 
+import com.rs.game.player.dialogues.Dialogue;
 import com.rs.cache.loaders.NPCDefinitions;
 import com.rs.game.player.controlers.TutorialIsland;
 import com.rs.game.WorldTile;

@@ -12,7 +12,7 @@ public final class Combat {
 			return false;
 		Player p2 = (Player) target;
 		int shieldId = p2.getEquipment().getShieldId();
-		return shieldId == 1540 || shieldId == 11283 || shieldId == 11284;
+		return shieldId == 1540 || shieldId == 11283 || shieldId == 11284 || shieldId == 25558 || shieldId == 25561;
 	}
 
 	public static int getSlayerLevelForNPC(int id) {

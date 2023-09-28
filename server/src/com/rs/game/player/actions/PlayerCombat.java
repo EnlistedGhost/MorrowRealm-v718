@@ -1552,10 +1552,17 @@ public class PlayerCombat extends Action {
 										true, true, 1.0, true)));
 				dropAmmo(player, -1);
 				break;
+			case 10501:// snowball handling combat TODO: Remove, totally useless, snowballs don't have specials
+				player.setNextGraphics(new Graphics(1838));
+				player.setNextAnimation(new Animation(10504));
+				World.sendProjectile(player, target, 1839, 41, 41, 41, 35, 0, 0);
+				dropAmmo(player, -1);
+				player.getActionManager().forceStop();
+				break;
 			default:
 				player.getPackets()
 				.sendGameMessage(
-						"This weapon has no special Attack, if you still see special bar please relogin.");
+						"This weapon has no special Attack, if you still see special bar please re-login.");
 				return combatDelay;
 			}
 		} else {
@@ -1577,6 +1584,14 @@ public class PlayerCombat extends Action {
 					delayHit(1, weaponId, attackStyle, getRangeHit(player, hit));
 					checkSwiftGlovesEffect(player, 1, attackStyle, weaponId, hit, getKnifeThrowGfxId(weaponId), 41, 36, 41, 32, 15, 0);
 					dropAmmo(player, -1);
+				} else if (weaponName.contains("snowball")) {// Snowball handling
+					//
+					player.setNextGraphics(new Graphics(524));// TODO: review this
+					player.setNextAnimation(new Animation(929));// Throw something (slowly) anim
+					World.sendProjectile(player, target, 524, 41, 41, 41, 35, 0, 0);// TODO: review this
+					player.getEquipment().removeAmmo(10501, -1);// Remove snowball after throw
+					player.getActionManager().forceStop();
+					return combatDelay;
 				} else if (weaponName.contains("crossbow")) {
 					int damage = 0;
 					int ammoId = player.getEquipment().getAmmoId();
@@ -3471,10 +3486,14 @@ public class PlayerCombat extends Action {
                 }
             }
 		}
+		int weaponId_snbl = player.getEquipment().getWeaponId();
 		if (target instanceof Player) {
 			Player p2 = (Player) target;
-			if (!player.isCanPvp() || !p2.isCanPvp())
-				return false;
+			if (!player.isCanPvp() || !p2.isCanPvp()) {
+				if (weaponId_snbl != 10501) {// snowball allow combat
+					return false;
+				}
+			}
 		} else {
 			NPC n = (NPC) target;
 			if (n.isCantInteract()) {
@@ -3508,13 +3527,14 @@ public class PlayerCombat extends Action {
 			}
 		}
 		if (!(target instanceof NPC && ((NPC) target).isForceMultiAttacked())) {
-
-			if (!target.isAtMultiArea() || !player.isAtMultiArea()) {
-				if (player.getAttackedBy() != target && player.getAttackedByDelay() > Utils.currentTimeMillis()) {
-					return false;
-				}
-				if (target.getAttackedBy() != player&& target.getAttackedByDelay() > Utils.currentTimeMillis()) {
-					return false;
+			if (weaponId_snbl != 10501) {// snowball handling
+				if (!target.isAtMultiArea() || !player.isAtMultiArea()) {
+					if (player.getAttackedBy() != target && player.getAttackedByDelay() > Utils.currentTimeMillis()) {
+						return false;
+					}
+					if (target.getAttackedBy() != player&& target.getAttackedByDelay() > Utils.currentTimeMillis()) {
+						return false;
+					}
 				}
 			}
 		}
@@ -3631,7 +3651,8 @@ public class PlayerCombat extends Action {
 					|| name.equalsIgnoreCase("zaryte bow")
 					|| name.contains("chinchompa")
 					|| name.contains("Bolas")
-					|| name.contains("Boogie"))
+					|| name.contains("Boogie")
+					|| name.contains("Snowball"))
 				return 2;
 		}
 		int ammoId = player.getEquipment().getAmmoId();

@@ -69,8 +69,8 @@ public class NewStarter extends Dialogue {
 		sendEntityDialogue(IS_NPC, "MorrowRealm Manager", 13768, 9827, 
 				"Very good! Now all you need to do is decide",
 				"if you wish to continue. You must understand that", 
-				"MorrowRealm is in honor of Morrowind, but in no way",
-				"affiliated with Bethesda or its game titles!");
+				"MorrowRealm is in honor of Morrowind and RuneScape (2012), but in no way",
+				"affiliated with Bethesda and/or Jagex or their game titles!");
 		stage = 3;
 	}
 	

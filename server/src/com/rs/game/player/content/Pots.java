@@ -316,7 +316,9 @@ public final class Pots {
 				null)
 
 				/*MAGIC_ESSENCE_FLASK(new int[] { 23633, 23634, 23635, 23636, 23637, 23638 },
-				null)*/;
+				null)*/
+		MULLED_WINE(new int[] { 15431 }, Effects.MULLED_WINE_EFFECT),
+				;
 
 		private int[] id;
 		private Effects effect;
@@ -340,6 +342,12 @@ public final class Pots {
 			public int getAffectedSkill(Player player, int skillId, int actualLevel, int realLevel) {
 				int level = actualLevel > realLevel ? realLevel : actualLevel;
 				return (int) (level + 2 + (realLevel * 0.07));
+			}
+		},
+		MULLED_WINE_EFFECT() {
+			@Override
+			public void extra(Player player) {
+				player.heal(250);
 			}
 		},
 		MELEE_POTION2(Skills.ATTACK, Skills.STRENGTH, Skills.DEFENCE) {

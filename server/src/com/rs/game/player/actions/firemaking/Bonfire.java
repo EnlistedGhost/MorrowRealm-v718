@@ -20,12 +20,12 @@ public class Bonfire extends Action {
 
 	public static enum Log {
 
-		LOG(1511, 3098, 1, 40, 6), 
-		OAK(1521, 3099, 15, 50, 12), 
-		WILLOW(1519, 3101, 30, 80.5, 18), 
-		MAPLE(1517, 3100, 45, 150, 36), 
-		YEWS(1515, 3111, 60, 200, 54), 
-		MAGIC(1513, 3135, 75, 230, 60);
+		LOG(1511, 3098, 1, 20, 6), 
+		OAK(1521, 3099, 15, 35, 12), 
+		WILLOW(1519, 3101, 30, 47, 18), 
+		MAPLE(1517, 3100, 45, 60, 36), 
+		YEWS(1515, 3111, 60, 82, 54), 
+		MAGIC(1513, 3135, 75, 99, 60);
 		
 		private int logId, gfxId, level, boostTime;
 		private double xp;
@@ -118,7 +118,7 @@ public class Bonfire extends Action {
 	@Override
 	public int processWithDelay(Player player) {
 		player.getInventory().deleteItem(log.logId, 1);
-		player.getSkills().addXp(Skills.FIREMAKING,Firemaking.increasedExperience(player, log.xp));
+		player.getSkills().addXp(Skills.FIREMAKING,Firemaking.increasedExperience(player, (log.xp/10)));
 		player.setNextAnimation(new Animation(16703));
 		player.setNextGraphics(new Graphics(log.gfxId));
 		player.getPackets().sendGameMessage("You add a log to the fire.", true);

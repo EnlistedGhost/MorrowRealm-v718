@@ -17,7 +17,7 @@ public class MakeOverMage extends Dialogue {
 					SEND_3_TEXT_CHAT,
 					new String[] {
 							NPCDefinitions.getNPCDefinitions(npcId).name,
-							"Hello there! I am know as the Makeover Mage! I have",
+							"Hello there! I am known as the Makeover Mage! I have",
 							"spent many years researching magicks that can change",
 							"your physical appearence." }, IS_NPC, npcId, 9827);
 		} else if (v == 1) {

@@ -141,7 +141,7 @@ public class Thieving {
 						}
 						if (!gaveItems) {
 							player.getInventory().addItem(stall.getItem(Utils.getRandom(stall.item.length - 1)), Utils.getRandom(stall.getAmount()));
-							player.getSkills().addXp(Skills.THIEVING, stall.getExperience());
+							player.getSkills().addXp(Skills.THIEVING, (stall.getExperience()/10));
 							player.getGoals().increase(Skills.THIEVING);
 							gaveItems = true;
 							checkGuards(player);

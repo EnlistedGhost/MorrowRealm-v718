@@ -62,7 +62,9 @@ public class TitleHandler {
 		Legend(89, "Legendary ", false, "AF5F00", "", true, 6, 50000),
 		
 		Survivor(90, "Survivor ", false, "AF5F00", "", true, 0, 0),
-		Guardian(91, "The Guardian ", false, "00AAFF", "", true, 0, 0);
+		Guardian(91, "The Guardian ", false, "00AAFF", "", true, 0, 0),
+
+		BetaTester(92, "BetaTester ",  false, "FF0000", "AA0000", false, 0, 0);
 		
 		private int id, prestige, loyalty;
 		private String name, color, shade;

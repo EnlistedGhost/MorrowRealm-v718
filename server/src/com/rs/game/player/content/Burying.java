@@ -15,15 +15,15 @@ import com.rs.utils.Utils;
 public class Burying {
 
 	public enum Bone {
-		NORMAL(526, 150),
+		NORMAL(526, 1),
 
-		BIG(532, 300),
+		BIG(532, 5),
 
-		DRAGON(536, 430),
+		DRAGON(536, 20),
 
-		OURG(4834, 420),
+		OURG(4834, 18),
 
-		FROST_DRAGON(18830, 500);
+		FROST_DRAGON(18830, 25);
 
 		private int id;
 		private double experience;

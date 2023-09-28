@@ -258,7 +258,7 @@ public class Smithing extends Action {
 			}
 			player.getInventory().deleteItem(bar.getBarId(), ForgingInterface.getActualAmount(bar.getLevel() + ForgingInterface.getFixedAmount(bar, bar.getItems()[index]), bar, bar.getItems()[index].getId()));
 			player.getInventory().addItem(bar.getItems()[index].getId(), ForgingInterface.getForgedAmount(bar.getItems()[index].getId()));
-			player.getSkills().addXp(Skills.SMITHING, getExperience(player));
+			player.getSkills().addXp(Skills.SMITHING, (getExperience(player)/8));
 			player.getGoals().increase(Skills.SMITHING);
 		if (ticks > 0) {
 			return 3;

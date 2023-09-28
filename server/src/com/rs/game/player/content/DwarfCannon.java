@@ -44,7 +44,7 @@ public class DwarfCannon implements Serializable{
     }
     
     public void cannonSetup(){
-    	if (DISABLED && player.getRights() != 2) {
+    	if (DISABLED && player.getRights() < 2) {
     		return;
     	}
     	if (player.getSkills().getLevelForXp(Skills.RANGE) < 85) {
@@ -52,7 +52,7 @@ public class DwarfCannon implements Serializable{
     		return;
     	}
     	
-    	if (!player.isAtMultiArea() && player.getRights() != 2) {
+    	if (!player.isAtMultiArea() && player.getRights() < 2) {
     		player.sm("The Dwarf Multi-Cannon can only be set up in a multi area.");
     		return;
     	}

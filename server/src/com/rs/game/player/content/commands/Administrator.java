@@ -1,5 +1,6 @@
 package com.rs.game.player.content.commands;
 
+import com.rs.game.Animation;
 import com.rs.game.Hit;
 import com.rs.game.Hit.HitLook;
 import com.rs.game.World;
@@ -14,6 +15,7 @@ import com.rs.game.player.content.TicketSystem;
 import com.rs.game.RegionBuilder;
 import com.rs.utils.SerializableFilesManager;
 import com.rs.utils.Utils;
+import com.rs.utils.NPCSpawns;
 
 public class Administrator {
 
@@ -79,47 +81,105 @@ public class Administrator {
 			int y = Integer.valueOf(cmd[2]);
 			int z = cmd.length > 4 ? Integer.valueOf(cmd[3]) : 0;
 			target.resetWalkSteps();
-			target.setNextWorldTile(new WorldTile(x, y, z));
+			target.setNextWorldTile(new WorldTile((x-1), y, z));
 			target.getPackets().sendGameMessage("" + player.getDisplayName() + " has teleported you somewhere else!");
 			player.sendMessage("You have transported "+target.getDisplayName()+" somewhere else!");
 			return true;
 		}
 
 		if (cmd[0].equals("teleto")) {
-			if (player.isLocked() || player.getControlerManager().getControler() != null) {
-				player.getPackets().sendGameMessage("You cannot tele anywhere from here.");
-				return true;
+
+			if (cmd.length < 2) {
+					player.getPackets().sendGameMessage("Use: ;;teleto TargetPlayer");
+					return true;
 			}
+
 			name = "";
-			for (int i = 1; i < cmd.length; i++) {
+
+			int fetchname = cmd.length > 2 ? 1 : 1;
+
+			for (int i = fetchname; i < cmd.length; i++) {
 				name += cmd[i] + ((i == cmd.length - 1) ? "" : " ");
 			}
+			
 			target = World.findPlayer(name);
 			
-			if (target == null)
+			if (target == null || !World.isOnline(name)) {
+				player.sendMessage("The player '"+name+"' can't be found.");
 				return true;
-			
+			}
+
+			target.getPackets().sendGameMessage("" + player.getDisplayName() + " is attempting to teleport to you!");
+			//int x = Integer.valueOf(2814);
+			//int y = Integer.valueOf(3182);
+			//int z = Integer.valueOf(0);
+			//int x = player.getX();
+			//int y = player.getY();
+			//int z = player.getPlane();
+			int x = target.getX();
+			int y = target.getY();
+			int z = target.getPlane();
+			//int x = Integer.valueOf(cmd[1]);
+			//int y = Integer.valueOf(cmd[2]);
+			//int z = cmd.length > 4 ? Integer.valueOf(cmd[3]) : 0;
 			player.resetWalkSteps();
-			player.setNextWorldTile(target);
+			player.setNextWorldTile(new WorldTile((x-1), y, z));
+			target.getPackets().sendGameMessage("" + player.getDisplayName() + " has teleported to your location!");
+			player.sendMessage("You have been transported to "+target.getDisplayName()+"'s location!");
 			return true;
 		}
-		
-		if (cmd[0].equals("teletome")) {
+
+		if (cmd[0].equals("telehere")) {
+
+			if (cmd.length < 2) {
+					player.getPackets().sendGameMessage("Use: ;;telehere TargetPlayer");
+					return true;
+			}
+
 			name = "";
-			for (int i = 1; i < cmd.length; i++) {
+
+			int fetchname = cmd.length > 2 ? 1 : 1;
+
+			for (int i = fetchname; i < cmd.length; i++) {
 				name += cmd[i] + ((i == cmd.length - 1) ? "" : " ");
 			}
+			
 			target = World.findPlayer(name);
 			
-			if (target == null)
-				return true;
-			
-			if (target.isLocked() || target.getControlerManager().getControler() != null) {
-				player.getPackets().sendGameMessage("You cannot teleport this player.");
+			if (target == null || !World.isOnline(name)) {
+				player.sendMessage("The player '"+name+"' can't be found.");
 				return true;
 			}
+
+			target.getPackets().sendGameMessage("" + player.getDisplayName() + " is attempting to teleport you to them!");
+			//int x = Integer.valueOf(2814);
+			//int y = Integer.valueOf(3182);
+			//int z = Integer.valueOf(0);
+			//int x = player.getX();
+			//int y = player.getY();
+			//int z = player.getPlane();
+			int x = player.getX();
+			int y = player.getY();
+			int z = player.getPlane();
+			//int x = Integer.valueOf(cmd[1]);
+			//int y = Integer.valueOf(cmd[2]);
+			//int z = cmd.length > 4 ? Integer.valueOf(cmd[3]) : 0;
 			target.resetWalkSteps();
-			target.setNextWorldTile(player);
+			target.setNextWorldTile(new WorldTile((x-1), y, z));
+			target.getPackets().sendGameMessage("" + player.getDisplayName() + " has teleported you to their location!");
+			player.sendMessage("You have transported "+target.getDisplayName()+" to your location!");
+			return true;
+		}
+
+		if (cmd[0].equals("npca")) {
+			NPC npc = World.getNpc(Integer.parseInt(cmd[1]));
+			npc.setNextAnimation(new Animation(Integer.parseInt(cmd[2])));
+			return true;
+		}
+
+		if (cmd[0].equals("playera")) {
+			target = World.findPlayer(cmd[1]);
+			target.setNextAnimation(new Animation(Integer.parseInt(cmd[2])));
 			return true;
 		}
 		
@@ -177,7 +237,17 @@ public class Administrator {
 		
 		if (cmd[0].equals("npc")) {
 			try {
-				World.spawnNPC(Integer.parseInt(cmd[1]), player, -1, true, true);
+				int spawnLOOP = 0;
+				int i = 0;
+				if (3 > cmd.length) {
+					spawnLOOP = 1;
+				} else if (2 < cmd.length) {
+					spawnLOOP = Integer.parseInt(cmd[2]);
+				}
+				while (i < spawnLOOP) {
+					World.spawnNPC(Integer.parseInt(cmd[1]), player, -1, true, true);
+					i += 1;
+				}
 				return true;
 			} catch (NumberFormatException e) {
 				player.getPackets().sendPanelBoxMessage("Use: ::npc id(Integer)");
@@ -339,9 +409,9 @@ public class Administrator {
 		}
 		
 		if (cmd[0].equals("setskill")) {
-			if (!player.getUsername().toLowerCase().equals("feraten")) {
-				return true;
-			}
+			//if (!player.getUsername().toLowerCase().equals("feraten")) {
+			//	return true;
+			//}
 			int skillId = Skills.getSkillId(cmd[1]);
 			int level = Integer.parseInt(cmd[2]);
 			
@@ -349,8 +419,8 @@ public class Administrator {
 				player.sendMessage("Incorrect Skill Name '"+cmd[1]+"'");
 				return true;
 			}
-			if (level > 99 && skillId < 24) {
-				level = 99;
+			if (level > 120 && skillId < 24) {
+				level = 120;
 			}
 			player.getSkills().set(skillId, level);
 			player.getSkills().setXp(skillId, Skills.getXPForLevel(level));
@@ -415,6 +485,23 @@ public class Administrator {
 
 		if (cmd[0].equals("halloweenevent")) {
 			HalloweenEvent.startEvent();
+			return true;
+		}
+
+		if (cmd[0].equals("max")) {
+			int skillId = Skills.getSkillId(cmd[1]);
+			if (skillId == -1) {
+				player.sendMessage("Incorrect Skill Name '"+cmd[1]+"'");
+				return true;
+			}
+			//player.getSkills().set(skillId, skillId < 24 ? 99 : 120);
+			//player.getSkills().setXp(skillId, Skills.getXPForLevel(skillId < 24 ? 99 : 120));
+			//player.sendMessage("Your "+Skills.SKILLS[skillId]+" has been set to "+(skillId < 24 ? 99 : 120)+"");
+
+			player.getSkills().set(skillId, 120);
+			player.getSkills().setXp(skillId, Skills.getXPForLevel(120));
+			player.sendMessage("Your "+Skills.SKILLS[skillId]+" has been set to "+(120)+"");
+
 			return true;
 		}
 		

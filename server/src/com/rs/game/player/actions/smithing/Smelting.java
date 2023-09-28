@@ -198,7 +198,7 @@ public class Smelting extends Action {
 	public int processWithDelay(Player player) {
 		ticks--;
 		player.setNextAnimation(new Animation(3243));
-		player.getSkills().addXp(Skills.SMITHING, bar.getExperience());
+		player.getSkills().addXp(Skills.SMITHING, (bar.getExperience()/8));
 		player.getGoals().increase(Skills.SMITHING);
 		for (Item required : bar.getItemsRequired()) {
 			player.getInventory().deleteItem(required.getId(), required.getAmount());

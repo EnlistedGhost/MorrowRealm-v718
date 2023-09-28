@@ -229,6 +229,36 @@ public class Foods {
 		CHOCOLATE_BOMB(2185, 15),
 
 		/**
+		 * Fruit and Veggies
+		 */
+		CABBAGE(1965, 1, Effect.CABAGE_MESSAGE),
+
+		ONION(1957, 1, Effect.ONION_MESSAGE),
+
+		EVIL_TURNIP(12134, 1),
+
+		BANANA(1963, 2),
+
+		/**
+		 * Christmas Event 2019
+		 */
+		ROAST_POTATOES(15429, 200),
+
+		TURKEY_DRUMSTICK(15428, 200),
+
+		CHRISTMAS_PUDDING(26546, 350),
+
+		YULE_LOG(15430, 350),
+
+		/**
+		 * Breads
+		 */
+		BREAD(2309, 5),
+
+		BAGUETTE(6961, 20),
+
+
+		/**
 		 * Misc
 		 */
 		CAKE(1891, 4, 1893),
@@ -244,14 +274,6 @@ public class Foods {
 		CHOCOLATE_SLICE(1901, 4),
 
 		FISHCAKE(7530, 11),
-
-		BREAD(2309, 5),
-
-		CABBAGE(1965, 1, Effect.CABAGE_MESSAGE),
-
-		ONION(1957, 1, Effect.ONION_MESSAGE),
-
-		EVIL_TURNIP(12134, 1),
 
 		POT_OF_CREAM(2130, 1),
 

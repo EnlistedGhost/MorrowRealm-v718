@@ -9,6 +9,7 @@ public class RightsManager {
 		Owner("Owner", "FFFF00", "AF0000", 7),
 		Admin("Admin", "FF00FF", "DD00DD", 2),
 		Mod("Mod", "FF9500", "ff4400", 1),
+		BetaTester("BetaTester", "00FF00", "00AA00", 3),
 		R_Donator("R. Donor", "FF0000", "AA0000", 4),
 		S_Donator("S. Donor", "0085F2", "0000FF", 5),
 		E_Donator("E. Donor", "00FF00", "00AA00", 6),
@@ -52,7 +53,7 @@ public class RightsManager {
 	}
 	
 	public static String getInfo(Player player) {
-		int crownId = player.getRights() == 1 ? 0 : player.getRights() == 2 ? 1 : player.getRights();
+		int crownId = player.getRights() == 1 ? 0 : player.getRights() == 2 ? 1 : player.getRights() == 3 ? 0 : player.getRights();
 		Ranks t = forRights(player.getRights());
 		if (player.isAdmin())
 			t = Ranks.Admin;

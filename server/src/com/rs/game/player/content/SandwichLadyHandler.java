@@ -3,6 +3,7 @@ package com.rs.game.player.content;
 import com.rs.Settings;
 import com.rs.game.WorldTile;
 import com.rs.game.player.Player;
+import com.rs.game.player.content.Magic;
 
 /**
  * @author JazzyYaYaYa | Nexon | Fuzen Seth
@@ -19,7 +20,7 @@ public class SandwichLadyHandler {
 		if (player.getInventory().containsItem(6961, 1)) {
 			player.getControlerManager().forceStop();
 			player.getInterfaceManager().sendInterfaces();
-			player.setNextWorldTile(HOME_TELE);
+			//player.setNextWorldTile(HOME_TELE);
 			player.sm("Congratulations, you've completed Sandwich Lady event!");
 			player.getInventory().addItem(14664, 1);
 			player.getInventory().refresh();
@@ -28,7 +29,7 @@ public class SandwichLadyHandler {
 		}
 		else {
 			player.closeInterfaces();
-			player.sm("You haven't completed the event yet, talk to lady.");
+			player.sm("You haven't completed the event yet, talk to the Sandwich Lady.");
 		}
 	}
 	
@@ -49,39 +50,45 @@ public class SandwichLadyHandler {
 			player.getControlerManager().forceStop();
 			player.getInterfaceManager().closeInterface(SnackScreen, SnackScreen);
 			player.closeInterfaces();
-			player.setNextFaceWorldTile(WRONG_ANSWER_TELE);
-			player.sm("You have picked wrong snack, she'll force teleports you away.");
+			Magic.sendNormalTeleportSpell(player, 0, 0, new WorldTile(WRONG_ANSWER_TELE));
+			//player.setNextFaceWorldTile(WRONG_ANSWER_TELE);
+			player.sm("You have picked wrong snack, she force teleports you away.");
 			} 
 		if (componentId == 12) {
 			player.closeInterfaces();
 			player.lock(5);
 			player.getControlerManager().forceStop();
-			player.setNextFaceWorldTile(WRONG_ANSWER_TELE);
-			player.sm("You have picked wrong snack, she'll force teleports you away.");
+			Magic.sendNormalTeleportSpell(player, 0, 0, new WorldTile(WRONG_ANSWER_TELE));
+			//player.setNextFaceWorldTile(WRONG_ANSWER_TELE);
+			player.sm("You have picked wrong snack, she force teleports you away.");
 				} 
 		if (componentId == 22) {
 			player.closeInterfaces();
 			player.getControlerManager().forceStop();
-			player.setNextFaceWorldTile(WRONG_ANSWER_TELE);
-			player.sm("You have picked wrong snack, she'll force teleports you away.");
+			Magic.sendNormalTeleportSpell(player, 0, 0, new WorldTile(WRONG_ANSWER_TELE));
+			//player.setNextFaceWorldTile(WRONG_ANSWER_TELE);
+			player.sm("You have picked wrong snack, she force teleports you away.");
 				} 
 		if (componentId == 14) {
 			player.closeInterfaces();
 			player.getControlerManager().forceStop();
-			player.setNextFaceWorldTile(WRONG_ANSWER_TELE);
-			player.sm("You have picked wrong snack, she'll force teleports you away.");
+			Magic.sendNormalTeleportSpell(player, 0, 0, new WorldTile(WRONG_ANSWER_TELE));
+			//player.setNextFaceWorldTile(WRONG_ANSWER_TELE);
+			player.sm("You have picked wrong snack, she force teleports you away.");
 				} 
 		if (componentId == 16) {
 			player.closeInterfaces();
 			player.getControlerManager().forceStop();
-			player.setNextFaceWorldTile(WRONG_ANSWER_TELE);
-			player.sm("You have picked wrong snack, she'll force teleports you away.");
+			Magic.sendNormalTeleportSpell(player, 0, 0, new WorldTile(WRONG_ANSWER_TELE));
+			//player.setNextFaceWorldTile(WRONG_ANSWER_TELE);
+			player.sm("You have picked wrong snack, she force teleports you away.");
 				} 
 		if (componentId == 20) {
 			player.getControlerManager().forceStop();
 			player.closeInterfaces();
-			player.setNextFaceWorldTile(WRONG_ANSWER_TELE);
-			player.sm("You have picked wrong snack, she'll force teleports you away.");
+			Magic.sendNormalTeleportSpell(player, 0, 0, new WorldTile(WRONG_ANSWER_TELE));
+			//player.setNextFaceWorldTile(WRONG_ANSWER_TELE);
+			player.sm("You have picked wrong snack, she force teleports you away.");
 		} 
 	}
 	}	

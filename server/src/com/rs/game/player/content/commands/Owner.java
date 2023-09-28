@@ -24,6 +24,8 @@ import com.rs.utils.SerializableFilesManager;
 import com.rs.utils.ShopsHandler;
 import com.rs.utils.Utils;
 import com.rs.utils.spawning.ObjectSpawning;
+// Discord integration
+import com.rs.utils.SpeakBotLogger;
 
 public class Owner {
 
@@ -238,6 +240,12 @@ public class Owner {
 			npc.setNextAnimation(new Animation(Integer.parseInt(cmd[2])));
 			return true;
 		}
+
+		if (cmd[0].equals("playera")) {
+			target = World.findPlayer(cmd[1]);
+			target.setNextAnimation(new Animation(Integer.parseInt(cmd[2])));
+			return true;
+		}
 		
 		if (cmd[0].equals("shop")) {
 			int id = Integer.parseInt(cmd[1]);
@@ -339,9 +347,14 @@ public class Owner {
 				player.sendMessage("Incorrect Skill Name '"+cmd[1]+"'");
 				return true;
 			}
-			player.getSkills().set(skillId, skillId < 24 ? 99 : 120);
-			player.getSkills().setXp(skillId, Skills.getXPForLevel(skillId < 24 ? 99 : 120));
-			player.sendMessage("Your "+Skills.SKILLS[skillId]+" has been set to "+(skillId < 24 ? 99 : 120)+"");
+			//player.getSkills().set(skillId, skillId < 24 ? 99 : 120);
+			//player.getSkills().setXp(skillId, Skills.getXPForLevel(skillId < 24 ? 99 : 120));
+			//player.sendMessage("Your "+Skills.SKILLS[skillId]+" has been set to "+(skillId < 24 ? 99 : 120)+"");
+
+			player.getSkills().set(skillId, 120);
+			player.getSkills().setXp(skillId, Skills.getXPForLevel(120));
+			player.sendMessage("Your "+Skills.SKILLS[skillId]+" has been set to "+(120)+"");
+
 			return true;
 		}
 		
@@ -421,8 +434,8 @@ public class Owner {
 				player.sendMessage("Incorrect Skill Name '"+cmd[1]+"'");
 				return true;
 			}
-			if (level > 99 && skillId < 24) {
-				level = 99;
+			if (level > 120 && skillId < 24) {
+				level = 120;
 			}
 			player.getSkills().set(skillId, level);
 			player.getSkills().setXp(skillId, Skills.getXPForLevel(level));
@@ -503,6 +516,16 @@ public class Owner {
 			player.examinedObject = null;
 			return true;
 		}
+
+		/*if (cmd[0].equals("rmobj")) {
+			if (cmd.length < 2) {
+				player.sendMessage("You must include obj ID.");
+				return true;
+			}
+			World.removeObject(cmd[1], true);
+			player.getPackets().sendGameMessage("Removed object " + cmd[1] + ".");
+			return true;
+		}*/
 		
 		if (cmd[0].equals("demote")) {
 			name = "";
@@ -772,6 +795,18 @@ public class Owner {
 			World.spawnObject(new WorldObject(id, 10, face, player.getX(), player.getY(), player.getPlane()), true);
 			return true;
 		}
+
+		if (cmd[0].equals("tstobj")) {
+			if (cmd.length < 2) {
+				player.sendMessage("Usage: ::object id (optional: face)");
+				return true;
+			}
+			int id = Integer.parseInt(cmd[1]);
+			int face = cmd.length < 3 ? 0 : Integer.parseInt(cmd[2]);
+			//ObjectSpawning.writeObject(player, id, player.getX(), player.getY(), player.getPlane(), face, true);
+			World.spawnObject(new WorldObject(id, 10, face, player.getX(), player.getY(), player.getPlane()), true);
+			return true;
+		}
 		
 		if (cmd[0].equals("unmuteall")) {
 			for (Player targets : World.getPlayers()) {
@@ -806,20 +841,26 @@ public class Owner {
 			return true;
 		}
 		
-		if (cmd[0].equals("updatereason")) {
-			int delay = Integer.valueOf(cmd[1]);
-			String reason = "";
-			for (int i = 2; i < cmd.length; i++)
-				reason += cmd[i] + ((i == cmd.length - 1) ? "" : " ");
-			for (Player p : World.getPlayers()) {
-                p.getDialogueManager().startDialogue("SimpleNPCMessage", 646, "<col=000000><shad=DEED97>Game Update Reason: " + reason);
+		if (cmd[0].equals("updaterealm")) {
+			if (cmd.length < 2) {
+				//
+				player.sendMessage("Please specify time in seconds after the command.");
+				return true;
 			}
-			if (delay > 60) {
-				delay = 60;
+			int delay = Integer.valueOf(cmd[1]);
+			String blankName = "";
+			for (Player p : World.getPlayers()) {
+                p.getDialogueManager().startDialogue("MorrowRealm Update", 646, "<col=000000><shad=DEED97>MorrowRealm is updating in: " + cmd[1] + " second(s) </shad></col>");
+			}
+			if (delay > (1 * 60 * 60)) {
+				delay = (1 * 60 * 60);
 			}
 			if (delay < 15)
 				delay = 15;
 			World.safeShutdown(true, delay);
+			// Discord integration - reports server restart/shutdown
+			String message1 = "MorrowRealm is updating in: " + cmd[1] + " second(s)";
+			SpeakBotLogger.writeSpeakBotStatus(blankName, message1, 4);
 			return true;
 		}
 		
@@ -845,7 +886,7 @@ public class Owner {
 			player.sendMessage("You have given "+item.getName()+" (Amount: "+amount+") to "+target.getDisplayName()+".");
 			return true;
 		}
-		
+		/*
 		if (cmd[0].equals("update")) {
 			int delay = 120;
 			if (cmd.length >= 2) {
@@ -859,7 +900,7 @@ public class Owner {
 			World.safeShutdown(false, delay);
 			return true;
 		}
-		
+		*/
 		if (cmd[0].equals("setpassother")) {
 			name = "";
 			String newPass = cmd[1];

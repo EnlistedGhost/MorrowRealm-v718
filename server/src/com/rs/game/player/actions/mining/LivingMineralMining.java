@@ -85,7 +85,7 @@ public class LivingMineralMining extends MiningBase {
 	}
 
 	private void addOre(Player player) {
-		player.getSkills().addXp(Skills.MINING, 25);
+		player.getSkills().addXp(Skills.MINING, (25/10));
 		player.getInventory().addItem(15263, Utils.random(5, 25));
 		player.getPackets().sendGameMessage(
 				"You manage to mine some living minerals.", true);

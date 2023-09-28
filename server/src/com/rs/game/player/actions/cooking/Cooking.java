@@ -21,67 +21,67 @@ public class Cooking extends Action {
 		/**
 		 * Cooked Meat
 		 */
-		RAW_MEAT(new Item(2132, 1), 1, 200, 30, new Item(2146, 1), new Item(
+		RAW_MEAT(new Item(2132, 1), 1, 200, 15, new Item(2146, 1), new Item(
 				2142, 1), false, false),
 
 		/**
 		 * Cooked Chicken
 		 */
-		RAW_CHICKEN(new Item(2138, 1), 1, 200, 30, new Item(2144, 1), new Item(
+		RAW_CHICKEN(new Item(2138, 1), 1, 200, 15, new Item(2144, 1), new Item(
 				4291, 1), false, false),
 
 		/**
 		 * Ugthanki Meat
 		 */
-		RAW_UGTHANKI_MEAT(new Item(1859, 1), 1, 200, 30, new Item(2146, 1),
+		RAW_UGTHANKI_MEAT(new Item(1859, 1), 1, 200, 20, new Item(2146, 1),
 				new Item(1861, 1), false, false),
 
 		/**
 		 * Raw Rabbit
 		 */
-		RAW_RABBIT(new Item(3226, 1), 1, 200, 30, new Item(7222, 1), new Item(
+		RAW_RABBIT(new Item(3226, 1), 1, 200, 20, new Item(7222, 1), new Item(
 				3228, 1), false, true),
 
 		/**
 		 * Bird Meat
 		 */
-		RAW_BIRD_MEAT(new Item(9978, 1), 11, 200, 62, new Item(9982, 1),
+		RAW_BIRD_MEAT(new Item(9978, 1), 11, 200, 32, new Item(9982, 1),
 				new Item(9980, 1), true, false),
 
 		/**
 		 * Crab meat
 		 */
-		RAW_CRAB_MEAT(new Item(7518, 1), 21, 200, 100, new Item(7520, 1),
+		RAW_CRAB_MEAT(new Item(7518, 1), 21, 200, 45, new Item(7520, 1),
 				new Item(7521, 1), false, false),
 
 		/**
 		 * Beast meat
 		 */
-		RAW_BEAST_MEAT(new Item(9986, 1), 21, 200, 82, new Item(9990, 1),
+		RAW_BEAST_MEAT(new Item(9986, 1), 21, 200, 47, new Item(9990, 1),
 				new Item(9988, 1), true, false),
 
 		/**
 		 * Chompy
 		 */
-		RAW_CHOMPY(new Item(2876, 1), 30, 200, 140, new Item(2880, 1),
+		RAW_CHOMPY(new Item(2876, 1), 30, 200, 52, new Item(2880, 1),
 				new Item(2878, 1), false, true),
 
 		/**
 		 * Jubbly
 		 */
-		RAW_JUBBLY(new Item(7566, 1), 41, 200, 160, new Item(7570, 1),
+		RAW_JUBBLY(new Item(7566, 1), 41, 200, 64, new Item(7570, 1),
 				new Item(7568, 1), true, false),
 
 		/**
 		 * CrayFish
 		 */
-		RAW_CRAYFISH(new Item(13435, 1), 1, 32, 30, new Item(13437, 1),
+		RAW_CRAYFISH(new Item(13435, 1), 1, 32, 20, new Item(13437, 1),
 				new Item(13433, 1), false, false),
 
 		/**
 		 * Shrimp
 		 */
-		RAW_SHRIMP(new Item(317, 1), 1, 34, 30, new Item(7954, 1), new Item(
+		RAW_SHRIMP(new Item(317, 1), 1, 34, 15, new Item(7954, 1), new Item(
 				315, 1), false, false),
 
 		/**
@@ -93,55 +93,55 @@ public class Cooking extends Action {
 		/**
 		 * Sardine
 		 */
-		RAW_SARDINE(new Item(327, 1), 1, 38, 40, new Item(323, 1), new Item(
+		RAW_SARDINE(new Item(327, 1), 1, 38, 20, new Item(323, 1), new Item(
 				325, 1), false, false),
 
 		/**
 		 * Anchovies
 		 */
-		RAW_ANCHOVIES(new Item(321, 1), 1, 34, 30, new Item(323, 1), new Item(
+		RAW_ANCHOVIES(new Item(321, 1), 1, 34, 15, new Item(323, 1), new Item(
 				319, 1), false, false),
 
 		/**
 		 * Karambwan
 		 */
-		POISON_KARAMBWAN(new Item(3142, 1), 1, 20, 80, new Item(3148, 1),
+		POISON_KARAMBWAN(new Item(3142, 1), 1, 20, 40, new Item(3148, 1),
 				new Item(3151, 1), false, false),
 
 		/**
 		 * Herring
 		 */
-		RAW_HERRING(new Item(345, 1), 5, 37, 50, new Item(357, 1), new Item(
+		RAW_HERRING(new Item(345, 1), 5, 37, 30, new Item(357, 1), new Item(
 				347, 1), false, false),
 
 		/**
 		 * Mackerel
 		 */
-		RAW_MACKEREL(new Item(353, 1), 10, 45, 60, new Item(357, 1), new Item(
+		RAW_MACKEREL(new Item(353, 1), 10, 45, 40, new Item(357, 1), new Item(
 				355, 1), false, false),
 
 		/**
 		 * Trout
 		 */
-		RAW_TROUT(new Item(335, 1), 15, 50, 70, new Item(343, 1), new Item(333,
+		RAW_TROUT(new Item(335, 1), 15, 50, 50, new Item(343, 1), new Item(333,
 				1), false, false),
 
 		/**
 		 * Cod
 		 */
-		RAW_COD(new Item(341, 1), 18, 39, 75, new Item(343, 1),
+		RAW_COD(new Item(341, 1), 18, 39, 60, new Item(343, 1),
 				new Item(339, 1), false, false),
 
 		/**
 		 * Pike
 		 */
-		RAW_PIKE(new Item(349, 1), 20, 52, 80, new Item(349, 1), new Item(351,
+		RAW_PIKE(new Item(349, 1), 20, 52, 70, new Item(349, 1), new Item(351,
 				1), false, false),
 
 		/**
 		 * Salmon
 		 */
-		RAW_SALMON(new Item(331, 1), 25, 58, 90, new Item(343, 1), new Item(
+		RAW_SALMON(new Item(331, 1), 25, 58, 80, new Item(343, 1), new Item(
 				329, 1), false, false),
 
 		/**
@@ -201,31 +201,31 @@ public class Cooking extends Action {
 		/**
 		 * Shark
 		 */
-		RAW_SHARK(new Item(383, 1), 80, 100, 210, new Item(387, 1), new Item(
+		RAW_SHARK(new Item(383, 1), 80, 100, 190, new Item(387, 1), new Item(
 				385, 1), false, false),
 
 		/**
 		 * Sea turtle
 		 */
-		RAW_SEA_TURTLE(new Item(395, 1), 82, 200, 212, new Item(399, 1),
+		RAW_SEA_TURTLE(new Item(395, 1), 82, 200, 210, new Item(399, 1),
 				new Item(397, 1), false, false),
 
 		/**
 		 * Cavefish
 		 */
-		RAW_CAVEFISH(new Item(15264, 1), 88, 100, 214, new Item(15268, 1),
+		RAW_CAVEFISH(new Item(15264, 1), 88, 100, 225, new Item(15268, 1),
 				new Item(15266, 1), false, false),
 
 		/**
 		 * Manta Ray
 		 */
-		RAW_MANTA_RAY(new Item(389, 1), 91, 200, 216, new Item(393, 1),
+		RAW_MANTA_RAY(new Item(389, 1), 91, 200, 237, new Item(393, 1),
 				new Item(391, 1), false, false),
 
 		/**
 		 * RockTail
 		 */
-		RAW_ROCKTAIL(new Item(15270, 1), 92, 100, 225, new Item(15274, 1),
+		RAW_ROCKTAIL(new Item(15270, 1), 92, 100, 245, new Item(15274, 1),
 				new Item(15272, 1), false, false),
 
 		/**
@@ -291,7 +291,7 @@ public class Cooking extends Action {
 		/**
 		 * Potato
 		 */
-		RAW_POTATO(new Item(1942, 1), 7, 200, 15, new Item(6699, 1), new Item(
+		RAW_POTATO(new Item(1942, 1), 7, 200, 10, new Item(6699, 1), new Item(
 				6701, 1), false, false);
 
 		private static Map<Short, Cookables> ingredients = new HashMap<Short, Cookables>();
@@ -456,7 +456,7 @@ public class Cooking extends Action {
 		} else {
 			player.getInventory().deleteItem(item.getId(), 1);
 			player.getInventory().addItem(cook.getProduct().getId(), cook.getProduct().getAmount());
-			player.getSkills().addXp(Skills.COOKING, cook.getXp());
+			player.getSkills().addXp(Skills.COOKING, (cook.getXp()/10));
 			player.getGoals().increase(Skills.COOKING);
 			player.getPackets().sendGameMessage("You successfully cook the " + cook.getProduct().getDefinitions().getName().toLowerCase() + ".", true);
 		}

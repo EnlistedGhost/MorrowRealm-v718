@@ -1,7 +1,7 @@
 package com.rs.game.player.dialogues.impl;
 
 import com.rs.game.item.Item;
-import com.rs.game.player.actions.Herblore;
+import com.rs.game.player.actions.herblore.Herblore;
 import com.rs.game.player.content.SkillsDialogue;
 import com.rs.game.player.dialogues.Dialogue;
 

@@ -321,11 +321,11 @@ public class Fletching extends Action {
 
 		private Fletch(int id, int selected, int[] product, int level[], double[] xp, Animation anim) {
 			this.id = id;
-			this.product = product;
 			this.selected = selected;
+			this.product = product;
+			this.level = level;
 			this.xp = xp;
 			this.anim = anim;
-			this.level = level;
 		}
 
 		public int getId() {

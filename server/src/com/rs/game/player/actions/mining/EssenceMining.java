@@ -128,7 +128,7 @@ public class EssenceMining extends MiningBase {
 
 	private void addOre(Player player) {
 		double xpBoost = 1.0;
-		player.getSkills().addXp(Skills.MINING, definitions.getXp() * xpBoost);
+		player.getSkills().addXp(Skills.MINING, (definitions.getXp()/10) * xpBoost);
 		player.getInventory().addItem(definitions.getOreId(), 1);
 		String oreName = ItemDefinitions.getItemDefinitions(definitions.getOreId()).getName().toLowerCase();
 		player.getPackets().sendGameMessage("You mine some " + oreName + ".", true);

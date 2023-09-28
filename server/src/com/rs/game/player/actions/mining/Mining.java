@@ -215,7 +215,7 @@ public final class Mining extends MiningBase {
 			xpBoost += 0.500;
 		
 		double totalXp = definitions.getXp() * xpBoost;
-		player.getSkills().addXp(Skills.MINING, totalXp);
+		player.getSkills().addXp(Skills.MINING, (totalXp/10));
 		
 		if (definitions.getOreId() != -1) {
 			player.setOresMined(player.getOresMined() + 1);

@@ -53,6 +53,7 @@ import com.rs.game.player.content.custom.RockCake;
 import com.rs.game.player.content.interfaces.WelcomeBook;
 import com.rs.game.player.content.mission.Entrance;
 import com.rs.game.player.content.toolbelt.Toolbelt;
+//import com.rs.game.player.content.custom.PlayerLoginTimeout;
 import com.rs.game.player.controlers.Barrows;
 import com.rs.game.player.controlers.FightKiln;
 import com.rs.game.tasks.WorldTask;
@@ -64,6 +65,9 @@ import com.rs.utils.Utils;
 public class InventoryOptionsHandler {
 
 	public static void handleItemOption2(final Player player, final int slotId, final int itemId, Item item) {
+		// Reset player timeout
+		//PlayerLoginTimeout.PlayerTimeoutReset();
+
 		if (Firemaking.isFiremaking(player, itemId))
 			return;
 		
@@ -135,6 +139,8 @@ public class InventoryOptionsHandler {
 	}
 
 	public static void handleItemOption1(Player player, final int slotId, final int itemId, Item item) {
+		// Reset player timeout
+		//PlayerLoginTimeout.PlayerTimeoutReset();
 		long time = Utils.currentTimeMillis();
 		if (player.getLockDelay() >= time || player.getEmotesManager().getNextEmoteEnd() >= time)
 			return;
@@ -220,8 +226,8 @@ public class InventoryOptionsHandler {
 			return;
 		}
 		
-		// Gem Cutting controls
-		if (player.getTools().contains(1755)) {
+		// Gem Cutting controls TODO: provide better user prompts
+		if (player.getTools().contains(1755) || player.getInventory().contains(1755)) {
 			switch(item.getId()) {
 			case 1625:
 				GemCutting.cut(player, Gem.OPAL);
@@ -262,6 +268,16 @@ public class InventoryOptionsHandler {
 			case "onyx":
 				player.getDialogueManager().startDialogue("GemDialogue", itemId);
 				break;
+		}
+
+		// Log crafting - Fletching - (option 1 click) handling
+		if ((itemId >= 1511 && itemId <= 1521) || itemId == 24121 || itemId == 21600 || itemId == 2862) {
+			if (player.getTools().contains(946) || player.getInventory().contains(946)) {
+				Fletch fletch = Fletch.forId(itemId);
+				player.getDialogueManager().startDialogue("FletchingD", fletch);
+			} else {
+				player.sm("You need a knife in order to fletch these logs.");
+			}
 		}
 		
 		if (itemId == 6) {
@@ -353,6 +369,25 @@ public class InventoryOptionsHandler {
 			player.getInterfaceManager().sendInterface(1123);
 			player.getInventory().deleteItem(14664, 1);
 			player.sm("Random event gift box opens... please, select a reward.");
+			return;
+		}
+
+		//Armor Generators
+		if (itemId == 26687) {
+			player.lock(3);
+			//player.getInterfaceManager().sendInterface(1123);
+			//player.getInventory().deleteItem(14664, 1);
+			//player.getDialogueManager().startDialogue("ArmorGeneratorStandard");
+			//player.sm("Armor generator (standard) opens... please select an armor set.");
+			return;
+		}
+		// " "
+		if (itemId == 26688) {
+			player.lock(3);
+			//player.getInterfaceManager().sendInterface(1123);
+			//player.getInventory().deleteItem(14664, 1);
+			player.getDialogueManager().startDialogue("ArmorGeneratorDelux");
+			player.sm("Armor generator (delux) opens... please select an armor set.");
 			return;
 		}
 		
@@ -497,11 +532,23 @@ public class InventoryOptionsHandler {
  			*/
  			// TODO: Add toolbet item checking in addition to current inventory checking
 			if ((itemUsed.getId() >= 1511 && itemUsed.getId() <= 1521) || itemUsed.getId() == 24121 || itemUsed.getId() == 21600 || itemUsed.getId() == 2862) {
-				if (usedWith.getId() != 946)
+				if (usedWith.getId() != 946) {
 					player.sm("You need a knife to fletch this item.");
-				else {
+					return;
+				} else {
 					Fletch fletch = Fletch.forId(itemUsed.getId());
 					player.getDialogueManager().startDialogue("FletchingD", fletch);
+					return;
+				}
+			}
+			if (itemUsed.getId() == 946) {
+				if ((usedWith.getId() < 1511 && usedWith.getId() > 1521) && usedWith.getId() != 24121 && usedWith.getId() != 21600 && usedWith.getId() != 2862) {
+					player.sm("You need a fletchable item to use with this knife.");
+					return;
+				} else {
+					Fletch fletch = Fletch.forId(usedWith.getId());
+					player.getDialogueManager().startDialogue("FletchingD", fletch);
+					return;
 				}
 			}
 			if ((itemUsed.getId() >= 1601 && itemUsed.getId() <= 1615 || itemUsed.getId() == 6573) || itemUsed.getId() == 10105 || itemUsed.getId() == 10107) {

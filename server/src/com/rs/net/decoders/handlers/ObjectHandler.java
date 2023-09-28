@@ -1,6 +1,8 @@
 package com.rs.net.decoders.handlers;
 
 import java.util.concurrent.TimeUnit;
+//
+import java.util.TimerTask;//TODO: Remove after creating classes for dependencies
 
 import com.rs.Settings;
 import com.rs.cache.loaders.ObjectDefinitions;
@@ -28,6 +30,7 @@ import com.rs.game.player.actions.BoxAction.HunterNPC;
 import com.rs.game.player.actions.cooking.Cooking;
 import com.rs.game.player.actions.cooking.Cooking.Cookables;
 import com.rs.game.player.actions.CowMilkingAction;
+import com.rs.game.player.actions.holidayevents.christmas2019.Snowman2019;
 //import com.rs.game.player.actions.farming.v0_5.Farming;
 import com.rs.game.player.actions.farming.v1_5.FarmingSystem;
 import com.rs.game.player.actions.PlayerCombat;
@@ -61,6 +64,7 @@ import com.rs.game.player.content.agility.BarbarianOutpostAgility;
 import com.rs.game.player.content.agility.GnomeAgility;
 import com.rs.game.player.content.cities.Entrana;
 import com.rs.game.player.content.mission.Entrance;
+//import com.rs.game.player.content.custom.PlayerLoginTimeout;
 import com.rs.game.player.controlers.Falconry;
 import com.rs.game.player.controlers.FightCaves;
 import com.rs.game.player.controlers.FightKiln;
@@ -68,6 +72,9 @@ import com.rs.game.player.controlers.NomadsRequiem;
 import com.rs.game.player.controlers.Wilderness;
 import com.rs.game.player.dialogues.impl.ExpertDung;
 import com.rs.game.player.dialogues.impl.MiningGuildDwarf;
+import com.rs.game.player.dialogues.impl.MillHopper;
+import com.rs.game.player.dialogues.impl.MillFlourBin;
+import com.rs.game.player.dialogues.impl.MillControls;
 import com.rs.game.tasks.WorldTask;
 import com.rs.game.tasks.WorldTasksManager;
 import com.rs.game.player.content.ShootingStar;
@@ -79,6 +86,7 @@ import com.rs.io.InputStream;
 import com.rs.utils.Logger;
 import com.rs.utils.PkRank;
 import com.rs.utils.Utils;
+import com.rs.cores.CoresManager;//TODO: Remove after creating classes for dependencies
 
 public final class ObjectHandler {
 
@@ -86,6 +94,8 @@ public final class ObjectHandler {
     }
 
     public static void handleOption(final Player player, InputStream stream, int option) {
+        // Reset player timeout
+        //PlayerLoginTimeout.PlayerTimeoutReset();
         if (!player.hasStarted() || !player.clientHasLoadedMapRegion() || player.isDead()) {
             return;
         }
@@ -198,6 +208,31 @@ public final class ObjectHandler {
                     Hunter.createLoggedObject(player, object, true);
                 }
 
+                // Rune Essence Exit Portal handler
+                if (object.getId() == 2465) {
+                    Magic.sendNormalTeleportSpell(player, 0, 0, new WorldTile(3253, 3402, 0));
+                }
+
+                // Karamja->Sarim port gangplank (off loading)
+                if (object.getId() == 2082) {
+                    player.setNextWorldTile(new WorldTile(2956, 3145, 0));
+                }
+
+                // Karamja->Sarim port gangplank (on loading)
+                if (object.getId() == 2081) {
+                    player.setNextWorldTile(new WorldTile(2956, 3143, 1));
+                }
+
+                // Sarim->Karamja port gangplank (off loading)
+                if (object.getId() == 2084) {
+                    player.setNextWorldTile(new WorldTile(3030, 3217, 0));
+                }
+
+                // Sarim->Karamja port gangplank (on loading)
+                if (object.getId() == 2083) {
+                    player.setNextWorldTile(new WorldTile(3032, 3217, 1));
+                }
+
                 // Sign Post handler
                 if (SignPost.handleSigns(player, object))
                     return;
@@ -208,6 +243,325 @@ public final class ObjectHandler {
                         FarmingSystem.executeAction(player, object);
                     }
                 }
+
+                // Karamja Dungeon (Volcano) Entrance (into)
+                if (object.getId() == 492) {
+                    player.setNextAnimation(new Animation(832));
+                    CoresManager.fastExecutor.schedule(new TimerTask() {
+                                @Override
+                                public void run() {
+                                    player.setNextWorldTile(new WorldTile(2855, 9568, 0));
+                                }
+                    }, 1000);
+                }
+
+                // Karamja Dungeon (Volcano) Entrance (out of)
+                if (object.getId() == 1764) {
+                     player.setNextAnimation(new Animation(828));
+                    CoresManager.fastExecutor.schedule(new TimerTask() {
+                                @Override
+                                public void run() {
+                                    player.setNextWorldTile(new WorldTile(2857, 3170, 0));
+                                }
+                    }, 1000);
+                }
+
+                // Karamja TzHaar City Entrance (into)
+                if (object.getId() == 68134) {
+                    player.setNextWorldTile(new WorldTile(2480, 5175, 0));
+                }
+
+                // Karamja TzHaar City Entrance (out of)
+                if (object.getId() == 9359) {
+                    player.setNextWorldTile(new WorldTile(2845, 3170, 0));
+                }
+
+                // Windmill (milling) functionality handler
+                //
+                // Hopper
+                if (object.getId() == 70035) {
+                    player.getDialogueManager().startDialogue("MillHopper");
+                }
+                // Flour Bin
+                if (object.getId() == 1782) {
+                    player.getDialogueManager().startDialogue("MillFlourBin");
+                }
+                // Controls
+                if (object.getId() == 2721) {
+                    player.getDialogueManager().startDialogue("MillControls");
+                }
+
+                // Spinning Wheel functionality handler
+                //66850
+                if (objectDef.name.toLowerCase() == "spinning wheel") {
+                    //
+                    if (objectDef.containsOption(0, "Spin")) {
+                        //
+                    }
+                }
+
+                //
+                // Barbarian Village Stronghold of Security dungeon (handling)
+                //
+                // TODO: Clean this up into its own class
+                //
+                if (object.getId() == 16154) {// Correct object
+                    player.setNextAnimation(new Animation(832));
+                    CoresManager.fastExecutor.schedule(new TimerTask() {
+                                @Override
+                                public void run() {
+                                    player.setNextWorldTile(new WorldTile(1860, 5244, 0));// To level 1
+                                }
+                    }, 1000);
+                }
+                // Level 1 Stairs handling
+                if (object.getId() == 16148) {// Correct object
+                    player.setNextAnimation(new Animation(828));
+                    CoresManager.fastExecutor.schedule(new TimerTask() {
+                                @Override
+                                public void run() {
+                                    player.setNextWorldTile(new WorldTile(3081, 3421, 0));// Correct Back to Surface
+                                }
+                    }, 1000);
+                }
+                // Level 1 decent handling
+                if (object.getId() == 16149) {// Correct object
+                    player.setNextAnimation(new Animation(832));
+                    CoresManager.fastExecutor.schedule(new TimerTask() {
+                                @Override
+                                public void run() {
+                                    player.setNextWorldTile(new WorldTile(2042, 5245, 0));// To level 2
+                                }
+                    }, 1000);
+                }
+                // Level 2 Stairs handling
+                if (object.getId() == 16080) {// Correct object
+                    player.setNextAnimation(new Animation(828));
+                    CoresManager.fastExecutor.schedule(new TimerTask() {
+                                @Override
+                                public void run() {
+                                    player.setNextWorldTile(new WorldTile(1902, 5221, 0));// Correct Back to Level 1
+                                }
+                    }, 1000);
+                }
+                // Level 2 Rope handling
+                if (object.getId() == 16078) {// Correct object
+                    player.setNextAnimation(new Animation(828));
+                    CoresManager.fastExecutor.schedule(new TimerTask() {
+                                @Override
+                                public void run() {
+                                    player.setNextWorldTile(new WorldTile(1902, 5221, 0));// Correct Back to Level 1
+                                }
+                    }, 1000);
+                }
+                // Level 2 decent handling
+                if (object.getId() == 16081) {// Correct object
+                    player.setNextAnimation(new Animation(832));
+                    CoresManager.fastExecutor.schedule(new TimerTask() {
+                                @Override
+                                public void run() {
+                                    player.setNextWorldTile(new WorldTile(2122, 5251, 0));// To Level 3
+                                }
+                    }, 1000);
+                }
+                // Level 3 Stairs handling
+                if (object.getId() == 16114) {// Correct object
+                    player.setNextAnimation(new Animation(828));
+                    CoresManager.fastExecutor.schedule(new TimerTask() {
+                                @Override
+                                public void run() {
+                                    player.setNextWorldTile(new WorldTile(2027, 5218, 0));// Correct Back to level 2
+                                }
+                    }, 1000);
+                }
+                // Level 3 Goo covered vine handling
+                if (object.getId() == 16112) {// Correct object
+                    player.setNextAnimation(new Animation(828));
+                    CoresManager.fastExecutor.schedule(new TimerTask() {
+                                @Override
+                                public void run() {
+                                    player.setNextWorldTile(new WorldTile(2027, 5218, 0));// Correct Back to level 2
+                                }
+                    }, 1000);
+                }
+                // Level 3 decent handling
+                if (object.getId() == 16115) {// Correct object
+                    player.setNextAnimation(new Animation(832));
+                    CoresManager.fastExecutor.schedule(new TimerTask() {
+                                @Override
+                                public void run() {
+                                    player.setNextWorldTile(new WorldTile(2358, 5215, 0));// To Level 4
+                                }
+                    }, 1000);
+                }
+                // Level 4 Stairs handling (#2/Chest room entrance)
+                if (object.getId() == 16048) {// Correct object
+                    player.setNextAnimation(new Animation(828));
+                    CoresManager.fastExecutor.schedule(new TimerTask() {
+                                @Override
+                                public void run() {
+                                    player.setNextWorldTile(new WorldTile(2149, 5264, 0));// Correct Back to level 3
+                                }
+                    }, 1000);
+                }
+                // Level 4 Ladder handling
+                if (object.getId() == 16049) {// Correct object
+                    player.setNextAnimation(new Animation(828));
+                    CoresManager.fastExecutor.schedule(new TimerTask() {
+                                @Override
+                                public void run() {
+                                    player.setNextWorldTile(new WorldTile(2149, 5264, 0));// Correct Back to level 3
+                                }
+                    }, 1000);
+                }
+                //
+                // END Stronghold handling
+                //
+
+                // Whirlpool to Mithril Dragons
+                if (object.getId() == 67966) {// Correct object
+                    player.setNextAnimation(new Animation(7269));//6723 7269
+                    CoresManager.fastExecutor.schedule(new TimerTask() {
+                                @Override
+                                public void run() {
+                                    player.setNextWorldTile(new WorldTile(1694, 5296, 1));// To Dungeon
+                                }
+                    }, 1000);
+                }
+                //TODO: dungeon step
+
+                // Falador cabbage field Stile (handling)
+                if (object.getId() == 7527) {
+                    int y_coord = player.getY();
+                    if (y_coord < 3283) {
+                        player.setNextWorldTile(new WorldTile(3063, 3284, 0));
+                        return;
+                    } else if (y_coord > 3282) {
+                        player.setNextWorldTile(new WorldTile(3063, 3281, 0));
+                        return;
+                    }
+                }
+
+                // North of Lumbridge Sheep field Stile (handling)
+                if (object.getId() == 45205) {
+                    int y_coord = player.getY();
+                    if (y_coord < 3277) {
+                        player.setNextWorldTile(new WorldTile(3197, 3278, 0));
+                        return;
+                    } else if (y_coord > 3276) {
+                        player.setNextWorldTile(new WorldTile(3197, 3275, 0));
+                        return;
+                    }
+                }
+
+                // Ardougne wheat field, Sheep and Cows area Stile (handling)
+                if (object.getId() == 34776) {
+                    int y_coord = player.getY();
+                    int x_coord = player.getX();
+                    if (y_coord > 3355) {// Sheep
+                        if (x_coord > 2647) {
+                            player.setNextWorldTile(new WorldTile(2646, 3375, 0));
+                            return;
+                        } else if (x_coord < 2647) {
+                            player.setNextWorldTile(new WorldTile(2648, 3375, 0));
+                            return;
+                        }
+                    }
+                    else if (y_coord < 3355) {// Wheat field
+                        if (x_coord < 2639) {
+                            player.setNextWorldTile(new WorldTile(2640, 3350, 0));
+                            return;
+                        } else if (x_coord > 2638) {// Check if you're using the Cows Stile or Wheat Stile
+                            if (x_coord > 2648) {// Cows
+                                if (x_coord > 2656) {
+                                    //
+                                    player.setNextWorldTile(new WorldTile(2654, 3347, 0));
+                                    return;
+                                } else {
+                                    //
+                                    player.setNextWorldTile(new WorldTile(2657, 3347, 0));
+                                    return;
+                                }
+                            }else {
+                                player.setNextWorldTile(new WorldTile(2637, 3350, 0));
+                                return;
+                            }
+                        }
+                    }
+                }
+
+                // Karamja Dungeon Open Wall (handling)
+                if (object.getId() == 2606) {
+                    int y_coord = player.getY();
+                    if (y_coord < 9600) {
+                        player.setNextWorldTile(new WorldTile(2836, 9601, 0));
+                        return;
+                    } else if (y_coord > 9600) {
+                        player.setNextWorldTile(new WorldTile(2836, 9599, 0));
+                        return;
+                    }
+                }
+
+                // Karamja Banana Tree (handling)
+                if (object.getId() == 2073) {
+                    if (player.getInventory().getFreeSlots() < 1) {
+                        player.sm("You have no more space in your inventory.");
+                        return;
+                    } else {
+                        //
+                        player.getInventory().addItem(1963, 1);
+                        player.lock(3);
+                        player.sm("You gather a banana from the tree.");
+                        return;
+                    }
+                }
+
+                // Snow Pile handling 66496 28296
+                if (object.getId() == 66496) {
+                    if (player.christmas < 1) {
+                        player.setNextForceTalk(new ForceTalk("I think I should speak with the Snow Queen first."));
+                        return;
+                    } else if (player.getInventory().getFreeSlots() < 1) {
+                        player.sm("You have no more space in your inventory.");
+                        return;
+                    } else {
+                        //
+                        player.setNextAnimation(new Animation(827));
+                        player.lock(3);
+                        player.getInventory().addItem(10501, 1);
+                        player.sm("You gather some snow into a ball.");
+                        return;
+                    }
+                }
+
+                // Snow Pile handling 66496 28296
+                if (object.getId() == 28296) {
+                    if (player.christmas < 1) {
+                        player.setNextForceTalk(new ForceTalk("I think I should speak with the Snow Queen first."));
+                        return;
+                    } else if (player.getInventory().getFreeSlots() < 1) {
+                        player.sm("You have no more space in your inventory.");
+                        return;
+                    } else {
+                        //
+                        player.setNextAnimation(new Animation(827));
+                        player.lock(3);
+                        player.getInventory().addItem(10501, 1);
+                        player.sm("You gather some snow into a ball.");
+                        Snowman2019.handleSnwmn(player);
+                        return;
+                    }
+                }
+
+                //Snow Ball handling
+                /*if (object.getId() == 10501) {
+                    int weaponId_snbl = player.getEquipment().getWeaponId();
+                    if (weaponId_snbl == 10501) {
+                        player.getPackets().sendPlayerOption("Pelt", 1, true);
+                    } else {
+                        player.getPackets().sendPlayerOption("null", 1, true);
+                    }
+                }*/
 
                 //Halloween event
                 if (id == 27896 || id == 32046 || id == 31747 || id == 30838
@@ -223,9 +577,13 @@ public final class ObjectHandler {
                     if (player.christmas < 1) {
                         player.setNextForceTalk(new ForceTalk("I'm not too sure where this will lead me, maybe I should speak with the Snow Queen first."));
                     }else if (player.christmas >= 5) {
-                        player.setNextForceTalk(new ForceTalk("I don't think I need to go back there."));
+                        player.setNextForceTalk(new ForceTalk("I don't think I am allowed in there."));
                     }else {
-                        player.getControlerManager().startControler("SantaCage1Controler");
+                        // TODO: This is broken, figure out instances later, 
+                        // just send players to the same area for now
+                        //player.getControlerManager().startControler("SantaCage1Controler");
+                        //player.setNextWorldTile(getWorldTile(24, 8));
+                        player.setNextForceTalk(new ForceTalk("I worry too much about Santa to leave! I should vanquish more Snowmen!"));
                     }
                     return;
                 }
@@ -283,7 +641,7 @@ public final class ObjectHandler {
                             FadingScreen.unfade(player, time, new Runnable() {
                                 @Override
                                 public void run() {
-                                    player.setNextWorldTile(new WorldTile(2500, 3500, 0)); // MAKE SURE THESE COORDS CHANGE TO WHERE YOU WANT THEM SPAWNED BACK TO
+                                    player.setNextWorldTile(new WorldTile(3235, 3227, 0)); // MAKE SURE THESE COORDS CHANGE TO WHERE YOU WANT THEM SPAWNED BACK TO
                                 }
                                 
                             
@@ -369,7 +727,7 @@ public final class ObjectHandler {
                     }
                 }
                 if (id == 47777 || id == 47778) {
-                    if (player.christmas < 5) {
+                    if (player.christmas < 7) {// turned off for fun. people should be able to get food!
                         player.getDialogueManager().startDialogue("XmasFoodTable1");
                         return;
                     } else 
@@ -1624,7 +1982,11 @@ public final class ObjectHandler {
                             }
                             break;
                         case "ladder":
-                            handleLadder(player, object, 1);
+                            if (object.getId() != 16148) {//ignore security dungeon ladder
+                                if (object.getId() != 16080) {//ignore security dungeon ladder
+                                    handleLadder(player, object, 1);
+                                }
+                            }
                             break;
                         case "staircase":
                             handleStaircases(player, object, 1);
@@ -1824,6 +2186,13 @@ public final class ObjectHandler {
                         FarmingSystem.inspectPatch(player, object);
                     }
                 }
+
+                // Snow Pile handling 66496
+                if (object.getId() == 66496) {
+                    player.lock(3);
+                    player.getPackets().sendGameMessage("You decide doing that would just be silly.");
+                    return;
+                }
                 
                 if (id == 40444) {
                 	int amount = 5;
@@ -1884,6 +2253,34 @@ public final class ObjectHandler {
                     switch (objectDef.name.toLowerCase()) {
                         case "cabbage":
                             if (objectDef.containsOption(1, "Pick") && player.getInventory().addItem(1965, 1)) {
+                                player.setNextAnimation(new Animation(827));
+                                player.lock(2);
+                                World.removeTemporaryObject(object, 60000, false);
+                            }
+                            break;
+                        case "wheat":
+                            if (objectDef.containsOption(1, "Pick") && player.getInventory().addItem(1947, 1)) {
+                                player.setNextAnimation(new Animation(827));
+                                player.lock(2);
+                                World.removeTemporaryObject(object, 60000, false);
+                            }
+                            break;
+                        case "potato":
+                            if (objectDef.containsOption(1, "Pick") && player.getInventory().addItem(1942, 1)) {
+                                player.setNextAnimation(new Animation(827));
+                                player.lock(2);
+                                World.removeTemporaryObject(object, 60000, false);
+                            }
+                            break;
+                        case "flax":
+                            if (objectDef.containsOption(1, "Pick") && player.getInventory().addItem(1779, 1)) {
+                                player.setNextAnimation(new Animation(827));
+                                player.lock(2);
+                                World.removeTemporaryObject(object, 60000, false);
+                            }
+                            break;
+                        case "onion":
+                            if (objectDef.containsOption(1, "Pick") && player.getInventory().addItem(1957, 1)) {
                                 player.setNextAnimation(new Animation(827));
                                 player.lock(2);
                                 World.removeTemporaryObject(object, 60000, false);
@@ -2042,7 +2439,7 @@ public final class ObjectHandler {
 				player.sendMessage("You use your strength to push through the wheat.");
 			}
 			final int goX = x, goY = y, curDir = dir;
-			player.teleportPlayer(goX, goY, 0);
+			player.teleportPlayer(goX, goY, 0);// proper way to teleport TODO: reference this again
 			break;
         }
         
@@ -2077,16 +2474,21 @@ public final class ObjectHandler {
     }
 
     private static void handleOptionExamine(final Player player, final WorldObject object) {
-        if (player.getUsername().equalsIgnoreCase("tyler")) {
+        if (player.getUsername().equalsIgnoreCase("feraten")) {
             int offsetX = object.getX() - player.getX();
             int offsetY = object.getY() - player.getY();
             System.out.println("Offsets" + offsetX + " , " + offsetY);
         }
-        if (player.getRights() == 2) {
+        if (player.getRights() >= 2) {
             player.getPackets().sendPanelBoxMessage("" + object.getDefinitions().name + ": " + object.getId() + " (Coords: <col=00FFFF>" + object.getX() + ", " + object.getY() + "</col>) Region Id: "+object.getRegionId()+"");
             player.examinedObject = object;
         }
-        player.getPackets().sendGameMessage("It's an " + object.getDefinitions().name + ".");
+        // Disgusting NULL override - TODO: Update this
+        if (object.getId() == 1781) {
+            player.getPackets().sendGameMessage("It's a Flour Bin, where milled wheat ends up.");
+        } else {
+            player.getPackets().sendGameMessage("It's an " + object.getDefinitions().name + ".");
+        }
         if (Settings.DEBUG) {
             Logger.log("ObjectHandler", "examined object id : "
                     + object.getId() + ", "

@@ -123,7 +123,7 @@ public class ChargesManager implements Serializable {
 							"Your "
 									+ ItemDefinitions
 											.getItemDefinitions(itemId)
-											.getName() + " became into dust.");
+											.getName() + " degraded into dust.");
 				else
 					player.getPackets().sendGameMessage(
 							"Your "
