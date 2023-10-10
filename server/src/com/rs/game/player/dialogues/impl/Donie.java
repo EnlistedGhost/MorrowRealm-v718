@@ -1,74 +1,139 @@
 package com.rs.game.player.dialogues.impl;
 
-import com.rs.Settings;
+import com.rs.cache.loaders.NPCDefinitions;
 import com.rs.game.player.dialogues.Dialogue;
 
-public class Banker extends Dialogue {
+public class Donie extends Dialogue {
 
 	int npcId;
 
 	@Override
 	public void start() {
 		npcId = (Integer) parameters[0];
-		sendNPCDialogue(npcId, 2238, "Good day, How may I help you?");
+		sendEntityDialogue(
+					SEND_1_TEXT_CHAT,
+					new String[] {
+							NPCDefinitions.getNPCDefinitions(npcId).name,
+							"Hello there, can I help you?" }, IS_NPC, npcId, 9827);
 		stage = 0;
 	}
 
 	@Override
 	public void run(int interfaceId, int componentId) {
+		// TODO add the other 3 dialogues (total of 4) and set to random
 		if (stage == 0) {
-			sendOptionsDialogue("What would you like to say?",
-					"I'd like to acess my bank account, please.",
-					"I'd like to check my PIN settings.",
-					"I'd like to see my collection box.", "What is this place?");
+			sendOptionsDialogue("Select an option",
+					"Where am I?",
+					"How are you today?",
+					"Are there any quests I can do here?",
+					"Where can I get a haircut like yours?");
 			stage = 1;
 		} else if (stage == 1) {
 			if (componentId == OPTION_1) {
-				player.getBank().openBank();
-				end();
+				sendEntityDialogue(SEND_1_TEXT_CHAT,
+						new String[] { player.getDisplayName(),
+								"Where am I?" }, IS_PLAYER,
+						player.getIndex(), 9827);
+				stage = 2;
+				//end();
 			} else if (componentId == OPTION_2) {
-				player.getBank().openSetPin();
-				end();
+				sendEntityDialogue(SEND_1_TEXT_CHAT,
+						new String[] { player.getDisplayName(),
+								"How are you today?" }, IS_PLAYER,
+						player.getIndex(), 9827);
+				stage = 3;
+				//end();
 			} else if (componentId == OPTION_3) {
-				// TODO collection boss
-				end();
-			} else if (componentId == OPTION_4) {
-				stage = 1;
-				sendPlayerDialogue(2238, "What is this place?");
-			} else
-				end();
-		} else if (stage == 1) {
-			stage = 2;
-			sendNPCDialogue(npcId, 2238, "This is a branch of the Bank of "
-					+ Settings.SERVER_NAME + ". We have",
-					"branches in many towns.");
-		} else if (stage == 2) {
-			stage = 3;
-			sendOptionsDialogue("What would you like to say?",
-					"And what do you do?",
-					"Didnt you used to be called the Bank of Varrock?");
-		} else if (stage == 3) {
-			if (componentId == OPTION_1) {
+				sendEntityDialogue(SEND_1_TEXT_CHAT,
+						new String[] { player.getDisplayName(),
+								"Do you know of any quests I can do?" }, IS_PLAYER,
+						player.getIndex(), 9827);
 				stage = 4;
-				sendPlayerDialogue(2238, "And what do you do?");
-			} else if (componentId == OPTION_2) {
+			} else if (componentId == OPTION_4) {
+				sendEntityDialogue(SEND_1_TEXT_CHAT,
+						new String[] { player.getDisplayName(),
+								"Where can I get a haircut like yours?" }, IS_PLAYER,
+						player.getIndex(), 9827);
 				stage = 5;
-				sendPlayerDialogue(2238,
-						"Didnt you used to be called the Bank of Varrock?");
+				//end();
 			} else
 				end();
+		} else if (stage == 2) {
+			sendEntityDialogue(SEND_1_TEXT_CHAT,
+					new String[] {
+							NPCDefinitions.getNPCDefinitions(npcId).name,
+							"This is the town of Lumbridge my friend." }, IS_NPC, npcId, 9827);
+			stage = 0;
+		} else if (stage == 3) {
+				sendEntityDialogue(SEND_1_TEXT_CHAT,
+					new String[] {
+						NPCDefinitions.getNPCDefinitions(npcId).name,
+						"Aye, not too bad thank you. Lovely weather in Gielinor this fine day." }, IS_NPC, npcId, 9827);
+				stage = 6;
+		} else if (stage == 6) {
+				sendEntityDialogue(SEND_1_TEXT_CHAT,
+					new String[] { player.getDisplayName(),
+						"Weather?" }, IS_PLAYER,
+						player.getIndex(), 9827);
+				stage = 7;
+		} else if (stage == 7) {
+				sendEntityDialogue(SEND_1_TEXT_CHAT,
+					new String[] {
+						NPCDefinitions.getNPCDefinitions(npcId).name,
+						"Yes weather, you know." }, IS_NPC, npcId, 9827);
+				stage = 8;
+		} else if (stage == 8) {
+				sendEntityDialogue(SEND_3_TEXT_CHAT,
+					new String[] {
+						NPCDefinitions.getNPCDefinitions(npcId).name,
+						"The state or condition of the atmosphere at a time and place, ",
+						"with respect to variables such as temperature, moisture, ",
+						"wind velocity, and barometric pressure." }, IS_NPC, npcId, 9827);
+				stage = 9;
+		} else if (stage == 9) {
+				sendEntityDialogue(SEND_1_TEXT_CHAT,
+					new String[] { player.getDisplayName(),
+						"..." }, IS_PLAYER,
+						player.getIndex(), 9827);
+				stage = 10;
+		} else if (stage == 10) {
+				sendEntityDialogue(SEND_1_TEXT_CHAT,
+					new String[] {
+						NPCDefinitions.getNPCDefinitions(npcId).name,
+						"Not just a pretty face eh? Ha ha ha." }, IS_NPC, npcId, 9827);
+				stage = 14;
 		} else if (stage == 4) {
-			stage = -2;
-			sendNPCDialogue(npcId, 2238,
-					"We will look after your items and money for you.",
-					"Leave your valuables with us if you want to keep them",
-					"safe.");
+			sendEntityDialogue(SEND_1_TEXT_CHAT,
+					new String[] {
+							NPCDefinitions.getNPCDefinitions(npcId).name,
+							"Sorry, there's nothing right now. Check back later." }, IS_NPC, npcId, 9827);
+			stage = 14;
 		} else if (stage == 5) {
-			stage = -2;
-			sendNPCDialogue(npcId, 2238,
-					"Yes we did, but people kept on coming into our",
-					"signs were wrong. They acted as if we didn't know",
-					"what town we were in or something.");
+			sendEntityDialogue(SEND_1_TEXT_CHAT,
+					new String[] {
+							NPCDefinitions.getNPCDefinitions(npcId).name,
+							"Yes, it does look like you need a hairdresser." }, IS_NPC, npcId, 9827);
+			stage = 11;
+		} else if (stage == 11) {
+			sendEntityDialogue(SEND_1_TEXT_CHAT,
+						new String[] { player.getDisplayName(),
+								"Oh thanks!" }, IS_PLAYER,
+						player.getIndex(), 9827);
+			stage = 12;
+		} else if (stage == 12) {
+			sendEntityDialogue(SEND_1_TEXT_CHAT,
+					new String[] {
+							NPCDefinitions.getNPCDefinitions(npcId).name,
+							"No problem. The hairdresser in Falador will probably be able to sort you out." }, IS_NPC, npcId, 9827);
+			stage = 13;
+		} else if (stage == 13) {
+			sendEntityDialogue(SEND_1_TEXT_CHAT,
+					new String[] {
+							NPCDefinitions.getNPCDefinitions(npcId).name,
+							"The Lumbridge general store sells useful maps if you don't know the way." }, IS_NPC, npcId, 9827);
+			stage = 14;
+		} else if (stage == 14) {
+			end();
 		} else
 			end();
 	}

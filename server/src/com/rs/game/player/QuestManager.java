@@ -50,6 +50,7 @@ public final class QuestManager implements Serializable {
 
 	public void init() {
 		checkCompleted(); // temporary
+		// unlockQuestTab(); // TODO handle this only once (during tutorial)
 		for (Quests quest : completedQuests)
 			sendCompletedQuestsData(quest);
 		for (Quests quest : questStages.keySet())
@@ -97,5 +98,9 @@ public final class QuestManager implements Serializable {
 
 	public boolean completedQuest(Quests quest) {
 		return completedQuests.contains(quest);
+	}
+
+	public void unlockQuestTab() {
+		player.getPackets().sendUnlockIComponentOptionSlots(190, 15, 0, 201, 0, 1, 2, 3);
 	}
 }

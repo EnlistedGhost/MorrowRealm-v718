@@ -46,6 +46,8 @@ import com.rs.game.player.actions.mining.Mining.RockDefinitions;
 import com.rs.game.player.actions.mining.MiningBase;
 import com.rs.game.player.actions.runecrafting.SihponActionNodes;
 import com.rs.game.player.actions.thieving.Thieving;
+import com.rs.game.player.actions.thieving.ThievesGuildChests;
+import com.rs.game.player.actions.thieving.ThievesGuildDoors;
 import com.rs.game.player.content.ArtisanWorkshop;
 import com.rs.game.player.content.Barrels;
 import com.rs.game.player.content.ClueScrolls;
@@ -758,6 +760,20 @@ public final class ObjectHandler {
                 /**
                  * End Christmas
                  */
+
+
+                 /**thieves guild**/
+                 //doors
+                 if (id == 52302 || id == 52304) {
+                    player.getActionManager().setAction(new ThievesGuildDoors(object));
+                    return;
+                }
+                //chests
+                if (id == 52296 || id == 52299) {
+                    player.getActionManager().setAction(new ThievesGuildChests(object));
+                    return;
+                }
+                /**thieves guild end**/
 
                 HunterNPC hunterNpc = HunterNPC.forObjectId(id);
                 

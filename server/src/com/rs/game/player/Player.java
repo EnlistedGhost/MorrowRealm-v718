@@ -149,6 +149,8 @@ public class Player extends Entity {
 	private Title playerTitle;
 	// Zoom Controls
 	public int zoom = 226;
+	// Quest Points
+	public int questPoints = 0;
 	// Halloween Event
 	public int cake = 0;
 	public int dust1 = 0;
@@ -968,7 +970,7 @@ public class Player extends Entity {
 		//	getPackets().sendGameMessage("<img=7><col=ff8c38>Double EXP is now live! All weekend! (Friday - Sunday!)");
 		
 		Logger.log("Player", ""+getDisplayName()+" has logged in (IP: "+ip+")");
-		getInterfaceManager().openGameTab(3);
+		getInterfaceManager().openGameTab(16);// no tab selected
 		
 		if (needsFixed()) {
 			getBank().depositAllEquipment(true);
@@ -990,9 +992,15 @@ public class Player extends Entity {
 		prayer.refreshPrayerPoints();
 		getPoison().refresh();
 		getPackets().sendGlobalConfig(184, zoom); // Set Zoom to default values
-		getPackets().sendConfig(281, 1000); // unlock can't do this on tutorial
 		getPackets().sendConfig(1160, -1);  // unlock summoning orb
 		getPackets().sendConfig(1159, 1);
+		// Quest Configs
+		getPackets().sendConfig(281, 1000); // Quest Drop Menu
+		getPackets().sendConfig(1384, 512); // Quest Filter Button
+		getPackets().sendConfig(1384, 512); // Quest Related
+		getPackets().sendUnlockIComponentOptionSlots(190, 15, 0, 201, 0, 1, 2, 3); // Unlocks Quest Interface
+		getPackets().sendConfig(904, 333); // Quest points in the botom
+		getPackets().sendConfig(101, questPoints); // Quest Points, Maximum Quest Points in 2011 (326)
 		getPackets().sendGameBarStages();
 		refreshLodestoneNetwork();
 		musicsManager.init();

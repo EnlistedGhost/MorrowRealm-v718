@@ -132,7 +132,9 @@ public class InterfaceManager {
 		sendCombatStyles();
 		sendTaskSystem();
 		sendSkills();
-        RunePortal.sendPortal(player);
+        //RunePortal.sendPortal(player); - stupid user portal YUCK
+		//sendTab(114, 190);// quests
+		sendQuestTab();// quests with component text override
 		sendInventory();
 		sendEquipment();
 		sendPrayerBook();
@@ -170,7 +172,9 @@ public class InterfaceManager {
 		sendPrayerBook();
 		sendEquipment();
 		sendInventory();
-		RunePortal.sendPortal(player);
+		//sendTab(174, 190);// quests
+		//RunePortal.sendPortal(player); - stupid user portal YUCK
+		sendQuestTab();// quests with component text override
 		sendTab(181, 1109);// 551 ignore now friendchat
 		sendTab(182, 1110);// 589 old clan chat now new clan chat
 		sendTab(180, 550);// friend list
@@ -194,8 +198,14 @@ public class InterfaceManager {
 	public void updatePortal() {
 		player.getPackets().sendIComponentText(506, 0, getTime());
 	}
+
+	public void sendQuestTab() {
+		sendTab(resizableScreen ? 114 : 174, 190);
+		//player.getPackets().sendIComponentText(190, 1, "Free Quests");
+		//player.getPackets().sendIComponentText(190, 2, "Quest 1");
+	}
         
-	public void sendRunePortal() 	{
+	public void sendRunePortal() 	{// TODO remove this garbage or move it somewhere else
             sendTab(resizableScreen ? 114 : 174, 506);
             player.getPackets().sendIComponentText(506, 0, ""); // title
             player.getPackets().sendIComponentText(506, 2, "Account Manager"); // top button
@@ -455,7 +465,7 @@ public class InterfaceManager {
 	 */
 	public int openGameTab(int tabId) {
 		player.getPackets().sendGlobalConfig(168, tabId);
-		int lastTab = 4; // tabId
+		int lastTab = tabId; // tabId
 		// tab = tabId;
 		return lastTab;
 	}

@@ -175,7 +175,7 @@ public class MakeOverMage extends Dialogue {
 							NPCDefinitions.getNPCDefinitions(npcId).name,
 							"No problem, but please remember that the amulet I will",
 							"sell you is only a copy of my own. It contains no magical",
-							"powers and, as such, it will only cost you 100 coins." },
+							"powers and, as such, it will only cost you 3,000 coins." },
 					IS_NPC, npcId, 9827);
 		} else if (stage == 15) {
 			stage = 16;
@@ -183,7 +183,7 @@ public class MakeOverMage extends Dialogue {
 					"Sure, here you go.", "No way! That's too expensive.");
 		} else if (stage == 16) {
 			if (componentId == 1) {
-				if (!player.getInventory().containsItem(995, 100))
+				if (!player.getInventory().containsItem(995, 3000))
 					end();
 				else {
 					stage = 17;

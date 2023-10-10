@@ -514,8 +514,8 @@ public class NPCHandler {
 					ShopsHandler.openShop(player, 19);
 				else if (npc.getId() == 587)
 					ShopsHandler.openShop(player, 20);
-				else if (npc.getId() == 519)
-					ShopsHandler.openShop(player, 21);
+				else if (npc.getId() == 519)// Bob (from Bob's Brilliant Axes)
+					ShopsHandler.openShop(player, 21);// Bob's Brilliant Axes
 				else if (npc.getId() == 8864 && npc.getX() != 3643 && npc.getY() != 5135)
 					ShopsHandler.openShop(player, 22); // All Others
 				else if (npc.getId() == 8864 && npc.getX() == 3643 && npc.getY() == 5135)
